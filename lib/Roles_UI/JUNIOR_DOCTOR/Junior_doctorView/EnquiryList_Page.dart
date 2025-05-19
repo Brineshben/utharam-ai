@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../Controller/Doctor_List_Controller.dart';
 import '../../../Controller/EnquiredListController.dart';
 import '../../../Service/Api_Service.dart';
+import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
 import '../../UI/Common_Widget/popups.dart';
 import 'Add_Doctor.dart';
 import 'Second_Assesment.dart';
@@ -205,20 +206,42 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  GestureDetector(
 
-                                    child: SvgPicture.asset(
-                                      "assets/images/phone-call.svg",
+                                  Row(
+                                    children: [
 
-                                      width: 25.w,
-                                      height: 25.h,
-                                    ),
-                                    onTap: (){
-                                      // makePhoneCall( callHuman?.callId ?? 0);
-                                      //
-                                      makePhoneCall(patientEnquired?.mobileNumber ??"");
+                                      GestureDetector(
 
-                                    },
+                                        child:Image.asset(
+                                          "assets/images/whatsapp.png",
+                                          fit: BoxFit.cover,
+                                          width: 25,
+                                          height: 25,
+                                        ),
+                                        onTap: (){
+                                          // makePhoneCall( callHuman?.callId ?? 0);
+                                          //
+                                          openWhatsAppChat( phoneNumber: patientEnquired?.mobileNumber ??"");
+
+                                        },
+                                      ),
+                                      SizedBox(width: 15,),
+                                      GestureDetector(
+
+                                        child: SvgPicture.asset(
+                                          "assets/images/phone-call.svg",
+
+                                          width: 25.w,
+                                          height: 25.h,
+                                        ),
+                                        onTap: (){
+                                          // makePhoneCall( callHuman?.callId ?? 0);
+                                          //
+                                          makePhoneCall(patientEnquired?.mobileNumber ??"");
+
+                                        },
+                                      ),
+                                    ],
                                   )
                                 ],
                               ),

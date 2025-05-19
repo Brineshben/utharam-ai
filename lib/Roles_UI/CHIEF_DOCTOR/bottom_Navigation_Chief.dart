@@ -247,6 +247,6 @@ Future<void> openWhatsAppChat({
   if (await canLaunchUrl(Uri.parse(url))) {
     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   } else {
-    throw 'Could not launch WhatsApp chat';
-  }
+    Get.snackbar('Failed', 'Mobile Number Not Registered/ Whatsapp Not Installed',
+        snackPosition: SnackPosition.BOTTOM);  }
 }

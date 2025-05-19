@@ -346,7 +346,6 @@ class _PatientDetailsState extends State<PatientDetails> {
                   name: widget.name,
                   phone: widget.phone,
                   sevirity: widget.severity.toString(),
-                  disease: "",
                 ),
 
                 Padding(

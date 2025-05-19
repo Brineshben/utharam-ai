@@ -8,6 +8,7 @@ import 'package:patient/utils/color_util.dart';
 
 import '../../../Controller/Doctor_List_Controller.dart';
 import '../../../Controller/ReportPatientController.dart';
+import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
 import 'ReportDetails.dart';
 
 class ReportsList extends StatefulWidget {
@@ -167,16 +168,37 @@ class _ReportsListState extends State<ReportsList> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          trailing: IconButton(
-                            icon: Icon(Icons.arrow_forward_ios,
-                                size: 15, color: Colors.blueGrey),
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return ReportsDetails(token:widget.token, id: report?.patientDetails?.id ?? 0,);
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+
+                            children: [
+                              GestureDetector(
+
+                                child:Image.asset(
+                                  "assets/images/whatsapp.png",
+                                  fit: BoxFit.cover,
+                                  width: 22,
+                                  height: 22,
+                                ),
+                                onTap: (){
+                                  // makePhoneCall( callHuman?.callId ?? 0);
+                                  //
+                                  openWhatsAppChat( phoneNumber:report?.patientDetails?.mobileNumber ?? "");
+
                                 },
-                              ));
-                            },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.arrow_forward_ios,
+                                    size: 15, color: Colors.blueGrey),
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return ReportsDetails(token:widget.token, id: report?.patientDetails?.id ?? 0,);
+                                    },
+                                  ));
+                                },
+                              ),
+                            ],
                           ),
                         );
                       },

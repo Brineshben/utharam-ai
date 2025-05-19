@@ -214,23 +214,28 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                 SizedBox(),
                 GetX<Patientappointmentdetailscontroller>(
                   builder: (Patientappointmentdetailscontroller controller) {
-                    final name = (controller.patientAppointmentListList.isNotEmpty )
-                        ?controller.patientAppointmentListList.last?.doctorDetails?.name
-                        : 'No Name';
-                    final date = (controller.patientAppointmentListList.isNotEmpty )
-                        ?controller.patientAppointmentListList.last?.slotDetails?.date
-                        : 'No Date';
-                    final role = (controller.patientAppointmentListList.isNotEmpty )
-                        ?controller.patientAppointmentListList.last?.slotDetails?.date
-                        : 'No Date';
-                    final fromDate = (controller.patientAppointmentListList.isNotEmpty )
-                        ?controller.patientAppointmentListList.last?.slotDetails?.fromTime
-                        : 'No Date';
-                    final toDate = (controller.patientAppointmentListList.isNotEmpty )
-                        ?controller.patientAppointmentListList.last?.slotDetails?.toTime
-                        : 'No Date';
+                    if (controller.patientAppointmentListList.isEmpty) {
+                      return const SizedBox(); // Return an empty widget when no data
+                    }
 
-                    return AppointmentCard2(name: name ?? "", date: date ?? "", role: role ?? "", fromDate: fromDate?? "", toDate: toDate?? "",);
+                    final lastAppointment = controller.patientAppointmentListList.last;
+                    final name = lastAppointment?.doctorDetails?.name ?? 'No Name';
+                    final date = lastAppointment?.slotDetails?.date ?? 'No Date';
+                    final role = lastAppointment?.slotDetails?.date ?? 'No Date';
+                    final fromDate = lastAppointment?.slotDetails?.fromTime ?? 'No From Time';
+                    final toDate = lastAppointment?.slotDetails?.toTime ?? 'No To Time';
+
+                    if (name == "No Name") {
+                      return const SizedBox(); // Return nothing if no valid name
+                    } else {
+                      return AppointmentCard2(
+                        name: name,
+                        date: date,
+                        role: role,
+                        fromDate: fromDate,
+                        toDate: toDate,
+                      );
+                    }
                   },
                 ),
 

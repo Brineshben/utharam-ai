@@ -57,7 +57,7 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
             Padding(
               padding: const EdgeInsets.only(top: 50, left: 20),
               child: Text(
-                "Patient LIST",
+                "PATIENT LIST",
                 style: GoogleFonts.shanti(
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.w900,
@@ -72,6 +72,13 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
             Expanded(
               child: GetX<PatientAssignmentController>(
                 builder: (PatientAssignmentController controller) {
+                  if (controller.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Colorutils.userdetailcolor,
+                      ),
+                    );
+                  }
                   if (controller.patientAssesmentListDataList.isEmpty) {
                     return Padding(
                         padding:

@@ -29,18 +29,20 @@ class CreateSlotController extends GetxController {
       print('response slot create $response');
 
       if (response['status'] == 'ok') {
-        Get.snackbar(
-          'Success',
-          'Slot created successfully',
-          snackPosition: SnackPosition.TOP,
-          colorText: Colors.white,
-          backgroundColor: Color(0xFF51C2B9),
-        );
+        Get.snackbar('SUCCESS', 'Slot created successfully',
+            snackPosition: SnackPosition.BOTTOM);
+
 
         fetchSlots(date: DateTime.parse(date), doctorName: doctorName, token: token);
       }
+      else {
+
+        Get.snackbar('FAILED', 'Please select the correct time range.',
+            snackPosition: SnackPosition.BOTTOM);
+      }
     } catch (e) {
-      print('error in slot create $e');
+      Get.snackbar('Error', 'Please select the correct time range.',
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 

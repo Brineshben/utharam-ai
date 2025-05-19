@@ -8,19 +8,21 @@ import 'package:patient/utils/color_util.dart';
 
 import '../../../Controller/Doctor_List_Controller.dart';
 import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
-import 'Add_Doctor.dart';
-import 'Slot_Create.dart';
+import '../../JUNIOR_DOCTOR/Junior_doctorView/Add_Doctor.dart';
+import '../../JUNIOR_DOCTOR/Junior_doctorView/Slot_Create.dart';
 
-class DoctorList extends StatefulWidget {
+
+class DoctorListSenior extends StatefulWidget {
   final String token;
+  final int doctorId;
 
-  const DoctorList({super.key, required this.token});
+  const DoctorListSenior({super.key, required this.token, required this.doctorId});
 
   @override
-  State<DoctorList> createState() => _DoctorListState();
+  State<DoctorListSenior> createState() => _DoctorListSeniorState();
 }
 
-class _DoctorListState extends State<DoctorList> {
+class _DoctorListSeniorState extends State<DoctorListSenior> {
   @override
   void initState() {
     super.initState();
@@ -60,92 +62,92 @@ class _DoctorListState extends State<DoctorList> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 50, left: 20,right: 20),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AddDoctor(
-                              token: widget.token,
-                            ),
-                          ));
-                    },
-                    child: Container(
-                      height: 50.h,
-                      width: 110.w,
-                      decoration: BoxDecoration(
-                          color: Colorutils.userdetailcolor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                          child: Text(
-                            "ADD DOCTOR",
-                            style: TextStyle(color: Colors.white, fontSize: 14.h),
-                          )),
-                    ),
-                  ),
-                )
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 50, left: 20,right: 20),
+                //   child: GestureDetector(
+                //     onTap: () {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //             builder: (context) => AddDoctor(
+                //               token: widget.token,
+                //             ),
+                //           ));
+                //     },
+                //     child: Container(
+                //       height: 50.h,
+                //       width: 110.w,
+                //       decoration: BoxDecoration(
+                //           color: Colorutils.userdetailcolor,
+                //           borderRadius: BorderRadius.circular(10)),
+                //       child: Center(
+                //           child: Text(
+                //             "ADD DOCTOR",
+                //             style: TextStyle(color: Colors.white, fontSize: 14.h),
+                //           )),
+                //     ),
+                //   ),
+                // )
               ],
             ),
             SizedBox(
               height: 10.h,
             ),
             // Doctor List View
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Container(
-              height: 50.h,
-              decoration: const BoxDecoration(
-                  border: Border(),
-                  borderRadius: BorderRadius.all(Radius.circular(25))),
-              width: double.infinity,
-              child: TextFormField(
-                autofocus: false,
-                onChanged: (value) {
-                  Get.find<DoctorListController>().SearchDoctorList(value);
-                },
-                validator: (val) => val!.isEmpty ? 'Enter the Topic' : null,
-                cursorColor: Colors.grey,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    hintText: "Search Doctors",
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                          height: 25,
-                          width: 25,
-                          child: SvgPicture.asset(
-                            "assets/images/MagnifyingGlass.svg",
-                            color: Colorutils.userdetailcolor,
-                          )),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 25.0),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(2.0),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                height: 50.h,
+                decoration: const BoxDecoration(
+                    border: Border(),
+                    borderRadius: BorderRadius.all(Radius.circular(25))),
+                width: double.infinity,
+                child: TextFormField(
+                  autofocus: false,
+                  onChanged: (value) {
+                    Get.find<DoctorListController>().SearchDoctorList(value);
+                  },
+                  validator: (val) => val!.isEmpty ? 'Enter the Topic' : null,
+                  cursorColor: Colors.grey,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      hintText: "Search Doctors",
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: SvgPicture.asset(
+                              "assets/images/MagnifyingGlass.svg",
+                              color: Colorutils.userdetailcolor,
+                            )),
                       ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      BorderSide(color: Colorutils.userdetailcolor),
-                      borderRadius:
-                      const BorderRadius.all(Radius.circular(25)),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Colorutils.userdetailcolor, width: 1.0),
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 25.0),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(2.0),
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                        BorderSide(color: Colorutils.userdetailcolor),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(25)),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colorutils.userdetailcolor, width: 1.0),
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true),
+                ),
               ),
             ),
-          ),
 
-          Expanded(
+            Expanded(
               child: GetX<DoctorListController>(
                 builder: (DoctorListController controller) {
 
@@ -216,6 +218,7 @@ class _DoctorListState extends State<DoctorList> {
                                 },
                               ),
                               SizedBox(width: 10,),
+                              (widget.doctorId ==  doctor?.id)?
                               IconButton(
                                 icon: Icon(Icons.arrow_forward_ios, size: 20.w, color: Colors.blueGrey),
                                 onPressed: () {
@@ -233,7 +236,7 @@ class _DoctorListState extends State<DoctorList> {
                                     ),
                                   );
                                 },
-                              ),
+                              ):SizedBox(),
                             ],
                           ),
 

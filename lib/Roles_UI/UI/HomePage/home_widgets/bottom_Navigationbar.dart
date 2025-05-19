@@ -100,6 +100,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:patient/utils/color_util.dart';
 
 import '../../../../Controller/AssignedDoctorPatients_Controller.dart';
+import '../../../../Controller/Doctor_List_Controller.dart';
 import '../../../../Controller/PatientAppointmentDetailsController.dart';
 import '../../../../Controller/Quotes_Controller.dart';
 import '../../../../Controller/ReportPatientController.dart';
@@ -109,6 +110,7 @@ import '../../../PATIENT/UI_PATIENT/Chat_Patient/Chat_PAtient.dart';
 import '../../AppintmentsPage/Appointments.dart';
 
 import '../../Assesment_therapist/Assesment_Page.dart';
+import '../../DoctorListSenior/doctorListSenior.dart';
 import '../../Reports/ReportsList.dart';
 import '../../Shedule_Page/Upcoming_List.dart';
 import '../../Shedule_Page/shedule.dart';
@@ -163,7 +165,8 @@ class _PageIndexNavigationTherapistState
       ),
       ReportsList(
         token: widget.token,
-      )
+      ),
+      DoctorListSenior(token:  widget.token, doctorId: widget.doctorId,)
       // ChatListPage()
     ];
   }
@@ -186,6 +189,8 @@ class _PageIndexNavigationTherapistState
         break;
       case 3:
         Get.find<ReportPatientController>().reportListData(widget.token);
+        break;  case 4:
+      Get.find<DoctorListController>().doctorListData(widget.token);
         break;
     }
   }
@@ -273,6 +278,21 @@ class _PageIndexNavigationTherapistState
                 ),
               ),
               label: 'Reports',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/images/stethoscope.svg",
+                width: 25.w,
+                height: 25.h,
+                color: Colors.grey,
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 4
+                      ? Colorutils.userdetailcolor
+                      : Colors.grey,
+                  BlendMode.srcIn,
+                ),
+              ),
+              label: 'DoctorList',
             ),
           ],
         ),

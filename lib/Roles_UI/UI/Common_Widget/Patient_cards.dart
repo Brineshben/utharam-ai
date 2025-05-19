@@ -16,7 +16,6 @@ class PatientCard extends StatelessWidget {
   final String email;
   final String phone;
   final String sevirity;
-  final String disease;
 
   const PatientCard({
     Key? key,
@@ -26,7 +25,6 @@ class PatientCard extends StatelessWidget {
     required this.name,
     required this.phone,
     required this.sevirity,
-    required this.disease,
   }) : super(key: key);
 
   @override

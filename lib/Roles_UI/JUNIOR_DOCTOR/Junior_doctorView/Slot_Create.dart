@@ -314,8 +314,9 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                                 totime: toTime,
                                 doctorName: widget.drName, token:widget.token);
                           } else {
-                            Get.snackbar(
-                                "Time Missing", "Please select time range");
+                            Get.snackbar('Error', 'Please select time range',
+                                snackPosition: SnackPosition.BOTTOM);
+
                           }
                         },
                         child: Ink(

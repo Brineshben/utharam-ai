@@ -10,6 +10,7 @@ import 'package:patient/utils/color_util.dart';
 
 import '../../../Controller/Doctor_List_Controller.dart';
 import '../../../Controller/SheduleController.dart';
+import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
 import 'Add_Assesment.dart';
 import 'Assesment_List.dart';
 
@@ -51,7 +52,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
             Padding(
               padding: const EdgeInsets.only(top: 50, left: 20),
               child: Text(
-                "Patient LIST",
+                "PATIENT LIST",
                 style: GoogleFonts.shanti(
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.w900,
@@ -122,7 +123,9 @@ class _AssesmentPageState extends State<AssesmentPage> {
                                     ),
                                   ),
                                   Row(
+
                                     children: [
+
                                       // GestureDetector(child: _buildTag("ADD", Colorutils.userdetailcolor),onTap: (){
                                       //   Navigator.push(context, MaterialPageRoute(builder: (context) {
                                       //     return AddAssesment(name: patient?.patientName ??"", patientId: patient?.patientId ??"", sevirity:patient?.aiSummary ??"", id: patient?.patient ??0, token: widget.token,);

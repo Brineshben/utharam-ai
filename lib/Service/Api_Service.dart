@@ -1081,7 +1081,9 @@ class ApiServices {
       print('response: ${response.body}');
       return jsonDecode(response.body);
     } catch (e) {
-      throw Exception('Failed to create slot: $e');
+      Get.snackbar('Error', 'ToTime should be greater than FromTime ',
+          snackPosition: SnackPosition.BOTTOM);
+      // throw Exception('Failed to create slot: $e');
     }
   }
 
