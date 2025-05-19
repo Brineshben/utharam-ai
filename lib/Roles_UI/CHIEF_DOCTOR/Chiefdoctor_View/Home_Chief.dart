@@ -67,13 +67,7 @@ class _HomeScreenChiefState extends State<HomeScreenChief> {
                   const SizedBox(height: 20),
                   GetX<PatientQueueController>(
                     builder: (PatientQueueController controller) {
-                      if (controller.isLoading.value) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Colorutils.userdetailcolor,
-                          ),
-                        );
-                      }
+
                       if(controller.patientList.isEmpty) {
                         return Padding(
                             padding: const EdgeInsets.only(top: 180),

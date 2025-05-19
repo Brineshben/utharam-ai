@@ -68,6 +68,17 @@ class _MedicinelistjuniorState extends State<Medicinelistjunior> {
             ),
             Obx(() {
               final controller = Get.find<ParticularMedicinelistController>();
+              if (controller.particularMedicineList.isEmpty) {
+                return Padding(
+                    padding: const EdgeInsets.only(top: 180),
+                    child: Center(
+                      child: const Text(
+                        "No Medicine Assigned Yet",
+                        style: TextStyle(
+                            color: Colors.red, fontStyle: FontStyle.italic),
+                      ),
+                    ));
+              }else{
               return ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -97,7 +108,7 @@ class _MedicinelistjuniorState extends State<Medicinelistjunior> {
                     );
                   }
                 },
-              );
+              );}
             })
           ]))),
     );

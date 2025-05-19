@@ -9,12 +9,11 @@ import '../../../../Controller/Call_HumanController.dart';
 import '../../../UI/Personal_Chat/Chat_Page.dart';
 
 class TalkToHuman extends StatelessWidget {
-
-
   TalkToHuman({super.key});
+
   Future<void> makePhoneCall(
-      final int number,
-      ) async {
+    final int number,
+  ) async {
     final Uri uri = Uri(scheme: 'tel', path: number.toString());
     if (await canLaunchUrl(uri)) {
       print("Launching: $uri");
@@ -24,6 +23,7 @@ class TalkToHuman extends StatelessWidget {
       throw 'Could not launch $uri';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,67 +55,78 @@ class TalkToHuman extends StatelessWidget {
               ),
             ),
             GetX<CallHumanController>(
-
-              builder: (CallHumanController controller) { return Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.all(0),
-                  itemCount: controller.callHumanList.length,
-                  itemBuilder: (context, index) {
-                    final callHuman = controller.callHumanList[index];
-                    return Column(
-                      children: [
-                        GestureDetector(
-
-                          child: ListTile(
-                            leading:   CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 30.r,
-                      child: CircleAvatar(
-                        radius: 25.r, // Ensure the radius is responsive
-                        backgroundColor: Colors.white,
-                        child: ClipOval(
-                          child: Image.asset(
-                            "assets/images/profile2.jpg",
-                            fit: BoxFit.cover,
-                            // Ensures the image is properly scaled and centered
-                            width: 54.r,
-                            // Double the inner radius to cover full area
-                            height: 54.r,
-                          ),
+              builder: (CallHumanController controller) {
+                if (controller.callHumanList.isEmpty) {
+                  return Padding(
+                      padding: const EdgeInsets.only(top: 180),
+                      child: Center(
+                        child: const Text(
+                          "Oops...No Data Found.",
+                          style: TextStyle(
+                              color: Colors.red, fontStyle: FontStyle.italic),
                         ),
-                      ),
-                    ),
-                            title: Text(
-                              callHuman?.doctorName ?? "",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(callHuman?.doctorRole ?? ""),
-                            trailing: GestureDetector(
-                              child: SvgPicture.asset(
-                                "assets/images/phone-call.svg",
-
-                                width: 25.w,
-                                height: 25.h,
+                      ));
+                } else {
+                  return Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.all(0),
+                      itemCount: controller.callHumanList.length,
+                      itemBuilder: (context, index) {
+                        final callHuman = controller.callHumanList[index];
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 30.r,
+                                  child: CircleAvatar(
+                                    radius: 25.r,
+                                    // Ensure the radius is responsive
+                                    backgroundColor: Colors.white,
+                                    child: ClipOval(
+                                      child: Image.asset(
+                                        "assets/images/profile2.jpg",
+                                        fit: BoxFit.cover,
+                                        // Ensures the image is properly scaled and centered
+                                        width: 54.r,
+                                        // Double the inner radius to cover full area
+                                        height: 54.r,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                title: Text(
+                                  callHuman?.doctorName ?? "",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(callHuman?.doctorRole ?? ""),
+                                trailing: GestureDetector(
+                                  child: SvgPicture.asset(
+                                    "assets/images/phone-call.svg",
+                                    width: 25.w,
+                                    height: 25.h,
+                                  ),
+                                ),
                               ),
-
+                              onTap: () {
+                                print("----------------------calll");
+                                makePhoneCall(callHuman?.callId ?? 0);
+                              },
                             ),
-                          ),
-                          onTap: (){
-                            print("----------------------calll");
-                            makePhoneCall( callHuman?.callId ?? 0);
-                          },
-                        ),
-                        Divider(
-                          thickness: 0.3,
-                          indent: 10, // aligns the divider with the text
-                          endIndent: 10,
-                        ),
-                      ],
-                    );
-                    ;
-                  },
-                ),
-              );},
+                            Divider(
+                              thickness: 0.3,
+                              indent: 10, // aligns the divider with the text
+                              endIndent: 10,
+                            ),
+                          ],
+                        );
+                        ;
+                      },
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),
@@ -123,5 +134,3 @@ class TalkToHuman extends StatelessWidget {
     );
   }
 }
-
-
