@@ -157,10 +157,10 @@ class _HomeScreenJuniorState extends State<HomeScreenJunior> {
 
 
                                     final patientSummary = (patientData?.diagnosis?.isNotEmpty ?? false)
-                                        ? patientData?.diagnosis?.last.aiReport?.patientReport?.patientSummary
+                                        ? patientData?.diagnosis?.first.aiReport?.patientReport?.patientSummary
                                         : 'No diagnosis summary available';
                                     final severity = (patientData?.diagnosis?.isNotEmpty ?? false)
-                                        ? (patientData!.diagnosis!.last.aiReport?.therapistReport?.severity ?? "")
+                                        ? (patientData!.diagnosis!.first.aiReport?.therapistReport?.severity ?? "")
                                         : '---';
 
                                     final url = (patientData?.diagnosis?.isNotEmpty ?? false)

@@ -155,10 +155,10 @@ class _HomeScreenChiefState extends State<HomeScreenChief> {
 
 
                                     final patientSummary = (patientData?.diagnosis?.isNotEmpty ?? false)
-                                        ? patientData?.diagnosis?.last.aiReport?.patientReport?.patientSummary
+                                        ? patientData?.diagnosis?.first.aiReport?.patientReport?.patientSummary
                                         : 'No diagnosis summary available';
                                     final severity = (patientData?.diagnosis?.isNotEmpty ?? false)
-                                        ? (patientData!.diagnosis!.last.aiReport?.therapistReport?.severity ?? "")
+                                        ? (patientData!.diagnosis!.first.aiReport?.therapistReport?.severity ?? "")
                                         : '---';
 
                                     final url = (patientData?.diagnosis?.isNotEmpty ?? false)
@@ -176,7 +176,7 @@ class _HomeScreenChiefState extends State<HomeScreenChief> {
                                           phone: patientData?.mobileNumber ?? " ",
                                           disease: patientData?.chatEnabled ?? false,
                                           severity: severity ?? "No severity info available",
-                                          diagnosissummary: patientSummary ?? "No diagnosis summary available",
+                                          diagnosissummary: patientSummary ?? "No diagnosis summary avaewfewilable",
                                           patientId: patientData?.patientId ?? " ",
                                           token: widget.token,
                                           id: patientData?.id ?? 0, url: url ??  "No File Generated yet " ,

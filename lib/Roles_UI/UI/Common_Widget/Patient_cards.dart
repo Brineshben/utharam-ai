@@ -195,7 +195,7 @@ class AiReport extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 10, right: 10, top: 3, bottom: 3),
                       child: Text(
-                        "VIEW FULL REPORT",
+                        "VIEW PRELIMINARY REPORT",
                         style: GoogleFonts.nunito(
                           color: Colors.white,
                           // Ensure ColorUtils is defined or use a custom color.
