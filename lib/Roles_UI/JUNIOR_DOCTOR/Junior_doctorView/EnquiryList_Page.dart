@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Controller/Doctor_List_Controller.dart';
 import '../../../Controller/EnquiredListController.dart';
+import '../../../Controller/JuniorDashoard_Controller.dart';
 import '../../../Service/Api_Service.dart';
 import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
 import '../../UI/Common_Widget/popups.dart';
@@ -317,7 +318,9 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                                           iconData: Icons.done,
                                           iconColor: Colorutils.userdetailcolor,
                                         );
-                                        Get.find<EnquiredListController>().enquiryListData(widget.token);
+                                        await Get.find<EnquiredListController>().enquiryListData(widget.token);
+                                        await Get.find<JuniorDashboardController>().juniorData(widget.token);
+
                                       } else {
                                         ProductAppPopUps.submit(
                                           title: "Failed",

@@ -8,7 +8,9 @@ class ProfileSettingsPage extends StatefulWidget {
   final String name;
   final String role;
 
-  const ProfileSettingsPage({super.key, required this.name, required this.role});
+  const ProfileSettingsPage(
+      {super.key, required this.name, required this.role});
+
   @override
   _ProfileSettingsPageState createState() => _ProfileSettingsPageState();
 }
@@ -59,7 +61,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   ],
                 ),
               ),
-              buildProfileCard(widget.name,widget.role),
+              buildProfileCard(widget.name, widget.role),
               SizedBox(height: 12),
               Wrap(
                 spacing: 12,
@@ -89,7 +91,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                         Radio<String>(
                           value: 'light',
                           groupValue: appearance,
-                          activeColor: Colorutils.userdetailcolor ,
+                          activeColor: Colorutils.userdetailcolor,
                           onChanged: (value) {
                             setState(() => appearance = value!);
                           },
@@ -103,7 +105,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                         SizedBox(width: 10),
                         Radio<String>(
                           value: 'small',
-                          activeColor: Colorutils.userdetailcolor ,
+                          activeColor: Colorutils.userdetailcolor,
                           groupValue: fontSize,
                           onChanged: (value) {
                             setState(() => fontSize = value!);
@@ -111,7 +113,8 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                         ),
                         Text("Small"),
                         Radio<String>(
-                          value: 'large', activeColor: Colorutils.userdetailcolor ,
+                          value: 'large',
+                          activeColor: Colorutils.userdetailcolor,
                           groupValue: fontSize,
                           onChanged: (value) {
                             setState(() => fontSize = value!);
@@ -127,7 +130,11 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   // ]),
                 ],
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 5),
+              NameCard(
+                name: "ADD TALK TO HUMAN",
+              )
+
               // ElevatedButton(
               //   onPressed: () {},
               //   child: Text('Save Changes',style: TextStyle(
@@ -146,10 +153,9 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   }
 
   Widget buildProfileCard(
-      final String name,
-      final String role,
-
-      ) {
+    final String name,
+    final String role,
+  ) {
     return Card(
       color: Colors.white,
       margin: EdgeInsets.symmetric(vertical: 5),
@@ -161,10 +167,10 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     CircleAvatar(
                       backgroundColor: Colors.white,
                       child: ClipOval(
@@ -213,23 +219,30 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                       children: [
                         Text("Notifications",
                             style: TextStyle(
-                                fontSize: 14, color: Colors.blueGrey)),                        Row(
+                                fontSize: 14, color: Colors.blueGrey)),
+                        Row(
                           children: [
                             Checkbox(
-                                value: email,checkColor:Colors.white,activeColor: Colorutils.userdetailcolor ,
-                                onChanged: (val) => setState(() => email = val!)),
-                            Text("Email", style: TextStyle(
-                                fontSize: 12, color: Colors.blueGrey)),
+                                value: email,
+                                checkColor: Colors.white,
+                                activeColor: Colorutils.userdetailcolor,
+                                onChanged: (val) =>
+                                    setState(() => email = val!)),
+                            Text("Email",
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.blueGrey)),
                             Checkbox(
-                                value: sms,checkColor:Colors.white,activeColor: Colorutils.userdetailcolor ,
+                                value: sms,
+                                checkColor: Colors.white,
+                                activeColor: Colorutils.userdetailcolor,
                                 onChanged: (val) => setState(() => sms = val!)),
-                            Text("SMS", style: TextStyle(
-                                fontSize: 12, color: Colors.blueGrey)),
+                            Text("SMS",
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.blueGrey)),
                           ],
                         )
                       ],
                     ),
-
                   ],
                 ),
               ],
@@ -252,7 +265,9 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blueGrey)),
+              Text(title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.blueGrey)),
               SizedBox(height: 8),
               ...content,
             ],
@@ -265,11 +280,54 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   Widget buildCheckbox(String label, bool value, Function(bool?)? onChanged) {
     return Row(
       children: [
-        Checkbox(value: value, onChanged: onChanged,checkColor:Colors.white,activeColor: Colorutils.userdetailcolor ,),
-        Expanded(child: Text(label,style: TextStyle(
-          color: Colors.blueGrey
-        ),)),
+        Checkbox(
+          value: value,
+          onChanged: onChanged,
+          checkColor: Colors.white,
+          activeColor: Colorutils.userdetailcolor,
+        ),
+        Expanded(
+            child: Text(
+          label,
+          style: TextStyle(color: Colors.blueGrey),
+        )),
       ],
+    );
+  }
+}
+
+class NameCard extends StatelessWidget {
+  final String name;
+
+  const NameCard({Key? key, required this.name}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(1),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween
+            ,
+            children: [
+              Text(
+                name,
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              ),
+              Icon(Icons.arrow_back_ios,color:Colors.blueGrey,)
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -60,24 +60,28 @@ class UserDetails extends StatelessWidget {
                   SizedBox(width: 12.w),
 
                   CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 30.r,
-                    child: CircleAvatar(
-                      radius: 29.r, // Ensure the radius is responsive
-                      backgroundColor: Colors.white,
-                      child: ClipOval(
-                        child: Image.asset(
-                          image,
-                          fit: BoxFit.cover,
-                          // Ensures the image is properly scaled and centered
-                          width: 54.r,
-                          // Double the inner radius to cover full area
-                          height: 54.r,
-                        ),
-                      ),
+                    radius: 29.r, // Ensure the radius is responsive
+                    backgroundColor: Colors.transparent,
+                    child: Lottie.asset(
+                      "assets/images/Splash ScreenLQ.json",
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
-                  SizedBox(width: 4.w),
+                  // CircleAvatar(
+                  //   radius: 29.r, // Ensure the radius is responsive
+                  //   backgroundColor: Colors.transparent,
+                  //   child: ClipOval(
+                  //     child: Image.asset(
+                  //       "assets/images/Utaram3d_Logo.png",
+                  //       fit: BoxFit.cover,
+                  //       // Ensures the image is properly scaled and centered
+                  //       width: 54.r,
+                  //       // Double the inner radius to cover full area
+                  //       height: 54.r,
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(width: 5.w),
 
                   Expanded(
                     child: Column(

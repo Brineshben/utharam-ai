@@ -12,7 +12,7 @@ class TalkToHuman extends StatelessWidget {
   TalkToHuman({super.key});
 
   Future<void> makePhoneCall(
-    final int number,
+    final String number,
   ) async {
     final Uri uri = Uri(scheme: 'tel', path: number.toString());
     if (await canLaunchUrl(uri)) {
@@ -97,10 +97,10 @@ class TalkToHuman extends StatelessWidget {
                                   ),
                                 ),
                                 title: Text(
-                                  callHuman?.doctorName ?? "",
+                                  callHuman?.name ?? "",
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                subtitle: Text(callHuman?.doctorRole ?? ""),
+                                subtitle: Text(callHuman?.role ?? ""),
                                 trailing: GestureDetector(
                                   child: SvgPicture.asset(
                                     "assets/images/phone-call.svg",
@@ -111,7 +111,7 @@ class TalkToHuman extends StatelessWidget {
                               ),
                               onTap: () {
                                 print("----------------------calll");
-                                makePhoneCall(callHuman?.callId ?? 0);
+                                makePhoneCall(callHuman?.mobileNumber ?? "");
                               },
                             ),
                             Divider(

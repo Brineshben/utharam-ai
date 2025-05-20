@@ -193,7 +193,7 @@ class _ReportsListState extends State<ReportsList> {
                                 onPressed: () {
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
-                                      return ReportsDetails(token:widget.token, id: report?.patientDetails?.id ?? 0,);
+                                      return ReportsDetails(token:widget.token, id: report?.patientDetails?.id ?? 0, name: report?.patientDetails?.name ?? "",);
                                     },
                                   ));
                                 },

@@ -13,10 +13,11 @@ import '../Common_Widget/pdfview.dart';
 
 class ReportsDetails extends StatefulWidget {
   final String token;
+  final String name;
 
   final int id;
 
-  const ReportsDetails({super.key, required this.token, required this.id});
+  const ReportsDetails({super.key, required this.token, required this.id, required this.name});
 
   @override
   State<ReportsDetails> createState() => _ReportsDetailsState();
@@ -130,7 +131,7 @@ class _ReportsDetailsState extends State<ReportsDetails> {
                   summary:
                       preliminarySummary ?? "No diagnosis summary available",
                   details: "details",
-                  repoturl: preliminarySummaryUrl ?? "",
+                  repoturl: preliminarySummaryUrl ?? "", name: widget.name,
                 ),
 
                 Padding(
@@ -154,7 +155,7 @@ class _ReportsDetailsState extends State<ReportsDetails> {
                   summary: SecondaryDiagnosesDataSummary ??
                       "No diagnosis summary available",
                   details: "details",
-                  repoturl: SecondaryDiagnosesDataSummaryUrl ?? "",
+                  repoturl: SecondaryDiagnosesDataSummaryUrl ?? "", name: widget.name,
                 ),
 
                 Padding(
@@ -178,7 +179,7 @@ class _ReportsDetailsState extends State<ReportsDetails> {
                   summary: GeneralChatsDataSummary ??
                       "No diagnosis summary available",
                   details: "details",
-                  repoturl: GeneralChatsDataSummaryUrl ?? "",
+                  repoturl: GeneralChatsDataSummaryUrl ?? "", name: widget.name,
                 ),
               ],
             );
@@ -191,6 +192,7 @@ class _ReportsDetailsState extends State<ReportsDetails> {
 
 class AiReport extends StatelessWidget {
   final String summary;
+  final String name;
   final String repoturl;
   final String details;
 
@@ -198,7 +200,7 @@ class AiReport extends StatelessWidget {
     Key? key,
     required this.summary,
     required this.details,
-    required this.repoturl,
+    required this.repoturl, required this.name,
   }) : super(key: key);
 
   @override
@@ -248,7 +250,7 @@ class AiReport extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () async {
-                      await downloadPdfToDownloads(repoturl);
+                      await downloadPdfToDownloads(repoturl,name);
                     },
                     icon: Icon(Icons.download),
                   ),

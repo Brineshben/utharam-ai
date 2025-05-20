@@ -956,7 +956,7 @@ class ApiServices {
     print("Talk to human List---$url");
 
     try {
-      var request = http.Request('POST', Uri.parse(url));
+      var request = http.Request('GET', Uri.parse(url));
       request.headers.addAll(
         {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
       );

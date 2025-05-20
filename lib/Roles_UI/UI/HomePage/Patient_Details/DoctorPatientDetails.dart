@@ -13,6 +13,7 @@ import '../../../../Controller/Medicine_Controller/Brand_Controller.dart';
 import '../../../../Controller/Medicine_Controller/FrequencyController.dart';
 import '../../../../Controller/Medicine_Controller/Medicine_Controller.dart';
 import '../../../../Controller/Medicine_Controller/Particular_medicineList_Controller.dart';
+import '../../../../Controller/SeniorDashboardController.dart';
 import '../../../../Service/Api_Service.dart';
 import '../../../../utils/color_util.dart';
 import '../../Common_Widget/DateFormat.dart';
@@ -143,7 +144,6 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                     name: widget.name,
                     phone: widget.phone,
                     sevirity: widget.severity,
-                    disease: widget.disease,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -163,7 +163,7 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                     ),
                   ),
                   AiReport(
-                      summary: widget.diagnosissummary, details: "details", repoturl: widget.url,),
+                      summary: widget.diagnosissummary, details: "details", repoturl: widget.url, name:widget.name,),
                   Padding(
                     padding:
                         EdgeInsets.only(top: 10.h, left: 20.w, right: 10.w),
@@ -353,6 +353,8 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                               context.loaderOverlay.hide();
 
                               if (resp['status'] == "ok") {
+                                await Get.find<SeniorDashboardController>().SeniorDashboardData(widget.token);
+
                                 ProductAppPopUps.submit2Back(
                                   title: "Success",
                                   message: resp['message'],
@@ -418,7 +420,7 @@ class PatientCard extends StatelessWidget {
   final String email;
   final String phone;
   final String sevirity;
-  final String disease;
+
 
   const PatientCard({
     Key? key,
@@ -428,7 +430,7 @@ class PatientCard extends StatelessWidget {
     required this.name,
     required this.phone,
     required this.sevirity,
-    required this.disease,
+
   }) : super(key: key);
 
   @override
@@ -457,7 +459,6 @@ class PatientCard extends StatelessWidget {
             _buildTitle('Age :', age.toString()),
             _buildTitle('Email :', email),
             _buildTitle('Phone :', phone),
-            _buildTitle('Disease :', disease),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -515,13 +516,14 @@ class PatientCard extends StatelessWidget {
 
 class AiReport extends StatelessWidget {
   final String summary;
+  final String name;
   final String repoturl;
   final String details;
 
   const AiReport({
     Key? key,
     required this.summary,
-    required this.details, required this.repoturl,
+    required this.details, required this.repoturl, required this.name,
   }) : super(key: key);
 
   @override
@@ -571,7 +573,7 @@ class AiReport extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      downloadPdfToDownloads(repoturl)  ;               },
+                      downloadPdfToDownloads(repoturl,name)  ;               },
                     icon: Icon(Icons.download),
                   ),
                   SizedBox(

@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import '../../../Controller/Consult_Doctor_Controller.dart';
 import '../../../Controller/DoctorToPatientController.dart';
 import '../../../Controller/EnquiredListController.dart';
+import '../../../Controller/JuniorDashoard_Controller.dart';
 import '../../../Controller/Patient_queue_Controller.dart';
 import '../../../Controller/Slottopateient_Controller.dart';
 import '../../../Model/Consult_Doctor_Model.dart';
@@ -368,7 +369,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                 AiReport(
                   summary: widget.diagnosissummary,
                   details: "details",
-                  repoturl: widget.url,
+                  repoturl: widget.url, name: widget.name,
                 ),
                 widget.disease==false?
                 Padding(
@@ -733,8 +734,10 @@ class _PatientDetailsState extends State<PatientDetails> {
                             await Get.find<DoctorToPatientController>()
                                 .doctorToPatientData(
                                     widget.token, data?.id ?? 0, widget.id);
-                            Get.find<PatientQueueController>()
+                            await Get.find<PatientQueueController>()
                                 .patientData(widget.token);
+                            await Get.find<JuniorDashboardController>().juniorData(widget.token);
+
                             // Navigator.of(context).pop();
                             ProductAppPopUps.submit2Back(
                               title: "Success",

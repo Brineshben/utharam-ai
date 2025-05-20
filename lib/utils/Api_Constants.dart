@@ -45,7 +45,7 @@ class ApiConstants {
   static String enquiredList = "/accounts/unverified-users/";
   static String approveEnquiredList = "/accounts/approve-user/";
   static String rejectEnquiredList = "/accounts/approve-user/";
-  static String talkToHuman = "/call_doctors/get_assigned_doctors/";
+  static String talkToHuman = "/accounts/available-doctors/";
   static String generateReport = "/accounts/generate_pdf/";
   static String addAddon = "/doctor_observations/preliminary-addons/create/";
   static String patientDetails = "/accounts/user/detail/";
@@ -54,4 +54,5 @@ class ApiConstants {
   static String reportPatientList = "/senior_function/assigned/patient/list/";
   static String multipleReports = "/senior_function/assigned/patient/diagnosis/list/";
   static String patientAppointmentdata = "/appointment/appointment/list/";
+  static String addHumantalk = "/accounts/available-doctors/";
 }

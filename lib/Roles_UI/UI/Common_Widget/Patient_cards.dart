@@ -110,13 +110,14 @@ class PatientCard extends StatelessWidget {
 
 class AiReport extends StatelessWidget {
   final String summary;
+  final String name;
   final String repoturl;
   final String details;
 
   const AiReport({
     Key? key,
     required this.summary,
-    required this.details, required this.repoturl,
+    required this.details, required this.repoturl, required this.name,
   }) : super(key: key);
 
   @override
@@ -166,7 +167,7 @@ class AiReport extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: ()async {
-                   await downloadPdfToDownloads(repoturl)  ;               },
+                   await downloadPdfToDownloads(repoturl,name)  ;               },
                   icon: Icon(Icons.download),
                 ),
                 SizedBox(
