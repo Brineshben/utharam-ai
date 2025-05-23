@@ -393,7 +393,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                         onChanged: (value) {
                           toggleSwitch(value, widget.id);
                         },
-                        activeColor: Colorutils.userdetailcolor,
+inactiveTrackColor:Colors.grey.withOpacity(0.2) ,                        activeColor: Colorutils.userdetailcolor,
                         inactiveThumbColor: Colors.grey,
                       )
                     ],

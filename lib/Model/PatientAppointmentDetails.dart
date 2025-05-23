@@ -33,6 +33,7 @@ class Data {
   PatientDetails? patientDetails;
   SlotDetails? slotDetails;
   String? date;
+  bool? consulted;
   int? doctor;
   int? patient;
   int? slot;
@@ -43,6 +44,7 @@ class Data {
         this.patientDetails,
         this.slotDetails,
         this.date,
+        this.consulted,
         this.doctor,
         this.patient,
         this.slot});
@@ -59,6 +61,7 @@ class Data {
         ? new SlotDetails.fromJson(json['slot_details'])
         : null;
     date = json['date'];
+    consulted = json['consulted'];
     doctor = json['doctor'];
     patient = json['patient'];
     slot = json['slot'];
@@ -77,6 +80,7 @@ class Data {
       data['slot_details'] = this.slotDetails!.toJson();
     }
     data['date'] = this.date;
+    data['consulted'] = this.consulted;
     data['doctor'] = this.doctor;
     data['patient'] = this.patient;
     data['slot'] = this.slot;
@@ -89,14 +93,16 @@ class DoctorDetails {
   String? name;
   String? email;
   String? mobileNumber;
+  String? role;
 
-  DoctorDetails({this.id, this.name, this.email, this.mobileNumber});
+  DoctorDetails({this.id, this.name, this.email, this.mobileNumber, this.role});
 
   DoctorDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];
     mobileNumber = json['mobile_number'];
+    role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
@@ -105,6 +111,7 @@ class DoctorDetails {
     data['name'] = this.name;
     data['email'] = this.email;
     data['mobile_number'] = this.mobileNumber;
+    data['role'] = this.role;
     return data;
   }
 }

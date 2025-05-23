@@ -249,7 +249,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 .value
                                                 ?.data
                                                 ?.registeredDate != null
-                                                ? DateFormat('dd_MM_yyyy').format(
+                                                ? DateFormat('dd-MM-yyyy').format(
                                                 DateTime.parse(Get.find<UserAuthController>()
                                                     .loginData
                                                     .value!

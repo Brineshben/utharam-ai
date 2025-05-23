@@ -27,3 +27,15 @@ String getSeverityLevel(String value) {
       return '----'; // for unexpected string values
   }
 }
+String convertDateFormat(String date) {
+  try {
+    final parts = date.split('-');
+    if (parts.length != 3) return 'Invalid date format';
+    final yyyy = parts[0];
+    final mm = parts[1];
+    final dd = parts[2];
+    return '$dd-$mm-$yyyy';
+  } catch (e) {
+    return 'Error: ${e.toString()}';
+  }
+}

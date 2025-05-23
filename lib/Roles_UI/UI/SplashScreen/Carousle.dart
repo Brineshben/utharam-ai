@@ -56,7 +56,7 @@ class _CarouseWidgetState extends State<CarouseWidget> {
             ),
           ),
         ),
-        SizedBox(height: 20.h),
+        SizedBox(height: 5.h),
         Obx(
               () => AnimatedSmoothIndicator(
             activeIndex: currentIndex.value,

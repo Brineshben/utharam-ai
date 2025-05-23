@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
+import '../../Controller/AddTalktoHumanController.dart';
 import '../../Controller/Doctor_List_Controller.dart';
 import '../../Controller/JuniorDashoard_Controller.dart';
 import '../../Controller/PatientAppointmentDetailsController.dart';
@@ -44,6 +45,8 @@ class _PageIndexNavigationChiefState extends State<PageIndexNavigationChief> wit
     Get.find<ScheduleController>().scheduleDataz(widget.token);
     Get.find<QuotesController>().QuotesData(widget.token);
     Get.find<JuniorDashboardController>().juniorData(widget.token);
+    Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
+
     Get.find<DoctorListController>().doctorListData(widget.token);
 
     _screens = [

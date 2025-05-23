@@ -349,7 +349,7 @@ class PatientsList extends StatelessWidget {
                           id: controller.assignedDoctorPatientList[index]?.patient?.id ?? 0,
                           role: role,
                           doctorID: doctorID,
-                          url: urlreport ?? "", diagnosisID:id?? 0,
+                          url: urlreport ?? "", diagnosisID:id?? 0, assignedId: controller.assignedDoctorPatientList[index]?.id ?? 0,
                         );
                       },
                     ));
@@ -446,6 +446,7 @@ class PatientsList extends StatelessWidget {
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
                                       return DoctorsPatientDetails(
+                                        assignedId: controller.assignedDoctorPatientList[index]?.id ?? 0,
                                         name: controller.assignedDoctorPatientList[index]?.patient?.name ?? "",
                                         age: controller.assignedDoctorPatientList[index]?.patient?.age ?? 0,
                                         gender: controller.assignedDoctorPatientList[index]?.patient?.gender ?? "",

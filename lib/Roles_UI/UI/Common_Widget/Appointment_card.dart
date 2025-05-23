@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/color_util.dart';
+import 'DateFormat.dart';
 
 class AppointmentCard2 extends StatelessWidget {
   final String name;
@@ -40,7 +41,7 @@ class AppointmentCard2 extends StatelessWidget {
                 const Icon(Icons.access_time, color: Colors.blueGrey, size: 20),
                 const SizedBox(width: 8),
                  Text(
-                  "${date} [ $fromDate - $toDate ]",
+                  "${convertDateFormat(date)} [ $fromDate - $toDate ]",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black87,

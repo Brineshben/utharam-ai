@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:patient/utils/color_util.dart';
 
+import 'addTalktoHuman.dart';
+
 class ProfileSettingsPage extends StatefulWidget {
   final String name;
   final String role;
@@ -62,7 +64,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 ),
               ),
               buildProfileCard(widget.name, widget.role),
-              SizedBox(height: 12),
+              SizedBox(height: 5),
               Wrap(
                 spacing: 12,
                 runSpacing: 12,
@@ -131,8 +133,15 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 ],
               ),
               SizedBox(height: 5),
-              NameCard(
-                name: "ADD TALK TO HUMAN",
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AddTalkToHuman();
+                  },));
+                },
+                child: NameCard(
+                  name: "ADD TALK TO HUMAN",
+                ),
               )
 
               // ElevatedButton(
@@ -184,7 +193,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                     ),
                   ],
                 ),
-                SizedBox(width: 16),
+                SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -305,7 +314,7 @@ class NameCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(1),
-      elevation: 2,
+      elevation: 1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
         width: double.infinity,
@@ -323,7 +332,7 @@ class NameCard extends StatelessWidget {
                 name,
                 style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
               ),
-              Icon(Icons.arrow_back_ios,color:Colors.blueGrey,)
+              Icon(Icons.arrow_forward_ios,color:Colors.blueGrey,)
             ],
           ),
         ),

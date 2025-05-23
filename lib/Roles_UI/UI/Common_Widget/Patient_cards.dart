@@ -51,8 +51,8 @@ class PatientCard extends StatelessWidget {
             _buildTitle('Name :', name),
             _buildTitle('Patient ID :', patientId),
             _buildTitle('Age :', age.toString()),
-            _buildTitle('Email :', email),
-            _buildTitle('Phone :', phone),
+            // _buildTitle('Email :', email),
+            // _buildTitle('Phone :', phone),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

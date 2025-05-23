@@ -183,7 +183,7 @@ class _SplashState extends State<Splash> {
                               ),
                             ),
 
-                            SizedBox(height: 10.h),
+                            SizedBox(height: 2.h),
 
                             CarouseWidget(carouselItems: items),
 
@@ -324,7 +324,7 @@ class _SplashState extends State<Splash> {
                             //   ),
                             // ),
                             SizedBox(
-                              height: 150,
+                              height: 40,
                             ),
                             Center(
                               child: Text(

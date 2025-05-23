@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 
 import 'package:loader_overlay/loader_overlay.dart';
 
+import '../../../../Controller/AssignedDoctorPatients_Controller.dart';
 import '../../../../Controller/Medicine_Controller/Brand_Controller.dart';
 import '../../../../Controller/Medicine_Controller/FrequencyController.dart';
 import '../../../../Controller/Medicine_Controller/Medicine_Controller.dart';
@@ -31,6 +32,7 @@ class DoctorsPatientDetails extends StatefulWidget {
   final String token;
   final String patientId;
   final int id;
+  final int assignedId;
   final int age;
   final int doctorID;
   final int diagnosisID;
@@ -55,7 +57,7 @@ class DoctorsPatientDetails extends StatefulWidget {
       required this.token,
       required this.id,
       required this.role,
-      required this.doctorID, required this.url, required this.diagnosisID})
+      required this.doctorID, required this.url, required this.diagnosisID, required this.assignedId})
       : super(key: key);
 
   @override
@@ -349,12 +351,13 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                                       token: widget.token,
                                       observation: _observationController.text,
                                       patientId: widget.id,
-                                      doctorId: widget.doctorID, diagnosis: widget.diagnosisID);
+                                      doctorId: widget.doctorID, diagnosis: widget.diagnosisID, assignedId: widget.assignedId);
                               context.loaderOverlay.hide();
 
                               if (resp['status'] == "ok") {
                                 await Get.find<SeniorDashboardController>().SeniorDashboardData(widget.token);
-
+                                await Get.find<AssignedDoctorToPatientController>()
+                                    .assignedDoctorPatientData(widget.token, widget.doctorID);
                                 ProductAppPopUps.submit2Back(
                                   title: "Success",
                                   message: resp['message'],

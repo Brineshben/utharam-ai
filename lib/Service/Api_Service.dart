@@ -445,6 +445,7 @@ class ApiServices {
     required int patientId,
     required int diagnosis,
     required int doctorId,
+    required int assignedId,
   }) async {
     String url = "${ApiConstants.baseURL}${ApiConstants.addObservation}";
     print('URL---->${url}');
@@ -453,6 +454,7 @@ class ApiServices {
       "patient": patientId,
       "observations": observation,
       "diagnosis":diagnosis,
+      "assigned":assignedId,
 
     };
     try {
@@ -953,6 +955,29 @@ class ApiServices {
     required String token,
   }) async {
     String url = "${ApiConstants.baseURL}${ApiConstants.talkToHuman}";
+    print("Talk to human List---$url");
+
+    try {
+      var request = http.Request('GET', Uri.parse(url));
+      request.headers.addAll(
+        {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
+      );
+
+      http.StreamedResponse response = await request.send();
+      print('Enquiry---->${response.statusCode}');
+
+      var respString = await response.stream.bytesToString();
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
+
+  ///Add Talk to human List
+  static Future<Map<String, dynamic>> AddtalkToHuman({
+    required String token,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.addHumanTalk}";
     print("Talk to human List---$url");
 
     try {

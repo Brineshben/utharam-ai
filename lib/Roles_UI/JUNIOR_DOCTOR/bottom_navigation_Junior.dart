@@ -9,6 +9,7 @@ import '../../Controller/Patient_queue_Controller.dart';
 import '../../Controller/Quotes_Controller.dart';
 import '../../Controller/SheduleController.dart';
 import '../../utils/color_util.dart';
+import '../UI/Assesment_therapist/Assesment_Page.dart';
 import '../UI/Shedule_Page/Upcoming_List.dart';
 import '../UI/Shedule_Page/shedule.dart';
 import 'Junior_doctorView/Doctor_List.dart';
@@ -55,7 +56,10 @@ class _PageIndexNavigationJuniorState extends State<PageIndexNavigationJunior> {
         token: widget.token, doctorID: widget.doctorId,
       ),
       PatientExpandableCardList(token:widget.token,),
-      DoctorList(token: widget.token)
+      DoctorList(token: widget.token),
+      AssesmentPage(
+        token: widget.token,
+      ),
     ];
   }
 
@@ -147,6 +151,21 @@ class _PageIndexNavigationJuniorState extends State<PageIndexNavigationJunior> {
                 ),
               ),
               label: 'DoctorList',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/images/memo-pad.svg",
+                width: 25.w,
+                height: 25.h,
+                color: Colors.grey,
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 3
+                      ? Colorutils.userdetailcolor
+                      : Colors.grey,
+                  BlendMode.srcIn,
+                ),
+              ),
+              label: 'Assessments',
             ),
           ],
         ),

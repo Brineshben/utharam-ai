@@ -624,7 +624,7 @@ class _ChatScreen2State extends State<ChatScreen2> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'MetroMind Bot',
+                                'MetroMind AI',
                                 style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,

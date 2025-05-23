@@ -132,82 +132,92 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                     ],
                   ),
                 ),
-                Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(
-                      color: Colorutils.userdetailcolor,
-                      width: 0.3,
+                SizedBox(
+                  width: double.infinity,
+                  child: Card(
+
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: BorderSide(
+                        color: Colorutils.userdetailcolor,
+                        width: 0.3,
+                      ),
                     ),
-                  ),
-                  elevation: 2,
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: GetX<PatientdetailsController>(
-                      builder: (controller) {
-                        final diagnosisList = controller
-                            .PatientDetailsData.value?.user?.diagnosis;
+                    elevation: 2,
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: GetX<PatientdetailsController>(
+                        builder: (controller) {
+                          final diagnosisList = controller
+                              .PatientDetailsData.value?.user?.diagnosis;
 
-                        final hasDiagnosis = diagnosisList?.isNotEmpty ?? false;
-                        final firstDiagnosis =
-                            hasDiagnosis ? diagnosisList!.last : null;
+                          final hasDiagnosis = diagnosisList?.isNotEmpty ?? false;
+                          final firstDiagnosis =
+                              hasDiagnosis ? diagnosisList!.last : null;
 
-                        final urlReport = firstDiagnosis?.aiPatientSummaryFile ?? "";
-                        final isApproved = firstDiagnosis?.isApproved ?? false;
+                          final urlReport = firstDiagnosis?.aiPatientSummaryFile ?? "";
+                          final isApproved = firstDiagnosis?.isApproved ?? false;
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildTitle('PATIENT NAME: ', widget.name),
-                            _buildTitle('PATIENT ID: ', widget.patientId),
-                            _buildTitle('ENQUIRY DATE: ', widget.date),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    if (urlReport.isNotEmpty) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              FullScreenPdfViewer(
-                                            pdfUrl: urlReport,
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildTitle('NAME: ', widget.name),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  _buildTitle('ID: ', widget.patientId),
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (urlReport.isNotEmpty) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FullScreenPdfViewer(
+                                                  pdfUrl: urlReport,
+                                                ),
                                           ),
-                                        ),
-                                      );
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                            content:
-                                                Text("No AI report available")),
-                                      );
-                                    }
-                                  },
-                                  child: _buildTag("View AI Report",
-                                      Colorutils.userdetailcolor),
-                                ),
-                                const SizedBox(width: 6),
-                                _buildTag(
-                                  hasDiagnosis
-                                      ? (isApproved
-                                          ? "IS APPROVED"
-                                          : "ON PROGRESS")
-                                      : "NO DIAGNOSIS",
-                                  hasDiagnosis
-                                      ? (isApproved ? Colors.green : Colors.red)
-                                      : Colors.grey,
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
-                      },
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content:
+                                              Text("No AI report available")),
+                                        );
+                                      }
+                                    },
+                                    child: _buildTag("View AI Report",
+                                        Colorutils.userdetailcolor),
+                                  ),
+                                ],
+                              ),
+                              _buildTitle('DATE: ', widget.date),
+                              const SizedBox(height: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+
+                                  const SizedBox(height: 10),
+                                  _buildTag(
+                                    hasDiagnosis
+                                        ? (isApproved
+                                            ? "Your enquiry has been approved by our therapist. Please make a call to proceed."
+                                            :"Your enquiry is being reviewed by our therapist. Please wait.")
+                                        : "NO DIAGNOSIS",
+                                    hasDiagnosis
+                                        ? (isApproved ? Colors.green : Colors.red)
+                                        : Colors.grey,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -221,7 +231,7 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                     final lastAppointment = controller.patientAppointmentListList.last;
                     final name = lastAppointment?.doctorDetails?.name ?? 'No Name';
                     final date = lastAppointment?.slotDetails?.date ?? 'No Date';
-                    final role = lastAppointment?.slotDetails?.date ?? 'No Date';
+                    final role = lastAppointment?.doctorDetails?.role?? 'No Role';
                     final fromDate = lastAppointment?.slotDetails?.fromTime ?? 'No From Time';
                     final toDate = lastAppointment?.slotDetails?.toTime ?? 'No To Time';
 
@@ -335,15 +345,15 @@ Widget _buildTitle(String title, String value) {
     padding: const EdgeInsets.only(bottom: 10),
     child: RichText(
       text: TextSpan(
-        style: TextStyle(fontSize: 14.h, color: Colors.blueGrey),
+        style: TextStyle(fontSize: 12.h, color: Colors.blueGrey),
         children: [
           TextSpan(
             text: '$title ',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.h),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.h),
           ),
           TextSpan(
-              text: value,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.h)),
+              text: value.toUpperCase(),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.h)),
         ],
       ),
     ),
