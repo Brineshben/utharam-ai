@@ -9,9 +9,10 @@ import 'addTalktoHuman.dart';
 class ProfileSettingsPage extends StatefulWidget {
   final String name;
   final String role;
+  final String token;
 
   const ProfileSettingsPage(
-      {super.key, required this.name, required this.role});
+      {super.key, required this.name, required this.role, required this.token});
 
   @override
   _ProfileSettingsPageState createState() => _ProfileSettingsPageState();
@@ -63,80 +64,80 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   ],
                 ),
               ),
-              buildProfileCard(widget.name, widget.role),
-              SizedBox(height: 5),
-              Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                children: [
-                  // buildCard('Data Access Control', [
-                  //   Text("Assigned Patients"),
-                  //   Text("View All Records"),
-                  // ]),
-                  // buildCard('AI Preferences', [
-                  //   buildCheckbox("Show AI suggestions", showSuggestions, (v) {
-                  //     setState(() => showSuggestions = v!);
-                  //   }),
-                  //   buildCheckbox("Confidence Scores", showConfidence, (v) {
-                  //     setState(() => showConfidence = v!);
-                  //   }),
-                  //   buildCheckbox("Diagnostic probabilities", showProbabilities,
-                  //       (v) {
-                  //     setState(() => showProbabilities = v!);
-                  //   }),
-                  // ]),
-                  buildCard('Interface Settings', [
-                    Row(
-                      children: [
-                        Text("Appearance"),
-                        SizedBox(width: 10),
-                        Radio<String>(
-                          value: 'light',
-                          groupValue: appearance,
-                          activeColor: Colorutils.userdetailcolor,
-                          onChanged: (value) {
-                            setState(() => appearance = value!);
-                          },
-                        ),
-                        Text("Light"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text("Font Size"),
-                        SizedBox(width: 10),
-                        Radio<String>(
-                          value: 'small',
-                          activeColor: Colorutils.userdetailcolor,
-                          groupValue: fontSize,
-                          onChanged: (value) {
-                            setState(() => fontSize = value!);
-                          },
-                        ),
-                        Text("Small"),
-                        Radio<String>(
-                          value: 'large',
-                          activeColor: Colorutils.userdetailcolor,
-                          groupValue: fontSize,
-                          onChanged: (value) {
-                            setState(() => fontSize = value!);
-                          },
-                        ),
-                        Text("Large"),
-                      ],
-                    ),
-                  ]),
-                  // buildCard('Legal & Compliance', [
-                  //   Text("Consent Templates"),
-                  //   Text("Access Logs"),
-                  // ]),
-                ],
-              ),
+              // buildProfileCard(widget.name, widget.role),
+              // SizedBox(height: 5),
+              // Wrap(
+              //   spacing: 12,
+              //   runSpacing: 12,
+              //   children: [
+              //     // buildCard('Data Access Control', [
+              //     //   Text("Assigned Patients"),
+              //     //   Text("View All Records"),
+              //     // ]),
+              //     // buildCard('AI Preferences', [
+              //     //   buildCheckbox("Show AI suggestions", showSuggestions, (v) {
+              //     //     setState(() => showSuggestions = v!);
+              //     //   }),
+              //     //   buildCheckbox("Confidence Scores", showConfidence, (v) {
+              //     //     setState(() => showConfidence = v!);
+              //     //   }),
+              //     //   buildCheckbox("Diagnostic probabilities", showProbabilities,
+              //     //       (v) {
+              //     //     setState(() => showProbabilities = v!);
+              //     //   }),
+              //     // ]),
+              //     buildCard('Interface Settings', [
+              //       Row(
+              //         children: [
+              //           Text("Appearance"),
+              //           SizedBox(width: 10),
+              //           Radio<String>(
+              //             value: 'light',
+              //             groupValue: appearance,
+              //             activeColor: Colorutils.userdetailcolor,
+              //             onChanged: (value) {
+              //               setState(() => appearance = value!);
+              //             },
+              //           ),
+              //           Text("Light"),
+              //         ],
+              //       ),
+              //       Row(
+              //         children: [
+              //           Text("Font Size"),
+              //           SizedBox(width: 10),
+              //           Radio<String>(
+              //             value: 'small',
+              //             activeColor: Colorutils.userdetailcolor,
+              //             groupValue: fontSize,
+              //             onChanged: (value) {
+              //               setState(() => fontSize = value!);
+              //             },
+              //           ),
+              //           Text("Small"),
+              //           Radio<String>(
+              //             value: 'large',
+              //             activeColor: Colorutils.userdetailcolor,
+              //             groupValue: fontSize,
+              //             onChanged: (value) {
+              //               setState(() => fontSize = value!);
+              //             },
+              //           ),
+              //           Text("Large"),
+              //         ],
+              //       ),
+              //     ]),
+              //     // buildCard('Legal & Compliance', [
+              //     //   Text("Consent Templates"),
+              //     //   Text("Access Logs"),
+              //     // ]),
+              //   ],
+              // ),
               SizedBox(height: 5),
               GestureDetector(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return AddTalkToHuman();
+                    return AddTalkToHuman(token: widget.token,);
                   },));
                 },
                 child: NameCard(
@@ -330,7 +331,7 @@ class NameCard extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color:Colors.blueGrey,),
               ),
               Icon(Icons.arrow_forward_ios,color:Colors.blueGrey,)
             ],

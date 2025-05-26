@@ -322,7 +322,7 @@ Widget buildTextFieldDropdown(
   List<String>? dropdownOptions, // Optional dropdown list
 }) {
   return Padding(
-    padding: const EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+    padding: const EdgeInsets.only(left: 15, right: 15, top:0, bottom: 0),
     child: dropdownOptions != null && dropdownOptions.isNotEmpty
         ? DropdownButtonFormField<String>(
             validator: validation
@@ -330,9 +330,12 @@ Widget buildTextFieldDropdown(
                     ? 'Please select $hintText'
                     : null
                 : null,
-            decoration: InputDecoration(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+
+      decoration: InputDecoration(
               hintText: hintText,
               labelText: hintText,
+
               labelStyle: TextStyle(
                 fontSize: 15.h,
                 fontWeight: FontWeight.bold,
@@ -348,11 +351,11 @@ Widget buildTextFieldDropdown(
                 borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
               ),
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(1.0),
+                padding: const EdgeInsets.all(13.0),
                 child: SvgPicture.asset(
                   svgAssetPath,
-                  width: 10.w,
-                  height: 10.h,
+                  width: 8.w,
+                  height: 8.h,
                   color: Colors.blueGrey,
                 ),
               ),

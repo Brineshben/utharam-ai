@@ -129,6 +129,15 @@ class _PageIndexNavigationPatientState
             clipBehavior: Clip.none,
             children: [
               Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 1,
+                  color: Colors.grey.shade200, // or any color you'd like
+                ),
+              ),
+              Positioned(
                 bottom: 0,
                 left: 0,
                 right: 0,

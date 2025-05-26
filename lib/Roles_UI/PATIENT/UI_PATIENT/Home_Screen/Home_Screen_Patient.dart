@@ -168,7 +168,7 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  _buildTitle('ID: ', widget.patientId),
+                                  _buildTitle('USER ID: ', widget.patientId),
                                   GestureDetector(
                                     onTap: () {
                                       if (urlReport.isNotEmpty) {
@@ -182,12 +182,13 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                                           ),
                                         );
                                       } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                              content:
-                                              Text("No AI report available")),
-                                        );
+                                        Get.snackbar('Failed', 'No AI report available',
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          margin: const EdgeInsets.only(
+                                              bottom: 10,
+                                              left: 8,
+                                              right: 8),);
+
                                       }
                                     },
                                     child: _buildTag("View AI Report",
@@ -315,16 +316,14 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                             },
                           );
                         } else {
-                          return Padding(
-                              padding: const EdgeInsets.only(top: 40),
-                              child: Center(
-                                child: const Text(
-                                  "Oops...No Recent Activity found",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontStyle: FontStyle.italic),
-                                ),
-                              ));
+                          return Center(
+                            child: const Text(
+                              "Oops...No Recent Activity found",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontStyle: FontStyle.italic),
+                            ),
+                          );
                         }
                       }),
                     ),
@@ -372,7 +371,7 @@ Widget _buildTag(String text, Color bgColor) {
       style: GoogleFonts.nunito(
         color: Colors.white,
         fontWeight: FontWeight.w600,
-        fontSize: 12.h,
+        fontSize: 13.h,
       ),
     ),
   );

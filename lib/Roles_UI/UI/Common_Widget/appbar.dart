@@ -123,7 +123,11 @@ class UserDetails extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Get.snackbar('Failed', 'Feature is under Maintenance',
-                            snackPosition: SnackPosition.BOTTOM);
+                            snackPosition: SnackPosition.BOTTOM,
+                          margin: const EdgeInsets.only(
+                              bottom: 10,
+                              left: 8,
+                              right: 8),);
                       },
                       child: Stack(
                         children: [

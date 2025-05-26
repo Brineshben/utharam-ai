@@ -35,7 +35,8 @@ class AddMedicineController extends GetxController {
           remarks: medicine.remarks,
           route: medicine.route,
           strength: medicine.strength,
-          uom: medicine.uom,
+          // uom: medicine.uom,
+          uom:"ML",
           isActive: true,
         )).toList(),
       );

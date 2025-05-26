@@ -270,7 +270,7 @@ class ApiServices {
     required int patientId,
   }) async {
     String url =
-        "${ApiConstants.baseURL}${ApiConstants.assignedDoctorAppointnmentList}$patientId/";
+        "${ApiConstants.baseURL}${ApiConstants.assignedDoctorAppointnmentList1}$patientId/";
     print("Assigned doctorPatientsList---$url");
 
     try {
@@ -475,7 +475,37 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
+  ///Add to talk to human list
+  static Future<Map<String, dynamic>> addTalkToHumanList({
+    required String token,
+    required int doctorId,
+    required bool status,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.assignedDoctorAppointnmentList}";
+    print('URL---->${url}');
+    Map apiBody = {
+      "doctor_id": doctorId,
+      "status": status,
 
+    };
+    try {
+    var request = http.Request('POST', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+    // request.headers.addAll({'Content-Type': 'application/json'});
+    // request.headers.addAll({'Authorization': "Bearer $token"});
+
+      request.headers.addAll(
+        {'Authorization': "Bearer $token",'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+      var respString = await response.stream.bytesToString();
+      print('respString---->${respString}');
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
   ///Enable chat
   static Future<Map<String, dynamic>> enableChat({
     required int patientId,

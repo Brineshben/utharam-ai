@@ -18,6 +18,8 @@ import '../HomePage/home_widgets/bottom_Navigationbar.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:intl/intl.dart';
 
+import '../SplashScreen/splash.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -38,525 +40,538 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: systemUiOverlayStyleDark,
-        child: Scaffold(
-            backgroundColor: Colors.white,
-            body: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.blue.shade50,
-                    Colors.white,
-                    Colors.white,
-                    Colors.white,
-                    Colors.white,
-                    Colors.white,
-                    Colors.white
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+    return WillPopScope(
+      onWillPop: () async {
+        // Navigate to Splash screen manually
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Splash()),
+        );
+        return false; // prevent default back action
+      },
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: systemUiOverlayStyleDark,
+          child: Scaffold(
+              backgroundColor: Colors.white,
+              body: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.blue.shade50,
+                      Colors.white,
+                      Colors.white,
+                      Colors.white,
+                      Colors.white,
+                      Colors.white,
+                      Colors.white
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
-              ),
-              child: SingleChildScrollView(
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Container(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(top: 80.h),
-                                  child: SizedBox(
-                                    height: 100.h,
-                                    // height: 180.h,
-                                    child: Image.asset(
-                                      "assets/images/Utaram3d_Logo.png",
-                                      fit: BoxFit.cover,
+                child: SingleChildScrollView(
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 80.h),
+                                    child: SizedBox(
+                                      height: 100.h,
+                                      // height: 180.h,
+                                      child: Image.asset(
+                                        "assets/images/Utaram3d_Logo.png",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 40.h),
-                              Container(
-                                margin: EdgeInsets.only(left: 15.w),
-                                child: Text(
-                                  'Hello !',
-                                  style: GoogleFonts.roboto(
-                                      color: Colors.black,
-                                      fontSize: 25.h,
-                                      fontWeight: FontWeight.bold),
+                                SizedBox(height: 40.h),
+                                Container(
+                                  margin: EdgeInsets.only(left: 15.w),
+                                  child: Text(
+                                    'Hello !',
+                                    style: GoogleFonts.roboto(
+                                        color: Colors.black,
+                                        fontSize: 25.h,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 15.w),
-                                child: Text(
-                                  'Sign in to your account',
-                                  style: TextStyle(
-                                      fontSize: 12.h,
-                                      color: Colors.grey,
-                                      fontStyle: FontStyle.italic),
+                                Container(
+                                  margin: EdgeInsets.only(left: 15.w),
+                                  child: Text(
+                                    'Sign in to your account',
+                                    style: TextStyle(
+                                        fontSize: 12.h,
+                                        color: Colors.grey,
+                                        fontStyle: FontStyle.italic),
+                                  ),
                                 ),
-                              ),
 
-                              SizedBox(height: 5.h),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 15.w, vertical: 2.h),
-                                child: TextFormField(
-                                  cursorColor: Colors.grey,
-                                  controller: _usernameController,
-                                  autofillHints: const [AutofillHints.username],
-                                  textInputAction: TextInputAction.next,
-                                  decoration: InputDecoration(
-                                      focusedBorder: const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.grey, width: 2)),
-                                      enabledBorder: const UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey)),
-                                      // border: UnderlineInputBorder(),
-                                      labelText: 'Email',
-                                      labelStyle: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 16.h)),
+                                SizedBox(height: 5.h),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 15.w, vertical: 2.h),
+                                  child: TextFormField(
+                                    cursorColor: Colors.grey,
+                                    controller: _usernameController,
+                                    autofillHints: const [AutofillHints.username],
+                                    textInputAction: TextInputAction.next,
+                                    decoration: InputDecoration(
+                                        focusedBorder: const UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.grey, width: 2)),
+                                        enabledBorder: const UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.grey)),
+                                        // border: UnderlineInputBorder(),
+                                        labelText: 'Email',
+                                        labelStyle: TextStyle(
+                                            color: Colors.black45,
+                                            fontSize: 16.h)),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20.w, vertical: 5.h),
-                                child: TextFormField(
-                                  cursorColor: Colors.grey,
-                                  textInputAction: TextInputAction.done,
-                                  obscureText: _obscureText,
-                                  controller: _passwordController,
-                                  autofillHints: const [AutofillHints.password],
-                                  onEditingComplete: () =>
-                                      TextInput.finishAutofillContext(),
-                                  decoration: InputDecoration(
-                                      focusedBorder: const UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Colors.grey, width: 2)),
-                                      enabledBorder: const UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey)),
-                                      labelText: 'Password',
-                                      labelStyle: TextStyle(
-                                          color: Colors.black45,
-                                          fontSize: 16.h),
-                                      suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _obscureText = !_obscureText;
-                                            });
-                                          },
-                                          child: Icon(_obscureText
-                                              ? Icons.visibility_off
-                                              : Icons.visibility))),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20.w, vertical: 5.h),
+                                  child: TextFormField(
+                                    cursorColor: Colors.grey,
+                                    textInputAction: TextInputAction.done,
+                                    obscureText: _obscureText,
+                                    controller: _passwordController,
+                                    autofillHints: const [AutofillHints.password],
+                                    onEditingComplete: () =>
+                                        TextInput.finishAutofillContext(),
+                                    decoration: InputDecoration(
+                                        focusedBorder: const UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.grey, width: 2)),
+                                        enabledBorder: const UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.grey)),
+                                        labelText: 'Password',
+                                        labelStyle: TextStyle(
+                                            color: Colors.black45,
+                                            fontSize: 16.h),
+                                        suffixIcon: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _obscureText = !_obscureText;
+                                              });
+                                            },
+                                            child: Icon(_obscureText
+                                                ? Icons.visibility_off
+                                                : Icons.visibility))),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                        horizontal: 20.w, vertical: 5.h)
-                                    .w,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Text(
-                                        "Forgot Password?",
-                                        style: TextStyle(
-                                            fontSize: 11.h,
-                                            color: Colors.blue[900],
-                                            fontStyle: FontStyle.italic),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                          horizontal: 20.w, vertical: 5.h)
+                                      .w,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Text(
+                                          "Forgot Password?",
+                                          style: TextStyle(
+                                              fontSize: 11.h,
+                                              color: Colors.blue[900]),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 50.h),
-                              GestureDetector(
-                                onTap: () async {
-                                  FocusScope.of(context).unfocus();
+                                SizedBox(height: 50.h),
+                                GestureDetector(
+                                  onTap: () async {
+                                    FocusScope.of(context).unfocus();
 
-                                  checkInternet2(
-                                    context: context,
-                                    function: () async {
-                                      print("Doctor Id${ Get.find<UserAuthController>()
-                                          .loginData
-                                          .value
-                                          ?.data
-                                          ?.userId ??
-                                          ""}");
-                                      String user = _usernameController.text.trim();
-                                      String psw = _passwordController.text.trim();
-                                      if (user.isNotEmpty) {
-                                        if (psw.isNotEmpty) {
-                                          context.loaderOverlay.show();
+                                    checkInternet2(
+                                      context: context,
+                                      function: () async {
+                                        print("Doctor Id${ Get.find<UserAuthController>()
+                                            .loginData
+                                            .value
+                                            ?.data
+                                            ?.userId ??
+                                            ""}");
+                                        String user = _usernameController.text.trim();
+                                        String psw = _passwordController.text.trim();
+                                        if (user.isNotEmpty) {
+                                          if (psw.isNotEmpty) {
+                                            context.loaderOverlay.show();
 
-                                          await Get.find<UserAuthController>()
-                                              .fetchUserData(
-                                              username: user, password: psw);
-                                          context.loaderOverlay.hide();
+                                            await Get.find<UserAuthController>()
+                                                .fetchUserData(
+                                                username: user, password: psw);
+                                            context.loaderOverlay.hide();
 
-                                          if (Get.find<UserAuthController>()
-                                              .isLoaded
-                                              .value) {
-                                            String role =
-                                                Get.find<UserAuthController>()
-                                                    .loginData
-                                                    .value
-                                                    ?.data
-                                                    ?.role ??
-                                                    "";  String name =
-                                                Get.find<UserAuthController>()
-                                                    .loginData
-                                                    .value
-                                                    ?.data
-                                                    ?.name ??
-                                                    ""; String token =
-                                                Get.find<UserAuthController>()
-                                                    .loginData
-                                                    .value
-                                                    ?.data
-                                                    ?.accessToken ??
-                                                    "";
+                                            if (Get.find<UserAuthController>()
+                                                .isLoaded
+                                                .value) {
+                                              String role =
+                                                  Get.find<UserAuthController>()
+                                                      .loginData
+                                                      .value
+                                                      ?.data
+                                                      ?.role ??
+                                                      "";  String name =
+                                                  Get.find<UserAuthController>()
+                                                      .loginData
+                                                      .value
+                                                      ?.data
+                                                      ?.name ??
+                                                      ""; String token =
+                                                  Get.find<UserAuthController>()
+                                                      .loginData
+                                                      .value
+                                                      ?.data
+                                                      ?.accessToken ??
+                                                      "";
 
-                                                    int doctorId =
-                                                Get.find<UserAuthController>()
-                                                    .loginData
-                                                    .value
-                                                    ?.data
-                                                    ?.userId ??
-                                                    0; bool firsttime =
-                                                Get.find<UserAuthController>()
-                                                    .loginData
-                                                    .value
-                                                    ?.data
-                                                    ?.firstTime ??
-                                                    false;
+                                                      int doctorId =
+                                                  Get.find<UserAuthController>()
+                                                      .loginData
+                                                      .value
+                                                      ?.data
+                                                      ?.userId ??
+                                                      0; bool firsttime =
+                                                  Get.find<UserAuthController>()
+                                                      .loginData
+                                                      .value
+                                                      ?.data
+                                                      ?.firstTime ??
+                                                      false;
 
-                                            String formattedDate = Get.find<UserAuthController>()
-                                                .loginData
-                                                .value
-                                                ?.data
-                                                ?.registeredDate != null
-                                                ? DateFormat('dd-MM-yyyy').format(
-                                                DateTime.parse(Get.find<UserAuthController>()
-                                                    .loginData
-                                                    .value!
-                                                    .data!
-                                                    .registeredDate!))
-                                                : '';
-                                                    String patientId =
-                                                Get.find<UserAuthController>()
-                                                    .loginData
-                                                    .value
-                                                    ?.data
-                                                    ?.patientId ??
-                                                    ""; int userid =
-                                                Get.find<UserAuthController>()
-                                                    .loginData
-                                                    .value
-                                                    ?.data
-                                                    ?.userId ??
-                                                    0;
-                                            print("object$role");
-                                            if (role == "user") {
-                                              if(firsttime== false){
+                                              String formattedDate = Get.find<UserAuthController>()
+                                                  .loginData
+                                                  .value
+                                                  ?.data
+                                                  ?.registeredDate != null
+                                                  ? DateFormat('dd-MM-yyyy').format(
+                                                  DateTime.parse(Get.find<UserAuthController>()
+                                                      .loginData
+                                                      .value!
+                                                      .data!
+                                                      .registeredDate!))
+                                                  : '';
+                                                      String patientId =
+                                                  Get.find<UserAuthController>()
+                                                      .loginData
+                                                      .value
+                                                      ?.data
+                                                      ?.patientId ??
+                                                      ""; int userid =
+                                                  Get.find<UserAuthController>()
+                                                      .loginData
+                                                      .value
+                                                      ?.data
+                                                      ?.userId ??
+                                                      0;
+                                              print("object$role");
+                                              if (role == "user") {
+                                                if(firsttime== false){
 
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ChatScreen(tokenPatient: Get.find<UserAuthController>()
+                                                                .loginData
+                                                                .value
+                                                                ?.data
+                                                                ?.accessToken ??
+                                                                "", role:role, name: name, date:formattedDate, patientId: patientId, userid: userid,),
+                                                      ));
+                                                }
+                                                else{
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => PageIndexNavigationPatient(
+                                                        tokenPatient: Get.find<UserAuthController>()
+                                                            .loginData
+                                                            .value
+                                                            ?.data
+                                                            ?.accessToken ??
+                                                            "",
+                                                        role: role,
+                                                        name: name,
+                                                        date: formattedDate,
+                                                        patientId: patientId,
+                                                        userid: userid,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+
+
+
+                                              } else if (role == "admin") {
                                                 Navigator.pushReplacement(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          ChatScreen(tokenPatient: Get.find<UserAuthController>()
-                                                              .loginData
-                                                              .value
-                                                              ?.data
-                                                              ?.accessToken ??
-                                                              "", role:role, name: name, date:formattedDate, patientId: patientId, userid: userid,),
+                                                          PageIndexNavigationChief(role:role, name: name, token: token, doctorId: doctorId,),
+                                                    ));
+                                              } else if (role == "junior_psychologist" ) {
+                                                Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PageIndexNavigationJunior(role:role, name: name, token: token, doctorId: doctorId,),
+                                                    ));
+                                              }else if (role == "senior_psychologist" ||role == "psychiatrist") {
+                                                Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PageIndexNavigationTherapist(role:role, name: name, token: token, doctorId: doctorId,),
                                                     ));
                                               }
-                                              else{
-                                                Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => PageIndexNavigationPatient(
-                                                      tokenPatient: Get.find<UserAuthController>()
-                                                          .loginData
-                                                          .value
-                                                          ?.data
-                                                          ?.accessToken ??
-                                                          "",
-                                                      role: role,
-                                                      name: name,
-                                                      date: formattedDate,
-                                                      patientId: patientId,
-                                                      userid: userid,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
 
-
-
-                                            } else if (role == "admin") {
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PageIndexNavigationChief(role:role, name: name, token: token, doctorId: doctorId,),
-                                                  ));
-                                            } else if (role == "junior_psychologist" ) {
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PageIndexNavigationJunior(role:role, name: name, token: token, doctorId: doctorId,),
-                                                  ));
-                                            }else if (role == "senior_psychologist" ||role == "psychiatrist") {
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PageIndexNavigationTherapist(role:role, name: name, token: token, doctorId: doctorId,),
-                                                  ));
+                                              ProductAppPopUps.submit(
+                                                title: "SUCCESS",
+                                                message: "Login successful",
+                                                actionName: "Close",
+                                                iconData: Icons.done,
+                                                iconColor: Colors.green,
+                                              );
                                             }
-
+                                          } else {
                                             ProductAppPopUps.submit(
-                                              title: "SUCCESS",
-                                              message: "Login successful",
+                                              title: "FAILED",
+                                              message: "Please Enter your Password.",
                                               actionName: "Close",
-                                              iconData: Icons.done,
-                                              iconColor: Colors.green,
+                                              iconData: Icons.error_outline,
+                                              iconColor: Colors.red,
                                             );
                                           }
                                         } else {
                                           ProductAppPopUps.submit(
                                             title: "FAILED",
-                                            message: "Please Enter your Password.",
+                                            message: "Please Enter Your Email.",
                                             actionName: "Close",
                                             iconData: Icons.error_outline,
                                             iconColor: Colors.red,
                                           );
                                         }
-                                      } else {
-                                        ProductAppPopUps.submit(
-                                          title: "FAILED",
-                                          message: "Please Enter Your Username.",
-                                          actionName: "Close",
-                                          iconData: Icons.error_outline,
-                                          iconColor: Colors.red,
-                                        );
-                                      }
-                                    },
-                                  );
-
-
-
-                                },
-                                child: Center(
-                                    child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 30)
-                                          .w,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      // gradient: LinearGradient(
-                                      //   colors: [Colors.green.shade300, Colors.blue.shade300], // Adjust colors to match your design
-                                      //   begin: Alignment.topLeft,
-                                      //   end: Alignment.bottomRight,
-                                      // ),
-                                      color: Colorutils.userdetailcolor,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r),
-                                    ),
-                                    // width: 250.w,
-                                    height: 45.h,
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'LOGIN',
-                                            style: GoogleFonts.roboto(
-                                              color: Colors.white,
-                                              fontSize: 16.h,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward_ios,
-                                            color: Colors.white,
-                                            size: 16,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                )),
-                              ),
-                              SizedBox(height: 10.h),
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Divider(
-                                      indent: 30.w,
-                                      thickness: 0.5,
-                                      color: Colors.grey[400],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.w),
-                                    child: Text(
-                                      'or',
-                                      style: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontSize: 12.h,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Divider(
-                                      thickness: 0.5,
-                                      color: Colors.grey[400],
-                                      endIndent: 30.w,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10.h),
-                              SizedBox(height: 10.h),
-                              GestureDetector(
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                            horizontal: 30)
-                                        .w,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Get.snackbar('Failed', 'Feature is under Maintenance',
-                                            snackPosition: SnackPosition.BOTTOM);
                                       },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(30.r),
-                                          border: Border.all(
-                                            color: Colorutils.userdetailcolor,
-                                            width: 0.8,
-                                          ),
-                                        ),
-                                        // width: 250.w,
-                                        height: 50.h,
-                                        child: Center(
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Image.asset(
-                                                height: 25.h,
-                                                "assets/images/google_logo.png",
-                                                fit: BoxFit.fitHeight,
-                                              ),
-                                              SizedBox(width: 8.w),
-                                              Text(
-                                                'Sign in with Google',
-                                                style: GoogleFonts.inter(
-                                                  fontSize: 16.h,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                    );
 
-                              // Center(
-                              //   child: Padding(
-                              //     padding:
-                              //         const EdgeInsets.symmetric(horizontal: 30).w,
-                              //     child: GestureDetector(
-                              //       onTap: () async {
-                              //         // context.loaderOverlay.show();
-                              //         // await signIn().then(
-                              //         //         (_) => context.loaderOverlay.hide());
-                              //       },
-                              //       child: Container(
-                              //         decoration: BoxDecoration(
-                              //           borderRadius: BorderRadius.circular(30.r),
-                              //           border: Border.all(
-                              //             color: Colorutils.userdetailcolor,
-                              //             width: 0.8,
-                              //           ),
-                              //         ),
-                              //         // width: 250.w,
-                              //         height: 45.h,
-                              //         child: Center(
-                              //           child: Row(
-                              //             mainAxisSize: MainAxisSize.min,
-                              //             children: [
-                              //               Image.asset(
-                              //                 height: 25.h,
-                              //                 "assets/google_logo.png",
-                              //                 fit: BoxFit.fitHeight,
-                              //               ),
-                              //               SizedBox(width: 8.w),
-                              //               Text(
-                              //                 'Sign in with Google',
-                              //                 style: GoogleFonts.inter(
-                              //                   fontSize: 16.h,
-                              //                 ),
-                              //               ),
-                              //             ],
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              SizedBox(
-                                height: 150,
-                              ),
-                              Center(
-                                child: GestureDetector(
-                                  onTap: () {
+
 
                                   },
-                                  child: Text(
-                                    "Version 0.1",
-                                    style: TextStyle(
-                                      color: Colors.blueGrey,
-                                      fontSize: 10.h,
+                                  child: Center(
+                                      child: Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(horizontal: 30)
+                                            .w,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        // gradient: LinearGradient(
+                                        //   colors: [Colors.green.shade300, Colors.blue.shade300], // Adjust colors to match your design
+                                        //   begin: Alignment.topLeft,
+                                        //   end: Alignment.bottomRight,
+                                        // ),
+                                        color: Colorutils.userdetailcolor,
+                                        borderRadius:
+                                            BorderRadius.circular(20.r),
+                                      ),
+                                      // width: 250.w,
+                                      height: 45.h,
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'LOGIN',
+                                              style: GoogleFonts.roboto(
+                                                color: Colors.white,
+                                                fontSize: 16.h,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Colors.white,
+                                              size: 16,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )),
+                                ),
+                                SizedBox(height: 10.h),
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Divider(
+                                        indent: 30.w,
+                                        thickness: 0.5,
+                                        color: Colors.grey[400],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.w),
+                                      child: Text(
+                                        'or',
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 12.h,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Divider(
+                                        thickness: 0.5,
+                                        color: Colors.grey[400],
+                                        endIndent: 30.w,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10.h),
+                                SizedBox(height: 10.h),
+                                GestureDetector(
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                              horizontal: 30)
+                                          .w,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Get.snackbar('Failed', 'Feature is under Maintenance',
+                                              snackPosition: SnackPosition.BOTTOM,
+                                            margin: const EdgeInsets.only(
+                                                bottom: 10,
+                                                left: 8,
+                                                right: 8),);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30.r),
+                                            border: Border.all(
+                                              color: Colorutils.userdetailcolor,
+                                              width: 0.8,
+                                            ),
+                                          ),
+                                          // width: 250.w,
+                                          height: 50.h,
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Image.asset(
+                                                  height: 25.h,
+                                                  "assets/images/google_logo.png",
+                                                  fit: BoxFit.fitHeight,
+                                                ),
+                                                SizedBox(width: 8.w),
+                                                Text(
+                                                  'Sign in with Google',
+                                                  style: GoogleFonts.inter(
+                                                    fontSize: 16.h,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 20.h),
-                            ],
+
+                                // Center(
+                                //   child: Padding(
+                                //     padding:
+                                //         const EdgeInsets.symmetric(horizontal: 30).w,
+                                //     child: GestureDetector(
+                                //       onTap: () async {
+                                //         // context.loaderOverlay.show();
+                                //         // await signIn().then(
+                                //         //         (_) => context.loaderOverlay.hide());
+                                //       },
+                                //       child: Container(
+                                //         decoration: BoxDecoration(
+                                //           borderRadius: BorderRadius.circular(30.r),
+                                //           border: Border.all(
+                                //             color: Colorutils.userdetailcolor,
+                                //             width: 0.8,
+                                //           ),
+                                //         ),
+                                //         // width: 250.w,
+                                //         height: 45.h,
+                                //         child: Center(
+                                //           child: Row(
+                                //             mainAxisSize: MainAxisSize.min,
+                                //             children: [
+                                //               Image.asset(
+                                //                 height: 25.h,
+                                //                 "assets/google_logo.png",
+                                //                 fit: BoxFit.fitHeight,
+                                //               ),
+                                //               SizedBox(width: 8.w),
+                                //               Text(
+                                //                 'Sign in with Google',
+                                //                 style: GoogleFonts.inter(
+                                //                   fontSize: 16.h,
+                                //                 ),
+                                //               ),
+                                //             ],
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                SizedBox(
+                                  height: 150,
+                                ),
+                                Center(
+                                  child: GestureDetector(
+                                    onTap: () {
+
+                                    },
+                                    child: Text(
+                                      "Version 0.1",
+                                      style: TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontSize: 10.h,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 20.h),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            )),
+              )),
+        ),
       ),
     );
   }

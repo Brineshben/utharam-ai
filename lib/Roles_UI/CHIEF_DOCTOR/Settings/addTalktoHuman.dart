@@ -3,13 +3,17 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Controller/AddTalktoHumanController.dart';
+import '../../../Service/Api_Service.dart';
 import '../../../utils/color_util.dart';
+import '../../UI/Common_Widget/popups.dart';
 
 class AddTalkToHuman extends StatefulWidget {
-  AddTalkToHuman({super.key});
+  final String token;
+  AddTalkToHuman({super.key, required this.token});
 
   @override
   State<AddTalkToHuman> createState() => _AddTalkToHumanState();
@@ -74,6 +78,7 @@ class _AddTalkToHumanState extends State<AddTalkToHuman> {
                       itemCount: controller.callHuman1List.length,
                       itemBuilder: (context, index) {
                         final callHuman = controller.callHuman1List[index];
+
                         return Column(
                           children: [
                             ListTile(
@@ -98,18 +103,84 @@ class _AddTalkToHumanState extends State<AddTalkToHuman> {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Text(callHuman?.role ?? ""),
-                              trailing: Switch(
-                                value: callHuman?.chatEnabled ?? false,
-                                onChanged: (value) {
-                                  controller.updateChatStatus(index, value);
-                                },
-                                activeColor: Colorutils.userdetailcolor,
-                                activeTrackColor:Colorutils.userdetailcolor,
-                                inactiveThumbColor: Colors.grey,
-                                inactiveTrackColor: Colors.grey.shade400,
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+
+                                  Switch(
+                                    value: callHuman?.isCallAvailable ?? false,
+                                    onChanged: (value) async{
+                                      setState(() async{
+                                        if(callHuman?.isCallAvailable == true){
+                                          print("beneferfgrefgr");
+                                          context.loaderOverlay.show();
+
+                                          Map<String, dynamic> resp =
+                                              await ApiServices.addTalkToHumanList(
+                                              token: widget.token, doctorId: callHuman?.id  ?? 0 , status:false);
+                                          context.loaderOverlay.hide();
+
+                                          if (resp['status'] == "ok") {
+                                            Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
+
+
+                                            ProductAppPopUps.submit(
+                                              title: "Success",
+                                              message: "Talk to human deactivated",
+                                              actionName: "Close",
+                                              iconData: Icons.done,
+                                              iconColor: Colors.green,
+                                            );
+                                          } else {
+                                            ProductAppPopUps.submit(
+                                              title: "Error",
+                                              message:  "Something went wrong",
+                                              actionName: "Close",
+                                              iconData: Icons.error_outline_outlined,
+                                              iconColor: Colors.red,
+                                            );
+                                          }
+                                        }else{
+                                          Map<String, dynamic> resp =
+                                              await ApiServices.addTalkToHumanList(
+                                              token: widget.token, doctorId: callHuman?.id  ?? 0 , status:true);
+                                          context.loaderOverlay.hide();
+
+                                          if (resp['status'] == "ok") {
+
+                                            Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
+
+                                            ProductAppPopUps.submit(
+                                              title: "Success",
+                                              message: "Talk to human activated",
+                                              actionName: "Close",
+                                              iconData: Icons.done,
+                                              iconColor: Colors.green,
+                                            );
+                                          } else {
+                                            ProductAppPopUps.submit(
+                                              title: "Error",
+                                              message:  "Something went wrong",
+                                              actionName: "Close",
+                                              iconData: Icons.error_outline_outlined,
+                                              iconColor: Colors.red,
+                                            );
+                                          }
+
+                                        }
+                                      });
+
+                                    },
+                                    activeColor: Colorutils.userdetailcolor.withOpacity(0.1),
+                                    activeTrackColor: Colorutils.userdetailcolor,
+                                    inactiveThumbColor:  Colorutils.userdetailcolor.withOpacity(0.1),
+                                    inactiveTrackColor: Colors.grey.shade400,
+                                  ),
+                                ],
                               ),
-                              onTap: () {
-                              },
+                              onTap: () async{
+
+                                                         },
                             ),
                             Divider(thickness: 0.3, indent: 10, endIndent: 10),
                           ],

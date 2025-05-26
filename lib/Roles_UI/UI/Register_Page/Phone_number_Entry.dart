@@ -349,7 +349,7 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
             context.loaderOverlay.hide();
             print("----------resp---------?$resp");
             if (resp['status'] == "ok") {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => OtpScreen(

@@ -54,7 +54,7 @@ class _PageIndexNavigationChiefState extends State<PageIndexNavigationChief> wit
       PatientExpandableCardList(token: widget.token,),
       DoctorList(token: widget.token),
 
-      ProfileSettingsPage(name: widget.name, role:widget.role,),
+      ProfileSettingsPage(name: widget.name, role:widget.role, token:widget.token,),
     ];
 
   }
@@ -82,6 +82,15 @@ class _PageIndexNavigationChiefState extends State<PageIndexNavigationChief> wit
         child: Stack(
           clipBehavior: Clip.none,
           children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 1,
+                color: Colors.grey.shade200, // or any color you'd like
+              ),
+            ),
             Positioned(
               bottom: 0,
               left: 0,

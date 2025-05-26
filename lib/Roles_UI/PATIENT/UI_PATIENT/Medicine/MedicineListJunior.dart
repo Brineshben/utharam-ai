@@ -48,69 +48,70 @@ class _MedicinelistjuniorState extends State<Medicinelistjunior> {
               end: Alignment.bottomCenter,
             ),
           ),
-          child: SingleChildScrollView(
-              child: Column(children: [
-            Padding(
-              padding: EdgeInsets.only(top: 60.h, left: 20.w, right: 10.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Suggested Medicine List",
-                    style: GoogleFonts.shanti(
-                      color: Colors.blueGrey,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 20.h,
-                    ),
+          child: Center(
+            child: Column(children: [
+                        Padding(
+            padding: EdgeInsets.only(top: 60.h, left: 20.w, right: 10.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Suggested Medicine List".toUpperCase(),
+                  style: GoogleFonts.shanti(
+                    color: Colors.blueGrey,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20.h,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Obx(() {
-              final controller = Get.find<ParticularMedicinelistController>();
-              if (controller.particularMedicineList.isEmpty) {
-                return Padding(
-                    padding: const EdgeInsets.only(top: 180),
-                    child: Center(
-                      child: const Text(
-                        "No Medicine Assigned Yet",
-                        style: TextStyle(
-                            color: Colors.red, fontStyle: FontStyle.italic),
-                      ),
-                    ));
-              }else{
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: controller.particularMedicineList.length,
-                itemBuilder: (context, index) {
-                  final medicine = controller.particularMedicineList[index];
-                  if (controller.particularMedicineList.isEmpty) {
-                    Padding(
-                        padding: const EdgeInsets.only(top: 180),
-                        child: Center(
-                          child: const Text(
-                            "Oops...No Data Found.",
-                            style: TextStyle(
-                                color: Colors.red, fontStyle: FontStyle.italic),
-                          ),
-                        ));
-                  } else {
-                    return Padding(
-                      padding:
-                          EdgeInsets.only(top: 1.h, left: 10.w, right: 8.w),
-                      child: MedicineCard(
-                        brandName: medicine?.medicine ?? "----",
-                        frequency: medicine?.strength ?? "",
-                        dosage: medicine?.dosage ?? "",
-                        date: formatDate(medicine?.dateTime ?? ""),
-                      ),
-                    );
-                  }
-                },
-              );}
-            })
-          ]))),
+                        ),
+
+              Expanded(
+                child: GetX<ParticularMedicinelistController>(
+                  builder: (ParticularMedicinelistController controller) {
+                    if (controller.particularMedicineList.isEmpty) {
+                      return Padding(
+                          padding:
+                          const EdgeInsets.only(top: 40),
+                          child: Center(
+                            child: const Text(
+                              "No Medicine Assigned Yet",
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontStyle: FontStyle.italic),
+                            ),
+                          ));
+                    } else {
+                      return  ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: controller.particularMedicineList.length,
+                        itemBuilder: (context, index) {
+                          final medicine = controller.particularMedicineList[index];
+
+                          return Padding(
+                            padding:
+                            EdgeInsets.only(top: 1.h, left: 10.w, right: 8.w),
+                            child: MedicineCard(
+                              brandName: medicine?.medicine ?? "----",
+                              frequency: medicine?.strength ?? "",
+                              dosage: medicine?.dosage ?? "",
+                              date: formatDate(medicine?.dateTime ?? ""),
+                            ),
+                          );
+
+                        },
+                      );
+
+
+                    }
+                  },
+                ),
+              ),
+
+                      ]),
+          )),
     );
   }
 }

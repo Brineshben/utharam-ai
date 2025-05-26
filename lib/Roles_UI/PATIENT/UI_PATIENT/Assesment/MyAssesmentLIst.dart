@@ -52,7 +52,7 @@ class _MyAssesmentListPageState extends State<MyAssesmentListPage> {
             Padding(
               padding: const EdgeInsets.only(top: 50, left: 20),
               child: Text(
-                "Assessment List",
+                "Assessment List".toUpperCase(),
                 style: GoogleFonts.shanti(
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.w900,
@@ -73,7 +73,7 @@ class _MyAssesmentListPageState extends State<MyAssesmentListPage> {
                         const EdgeInsets.only(top: 40),
                         child: Center(
                           child: const Text(
-                            "Oops...No Data Found.",
+                            "No Assessment Data Found",
                             style: TextStyle(
                                 color: Colors.red,
                                 fontStyle: FontStyle.italic),

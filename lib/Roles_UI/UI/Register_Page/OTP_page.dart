@@ -38,7 +38,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void _startResendOtpTimer() {
     _showResendButton = false;
-    _secondsRemaining = 120;
+    _secondsRemaining = 60;
     _timer?.cancel();
 
     _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
@@ -96,6 +96,19 @@ class _OtpScreenState extends State<OtpScreen> {
     //   const SnackBar(content: Text("OTP Resent")),
     // );
   }
+  final defaultPinTheme = PinTheme(
+    width: 56,
+    height: 56,
+    textStyle: const TextStyle(
+      fontSize: 18,
+      color: Colors.grey,
+      fontWeight: FontWeight.w300,
+    ),
+    decoration: BoxDecoration(
+      border: Border.all(color: Colors.grey),
+      borderRadius: BorderRadius.circular(8),
+    ),
+  );
 
   @override
   void dispose() {
@@ -167,7 +180,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 50.h, left: 15),
                   child: Text(
-                    'Enter the 4-digit OTP sent to your number',
+                    'Enter the 4-digit OTP sent to your Phone number',
                     style: GoogleFonts.roboto(
                         color: Colors.blueGrey,
                         fontSize: 20.h,
@@ -181,14 +194,15 @@ class _OtpScreenState extends State<OtpScreen> {
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly, // allows only digits (0-9)
                     ],
+                    showCursor: true,
                     controller: otpCode,
                     length: 4,
                     autofocus: true,
 
-                    // defaultPinTheme: defaultPinTheme.copyWith(
-                    //   textStyle: const TextStyle(
-                    //       fontSize: 30, fontWeight: FontWeight.bold),
-                    // ),
+                    defaultPinTheme: defaultPinTheme.copyWith(
+                      textStyle: const TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.w400),
+                    ),
                     keyboardType: TextInputType.number,
                     onCompleted: (pin) {
                       setState(() {
@@ -234,7 +248,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       );
                       ProductAppPopUps.submit(
                         title: "Success",
-                        message:"Phone Number Registered Successfully,Please Enter Your Details to Register",
+                        message:"Phone number registered successfully,please enter your details to register",
                         actionName: "Close",
                         iconData: Icons.done,
                         iconColor: Colors.green,
@@ -298,7 +312,15 @@ class _OtpScreenState extends State<OtpScreen> {
                           ),
                         )
                       else
-                        Text("Resend OTP in $_secondsRemaining seconds"),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Resend OTP in "),
+                            Text("$_secondsRemaining",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue),),
+                            Text(" seconds"),
+
+                          ],
+                        ),
                     ],
                   ),
                 ),
