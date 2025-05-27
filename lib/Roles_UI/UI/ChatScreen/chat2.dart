@@ -443,6 +443,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:patient/utils/Api_Constants.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -478,6 +479,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final GlobalKey _fabKey = GlobalKey();
+  final GlobalKey _textKey = GlobalKey();
+  final GlobalKey _sendKey = GlobalKey();
+  final GlobalKey _textEnterKey = GlobalKey();
   bool _isAwaitingResponse = false;
 
   final TextEditingController _messageController = TextEditingController();
@@ -491,6 +496,13 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ShowCaseWidget.of(context).startShowCase([
+        _fabKey,
+            _textEnterKey,
+            _textKey
+      ]),
+    );
     _loadSessionId();
   }
 
@@ -609,8 +621,107 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
-            Expanded(
+            Container(
+              height: 130.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(width: 0.2, color: Colorutils.userdetailcolor),
+                gradient: LinearGradient(
+                  colors: [Colors.blue.shade50, Colors.white],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.withOpacity(0.3),
+                    blurRadius: 0.1,
+                    spreadRadius: 0.1,
+                    offset: Offset(0, 1),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 43),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(width: 12.w),
+                        GestureDetector(
+                          onTap: () async {
+                            await SharedPrefs().removeLoginData();
+                            await SharedPrefrence().clearSessionId(); // Optional: clear session on logout
+                          },
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: AssetImage('assets/images/Utaram3d_Logo.png'),
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'MetroMind AI',
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18.h,
+                                  color: Colors.black.withOpacity(0.9),
+                                ),
+                              ),
+                              Text(
+                                'online',
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.h,
+                                  color: Colorutils.userdetailcolor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            _sendMessage(
+                              types.PartialText(text: "Generate utharamAI report"),
+                              switchPress: true,
+                            );
+                          },
+                          child: Showcase(
+                            key: _textKey,
+                            description: "You can generate the report using this button",
+                            child: Card(
+                              color: Colors.white,
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                child: Lottie.asset(
+                                  "assets/images/genAI (1).json",
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 18.w),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),            Expanded(
               child: Chat(
                 showUserAvatars: true,
                 showUserNames: true,
@@ -627,9 +738,16 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 customBottomWidget: _buildCustomInputField(),
                 emptyState: Center(
-                  child: Text(
-                    "Healing begins with utharam....",
-                    style: TextStyle(color: Colors.grey, fontSize: 15),
+                  child:Showcase(
+                    key: _fabKey,
+                    description: 'Lets start the healing with utharam',
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Healing begins with utharam....",
+                        style: TextStyle(color: Colors.grey, fontSize: 15),
+                      ),
+                    ),
                   ),
                 ),
                 avatarBuilder: _customAvatarBuilder,
@@ -641,152 +759,58 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildHeader() {
-    return Container(
-      height: 130.h,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(width: 0.2, color: Colorutils.userdetailcolor),
-        gradient: LinearGradient(
-          colors: [Colors.blue.shade50, Colors.white],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blue.withOpacity(0.3),
-            blurRadius: 0.1,
-            spreadRadius: 0.1,
-            offset: Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 43),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                SizedBox(width: 12.w),
-                GestureDetector(
-                  onTap: () async {
-                    await SharedPrefs().removeLoginData();
-                    await SharedPrefrence().clearSessionId(); // Optional: clear session on logout
-                  },
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: AssetImage('assets/images/Utaram3d_Logo.png'),
-                  ),
-                ),
-                SizedBox(width: 10.w),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'MetroMind AI',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.h,
-                          color: Colors.black.withOpacity(0.9),
-                        ),
-                      ),
-                      Text(
-                        'online',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14.h,
-                          color: Colorutils.userdetailcolor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                    _sendMessage(
-                      types.PartialText(text: "Generate utharamAI report"),
-                      switchPress: true,
-                    );
-                  },
-                  child: Card(
-                    color: Colors.white,
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Lottie.asset(
-                        "assets/images/genAI (1).json",
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 18.w),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
 
   Widget _buildCustomInputField() {
     return Padding(
       padding: const EdgeInsets.only(left: 8,right: 8,bottom: 12),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-        decoration: BoxDecoration(
-          color: Colors.grey[900],
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Row(
-          children: [
-            SizedBox(width: 10),
-            Expanded(
-              child: TextField(
-                controller: _messageController,
-                decoration: const InputDecoration(
-                  hintText: "Message",
-                  hintStyle: TextStyle(color: Colors.white54),
-                  border: InputBorder.none,
+      child: Showcase(
+        key: _textEnterKey,
+        description: 'You can enter the text and send using this button',
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.grey[900],
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Row(
+            children: [
+              SizedBox(width: 10),
+              Expanded(
+                child: TextField(
+                  controller: _messageController,
+                  decoration: const InputDecoration(
+                    hintText: "Message",
+                    hintStyle: TextStyle(color: Colors.white54),
+                    border: InputBorder.none,
+                  ),
+                  style: TextStyle(color: Colors.white),
                 ),
-                style: TextStyle(color: Colors.white),
               ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: _isAwaitingResponse ? Colors.grey : Colorutils.userdetailcolor,
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                icon: Icon(
-                  Icons.send_sharp,
-                  color: Colors.white,
+              Container(
+                decoration: BoxDecoration(
+                  color: _isAwaitingResponse ? Colors.grey : Colorutils.userdetailcolor,
+                  shape: BoxShape.circle,
                 ),
-                onPressed: _isAwaitingResponse
-                    ? null
-                    : () {
-                  if (_messageController.text.trim().isNotEmpty) {
-                    _sendMessage(
-                      types.PartialText(text: _messageController.text),
-                    );
-                    _messageController.clear();
-                  }
-                },
+                child: IconButton(
+                  icon: Icon(
+                    Icons.send_sharp,
+                    color: Colors.white,
+                  ),
+                  onPressed: _isAwaitingResponse
+                      ? null
+                      : () {
+                    if (_messageController.text.trim().isNotEmpty) {
+                      _sendMessage(
+                        types.PartialText(text: _messageController.text),
+                      );
+                      _messageController.clear();
+                    }
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -340,14 +340,13 @@ class _LoginPageState extends State<LoginPage> {
                                                           PageIndexNavigationTherapist(role:role, name: name, token: token, doctorId: doctorId,),
                                                     ));
                                               }
+                                              // Get.snackbar('SUCCESS', 'Login successful',
+                                              //   snackPosition: SnackPosition.BOTTOM,
+                                              //   margin: const EdgeInsets.only(
+                                              //       bottom: 10,
+                                              //       left: 8,
+                                              //       right: 8), );
 
-                                              ProductAppPopUps.submit(
-                                                title: "SUCCESS",
-                                                message: "Login successful",
-                                                actionName: "Close",
-                                                iconData: Icons.done,
-                                                iconColor: Colors.green,
-                                              );
                                             }
                                           } else {
                                             ProductAppPopUps.submit(

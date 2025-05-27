@@ -197,14 +197,6 @@ class _FullScreenPdfViewerJuniorState extends State<FullScreenPdfViewerJunior> {
                                 iconColor: Colors.red,
                               );
                             }
-                          } else {
-                            ProductAppPopUps.submit(
-                              title: "Error",
-                              message: "Something went wrong",
-                              actionName: "Close",
-                              iconData: Icons.error_outline_outlined,
-                              iconColor: Colors.red,
-                            );
                           }
                         },
                       );

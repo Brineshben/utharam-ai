@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:lottie/lottie.dart';
 import 'package:patient/utils/color_util.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'Roles_UI/UI/SplashScreen/main_Splash.dart';
 import 'Service/SharedPreference.dart';
 import 'Service/controller_handling.dart';
@@ -49,23 +50,30 @@ class MyApp extends StatelessWidget {
           // ),
         );
       },
-      child: ScreenUtilInit(
+      child:ScreenUtilInit(
         designSize: const Size(430, 930),
         minTextAdapt: true,
         splitScreenMode: true,
-        child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Metro Mind',
-          theme: ThemeData(
-            primaryColor:Colorutils.userdetailcolor,
-            colorScheme: ColorScheme.fromSwatch().copyWith(
-              primary: Colorutils.userdetailcolor,
-              secondary: Colorutils.userdetailcolor,
+        child: ScreenUtilInit(
+          designSize: const Size(430, 930),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          child: ShowCaseWidget(
+            builder: (context) => GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Metro Mind',
+              theme: ThemeData(
+                primaryColor: Colorutils.userdetailcolor,
+                colorScheme: ColorScheme.fromSwatch().copyWith(
+                  primary: Colorutils.userdetailcolor,
+                  secondary: Colorutils.userdetailcolor,
+                ),
+              ),
+              home: SplashScreen(),
             ),
           ),
-          home: SplashScreen(),
-        ),
-      ),
+        )
+      )
     );
   }
 }
