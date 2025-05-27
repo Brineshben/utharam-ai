@@ -560,7 +560,7 @@ Widget buildTextField2(
   bool allowSpecialChars, // NEW PARAM
 ) {
   return Padding(
-    padding: const EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+    padding: const EdgeInsets.only(left: 15, right: 15, top:8, bottom: 8),
     child: TextFormField(
       maxLength: 20,
       controller: controller,
@@ -573,8 +573,7 @@ Widget buildTextField2(
           ? [] // Allow everything
           : [
               FilteringTextInputFormatter.allow(
-                RegExp(r'[a-zA-Z0-9 ]'), // Allow only alphanumeric and spaces
-              ),
+                  RegExp(r'[a-zA-Z0-9]')              ),
             ],
       decoration: InputDecoration(
         hintText: hintText,
@@ -620,7 +619,7 @@ Widget buildTextField22(
   GlobalKey<FormState> formKey,
 ) {
   return Padding(
-    padding: const EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+    padding: const EdgeInsets.only(left: 15, right: 15, top: 8, bottom: 8),
     child: TextFormField(
       maxLength: 3,
       // Age typically doesn't exceed 3 digits

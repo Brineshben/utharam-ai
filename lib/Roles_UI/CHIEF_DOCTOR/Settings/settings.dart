@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:patient/utils/color_util.dart';
 
+import 'RejectedPatientList.dart';
 import 'addTalktoHuman.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
@@ -64,7 +65,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   ],
                 ),
               ),
-              // buildProfileCard(widget.name, widget.role),
+              buildProfileCard(widget.name, widget.role),
               // SizedBox(height: 5),
               // Wrap(
               //   spacing: 12,
@@ -142,6 +143,16 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 },
                 child: NameCard(
                   name: "ADD TALK TO HUMAN",
+                ),
+              ), SizedBox(height: 5),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return RejectedPatientList(token: widget.token,);
+                  },));
+                },
+                child: NameCard(
+                  name: "REJECTED PATIENTS",
                 ),
               )
 

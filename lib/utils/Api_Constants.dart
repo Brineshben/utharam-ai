@@ -57,4 +57,5 @@ class ApiConstants {
   static String multipleReports = "/senior_function/assigned/patient/diagnosis/list/";
   static String patientAppointmentdata = "/appointment/appointment/list/";
   static String addHumanTalk = "/accounts/available-doctors/";
+  static String rejectedList = "/accounts/notapproved-users/";
 }

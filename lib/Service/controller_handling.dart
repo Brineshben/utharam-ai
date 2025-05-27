@@ -20,6 +20,7 @@ import '../Controller/MultipleReportController.dart';
 import '../Controller/PatientAppointmentDetailsController.dart';
 import '../Controller/Patient_queue_Controller.dart';
 import '../Controller/Quotes_Controller.dart';
+import '../Controller/RejectedController.dart';
 import '../Controller/ReportPatientController.dart';
 import '../Controller/SeniorDashboardController.dart';
 import '../Controller/SheduleController.dart';
@@ -55,6 +56,7 @@ class HandleControllers {
     Get.put(MultipleReportsController());
     Get.put(Patientappointmentdetailscontroller());
     Get.put(AddTalkToHumanController());
+    Get.put(RejectedController());
   }
 
   static deleteAllGetControllers() async {
@@ -84,5 +86,6 @@ class HandleControllers {
     await Get.delete<MultipleReportsController>();
     await Get.delete<Patientappointmentdetailscontroller>();
     await Get.delete<AddTalkToHumanController>();
+    await Get.delete<RejectedController>();
   }
 }

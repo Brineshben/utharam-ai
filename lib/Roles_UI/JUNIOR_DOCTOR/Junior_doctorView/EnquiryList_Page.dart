@@ -253,7 +253,7 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                             children: [
                               SizedBox(height: 5,),
                               (showButtons == false && patientEnquired?.hasSecondAssessment ==false) ?
-                              GestureDetector(child: _buildTag("Generate AI Report", Colorutils.userdetailcolor),onTap: () async{
+                              GestureDetector(child: buildTag("Generate AI Report", Colorutils.userdetailcolor),onTap: () async{
 
 
 
@@ -289,7 +289,7 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                               },):SizedBox(),
                               SizedBox(height: 5,),
                               (showButtons == true &&patientEnquired?.hasSecondAssessment ==false) ?
-                              GestureDetector(child: _buildTag("START SECOND ASSESMENT", Colors.blue),onTap: (){
+                              GestureDetector(child: buildTag("START SECOND ASSESMENT", Colors.blue),onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                                   return SecondAssesment(token: widget.token, userID: patientEnquired?.id ?? 0, name: patientEnquired?.name ?? "",);
                                 },));
@@ -299,7 +299,7 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                               Row(
                                 children: [
                                   GestureDetector(
-                                    child: _buildTag("APPROVE", Colorutils.userdetailcolor),
+                                    child: buildTag("APPROVE", Colorutils.userdetailcolor),
                                     onTap: () async {
                                       context.loaderOverlay.show(); // Show loader before API call
                                       final resp = await ApiServices.approveEnquiredList(
@@ -334,7 +334,7 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                                   ),
                                   const SizedBox(width: 8),
                                   GestureDetector(
-                                    child: _buildTag("REJECT", Colors.red),
+                                    child: buildTag("REJECT", Colors.red),
                                     onTap: () async {
                                       context.loaderOverlay.show();
                                       final resp = await ApiServices.rejectEnquiredList(
@@ -464,7 +464,7 @@ class EnquirylistPageState extends State<EnquirylistPage> {
     );
   }
 }
-Widget _buildTag(String text, Color bgColor) {
+Widget buildTag(String text, Color bgColor) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(8),

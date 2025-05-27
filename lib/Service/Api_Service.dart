@@ -485,11 +485,12 @@ class ApiServices {
     print('URL---->${url}');
     Map apiBody = {
       "doctor_id": doctorId,
-      "status": status,
+      "is_call_available": status,
 
     };
     try {
     var request = http.Request('POST', Uri.parse(url));
+    print('Api body---->$apiBody');
       request.body = (json.encode(apiBody));
     // request.headers.addAll({'Content-Type': 'application/json'});
     // request.headers.addAll({'Authorization': "Bearer $token"});
@@ -1018,6 +1019,29 @@ class ApiServices {
 
       http.StreamedResponse response = await request.send();
       print('Enquiry---->${response.statusCode}');
+
+      var respString = await response.stream.bytesToString();
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
+
+  ///REJECTED PATIENT LIST
+  static Future<Map<String, dynamic>> rejectedList({
+    required String token,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.rejectedList}";
+    print("REJECTED PATIENT LIST---$url");
+
+    try {
+      var request = http.Request('GET', Uri.parse(url));
+      request.headers.addAll(
+        {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
+      );
+
+      http.StreamedResponse response = await request.send();
+      print('REJECTED PATIENT LIST-->${response.statusCode}');
 
       var respString = await response.stream.bytesToString();
       return json.decode(respString);
