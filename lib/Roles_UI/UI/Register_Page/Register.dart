@@ -132,8 +132,17 @@ class _RegisterState extends State<Register> {
                           name, true, _formKey, false),
                       buildTextField2("Username", "assets/images/user.svg",
                           false, username, true, _formKey, false),
-                      buildTextField2("Email", "assets/images/envelope.svg",
-                          false, email, true, _formKey, true),
+                      buildTextField2Email(
+                        "Email",
+                        "assets/images/envelope.svg",
+                        false,
+                        email,
+                        true,
+                        _formKey,
+                        true,
+                        isEmail: true,
+                      ),
+
                       buildTextFieldReadonly(
                         "Phone Number",
                         "assets/images/phone-call.svg",
@@ -167,8 +176,8 @@ class _RegisterState extends State<Register> {
                               gender,
                               true,
                               dropdownOptions: [
-                                'male',
-                                'female',
+                                'Male',
+                                'Female',
                               ],
                             ),
                           ),
@@ -512,43 +521,6 @@ Widget buildTextField(String hintText, String svgAssetPath, bool isPassword,
   );
 }
 
-// Widget buildTextField(String hintText, String svgAssetPath, bool isPassword,
-//     TextEditingController controller, bool validation) {
-//   return Padding(
-//     padding: const EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-//     child: TextFormField(
-//       validator: validation
-//           ? (val) => val!.trim().isEmpty ? 'Please enter $hintText' : null
-//           : null,
-//       controller: controller,
-//       obscureText: isPassword,
-//       decoration: InputDecoration(
-//         focusedBorder: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(10),
-//           borderSide: BorderSide(color: Colorutils.userdetailcolor, width: 1),
-//         ),
-//         enabledBorder: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(10),
-//           borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
-//         ),
-//         prefixIcon: Padding(
-//           padding: const EdgeInsets.all(14.0), // Adjust padding as needed
-//           child: SvgPicture.asset(
-//             svgAssetPath,
-//             width: 10.w,
-//             height: 10.h,
-//             color: Colors.grey,
-//           ),
-//         ),
-//         hintText: hintText,
-//         border: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(10),
-//           borderSide: BorderSide(color: Colorutils.userdetailcolor),
-//         ),
-//       ),
-//     ),
-//   );
-// }
 
 Widget buildTextField2(
   String hintText,
@@ -562,7 +534,7 @@ Widget buildTextField2(
   return Padding(
     padding: const EdgeInsets.only(left: 15, right: 15, top:8, bottom: 8),
     child: TextFormField(
-      maxLength: 20,
+      maxLength: 30,
       controller: controller,
       obscureText: isPassword,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -609,6 +581,72 @@ Widget buildTextField2(
     ),
   );
 }
+Widget buildTextField2Email(
+    String hintText,
+    String svgAssetPath,
+    bool isPassword,
+    TextEditingController controller,
+    bool validation,
+    GlobalKey<FormState> formKey,
+    bool allowSpecialChars,
+    {bool isEmail = false} // NEW PARAM
+    ) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 15, right: 15, top: 8, bottom: 8),
+    child: TextFormField(
+      maxLength: 30,
+      controller: controller,
+      obscureText: isPassword,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: validation
+          ? (val) {
+        val = val!.trim();
+        if (val.isEmpty) return 'Please enter $hintText';
+        if (isEmail) {
+          final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+          if (!emailRegex.hasMatch(val)) return 'Enter a valid email';
+        }
+        return null;
+      }
+          : null,
+      inputFormatters: allowSpecialChars
+          ? [] // Allow everything
+          : [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))],
+      decoration: InputDecoration(
+        hintText: hintText,
+        labelText: hintText,
+        labelStyle: TextStyle(
+          fontSize: 15.h,
+          fontWeight: FontWeight.bold,
+          color: Colors.blueGrey,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colorutils.userdetailcolor, width: 1),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: SvgPicture.asset(
+            svgAssetPath,
+            width: 10.w,
+            height: 10.h,
+            color: Colors.blueGrey,
+          ),
+        ),
+        counterText: '',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colorutils.userdetailcolor),
+        ),
+      ),
+    ),
+  );
+}
+
 
 Widget buildTextField22(
   String hintText,

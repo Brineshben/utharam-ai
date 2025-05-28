@@ -19,6 +19,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:intl/intl.dart';
 
 import '../SplashScreen/splash.dart';
+import 'forgot_password.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -181,7 +182,15 @@ class _LoginPageState extends State<LoginPage> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => ForgotPassword()
+
+                                              ));
+
+                                        },
                                         child: Text(
                                           "Forgot Password?",
                                           style: TextStyle(

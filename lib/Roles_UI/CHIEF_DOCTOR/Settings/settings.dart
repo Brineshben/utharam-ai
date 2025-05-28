@@ -68,6 +68,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
               buildProfileCard(widget.name, widget.role),
               // SizedBox(height: 5),
               // Wrap(
+
               //   spacing: 12,
               //   runSpacing: 12,
               //   children: [

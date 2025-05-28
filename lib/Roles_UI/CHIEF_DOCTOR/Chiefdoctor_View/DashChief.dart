@@ -103,7 +103,7 @@ class _DashchiefState extends State<Dashchief> {
               padding: const EdgeInsets.all(10).w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     item?.key?.toUpperCase() ?? " ",
@@ -113,69 +113,80 @@ class _DashchiefState extends State<Dashchief> {
                       fontSize: 15.h,
                     ),
                   ),
-                  Text(
-                    item?.value.toString() ?? "0",
-                    style: GoogleFonts.nunito(
-                      color: Colors.blueGrey,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 30.h,
-                    ),
+                  SizedBox(height: 25.w,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                    children: [
+                      Text(
+                        item?.value.toString() ?? "0",
+                        style: GoogleFonts.nunito(
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 30.h,
+                        ),
+                      ),
+                      SizedBox(height: 15.w,),
+                      if (item?.key == "Registered patients" && item?.value != 0)
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              Scaffold.of(context).openDrawer();
+                              Get.find<PatientQueueController>().patientData(widget.token);
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'VIEW PATIENTS',
+                                  style: GoogleFonts.shanti(
+                                    color: Colors.white.withOpacity(0.9),
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 14.h,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (item?.key == "Enquires" && item?.value != 0)
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return EnquirylistPage(token: widget.token, doctorID: widget.DoctorID);
+                              }));
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'VIEW ENQUIRIES',
+                                  style: GoogleFonts.shanti(
+                                    color: Colors.white.withOpacity(0.9),
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 14.h,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
-                  if (item?.key == "Registered patients" && item?.value != 0)
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          Scaffold.of(context).openDrawer();
-                          Get.find<PatientQueueController>().patientData(widget.token);
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'VIEW PATIENTS',
-                              style: GoogleFonts.shanti(
-                                color: Colors.white.withOpacity(0.9),
-                                fontWeight: FontWeight.w900,
-                                fontSize: 14.h,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  if (item?.key == "Enquires" && item?.value != 0)
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return EnquirylistPage(token: widget.token, doctorID: widget.DoctorID);
-                          }));
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'VIEW ENQUIRIES',
-                              style: GoogleFonts.shanti(
-                                color: Colors.white.withOpacity(0.9),
-                                fontWeight: FontWeight.w900,
-                                fontSize: 14.h,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+
                 ],
               ),
             ),

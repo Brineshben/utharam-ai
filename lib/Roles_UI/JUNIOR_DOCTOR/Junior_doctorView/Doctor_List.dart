@@ -73,7 +73,7 @@ class _DoctorListState extends State<DoctorList> {
                           ));
                     },
                     child: Container(
-                      height: 50.h,
+                      height: 40.h,
                       width: 110.w,
                       decoration: BoxDecoration(
                           color: Colorutils.userdetailcolor,

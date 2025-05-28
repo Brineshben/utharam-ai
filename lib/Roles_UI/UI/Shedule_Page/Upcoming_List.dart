@@ -101,16 +101,18 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
                 ),
               ),
               controller.scheduleList.isEmpty
-                  ? Center(
-                      child: Text(
-                        "No patient details found",
-                        style: TextStyle(
-                          fontSize: 16.h,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                  ? Expanded(
+                    child: Center(
+                        child: Text(
+                          "No patient details found",
+                          style: TextStyle(
+                            fontSize: 16.h,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
-                    )
+                  )
                   : Expanded(
                       child: ListView.builder(
                         padding: EdgeInsets.only(left: 8, right: 8, bottom: 1),
@@ -200,7 +202,7 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
                                                   Text(
                                                     controller
                                                             .scheduleList[index]
-                                                            ?.patientName
+                                                            ?.patientId
                                                             ?.toUpperCase() ??
                                                         "",
                                                     style: TextStyle(
@@ -273,7 +275,7 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
                                               ?.aiSummary?.patientReport?.patientSummary ??
                                               "No Summary Generated",
                                           style: TextStyle(
-                                              fontSize: 14.h,
+                                              fontSize: 15.h,
                                               fontWeight: FontWeight.w500),
                                         ),
                                         SizedBox(height: 10),
@@ -284,15 +286,15 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             Text(
-                                                "ASSIGNED DOCTOR: ${controller.scheduleList[index]?.doctorName ?? ""}",
+                                                "ASSIGNED DOCTOR:  ${controller.scheduleList[index]?.doctorName ?? ""}",
                                                 style: TextStyle(
-                                                    fontSize: 11.h,
+                                                    fontSize: 14.h,
                                                     fontWeight: FontWeight.w800,
                                                     color: Colors.green)),
                                             Text(
-                                                "SESSION: ${formatDate(controller.scheduleList[index]?.assignedAt ?? "")}",
+                                                "SESSION:  ${formatDate(controller.scheduleList[index]?.assignedAt ?? "")}",
                                                 style: TextStyle(
-                                                    fontSize: 11.h,
+                                                    fontSize: 14.h,
                                                     fontWeight: FontWeight.w800,
                                                     color: Colors.green)),
                                           ],

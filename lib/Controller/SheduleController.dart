@@ -26,7 +26,10 @@ class ScheduleController extends GetxController {
         scheduleData.value = SheduleModel.fromJson(resp);
         print("-scheduleDataz resp----scheduleDataz resp---${scheduleData.value?.data}");
         scheduleList.value = scheduleData.value?.data ?? [];
-        print("  scheduleList.value--${  scheduleList.value.first?.patient}");
+
+
+
+        print("  scheduleList.value--${scheduleList.value.first?.patient}");
         scheduleListCopy.value = scheduleList.value;
         isLoading.value = true;
       } else {
