@@ -420,7 +420,8 @@ class ApiServices {
   static Future<Map<String, dynamic>> patientAppointmentData({
     required String token,
   }) async {
-    String url = "${ApiConstants.baseURL}${ApiConstants.patientAppointmentdata}";
+    String url =
+        "${ApiConstants.baseURL}${ApiConstants.patientAppointmentdata}";
     print("qwejkdhqweic$url");
 
     try {
@@ -453,9 +454,8 @@ class ApiServices {
       "doctor": doctorId,
       "patient": patientId,
       "observations": observation,
-      "diagnosis":diagnosis,
-      "assigned":assignedId,
-
+      "diagnosis": diagnosis,
+      "assigned": assignedId,
     };
     try {
       print('apiBodyapiBodyapiBody---->${apiBody}');
@@ -475,28 +475,29 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
+
   ///Add to talk to human list
   static Future<Map<String, dynamic>> addTalkToHumanList({
     required String token,
     required int doctorId,
     required bool status,
   }) async {
-    String url = "${ApiConstants.baseURL}${ApiConstants.assignedDoctorAppointnmentList}";
+    String url =
+        "${ApiConstants.baseURL}${ApiConstants.assignedDoctorAppointnmentList}";
     print('URL---->${url}');
     Map apiBody = {
       "doctor_id": doctorId,
       "is_call_available": status,
-
     };
     try {
-    var request = http.Request('POST', Uri.parse(url));
-    print('Api body---->$apiBody');
+      var request = http.Request('POST', Uri.parse(url));
+      print('Api body---->$apiBody');
       request.body = (json.encode(apiBody));
-    // request.headers.addAll({'Content-Type': 'application/json'});
-    // request.headers.addAll({'Authorization': "Bearer $token"});
+      // request.headers.addAll({'Content-Type': 'application/json'});
+      // request.headers.addAll({'Authorization': "Bearer $token"});
 
       request.headers.addAll(
-        {'Authorization': "Bearer $token",'Content-Type': 'application/json'},
+        {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
       );
       http.StreamedResponse response = await request.send();
       var respString = await response.stream.bytesToString();
@@ -507,6 +508,7 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
+
   ///Enable chat
   static Future<Map<String, dynamic>> enableChat({
     required int patientId,
@@ -868,6 +870,97 @@ class ApiServices {
 
       request.headers.addAll(
         {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+
+      var respString = await response.stream.bytesToString();
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
+
+  ///Enter email Forgot password
+  static Future<Map<String, dynamic>> forgotPasswordEmail({
+    required String email,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.forgotPassword}";
+    print("assignmentCreate: $url");
+    Map apiBody = {
+      "email": email,
+    };
+
+    try {
+      print("Apibody: $apiBody");
+
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+
+      request.headers.addAll(
+        {'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+
+      var respString = await response.stream.bytesToString();
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
+
+  ///check OTP
+  static Future<Map<String, dynamic>> checkOTp({
+    required int id, required String otp,
+
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.checkOtpForgot}$id/";
+    print("assignmentCreate: $url");
+    Map apiBody = {
+      "otp_entered": otp,
+    };
+
+    try {
+      print("Apibody: $apiBody");
+
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+
+      request.headers.addAll(
+        {'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+
+      var respString = await response.stream.bytesToString();
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
+  ///rESETpASSWORD
+  static Future<Map<String, dynamic>> resetPassword({
+    required int id,
+    required String newPassword,
+    required String confirm,
+
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.resetPassword}$id/";
+    print("assignmentCreate: $url");
+    Map apiBody = {
+      "new_password": newPassword,
+      "confirm_password": confirm,
+    };
+
+    try {
+      print("Apibody: $apiBody");
+
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+
+      request.headers.addAll(
+        {'Content-Type': 'application/json'},
       );
       http.StreamedResponse response = await request.send();
 

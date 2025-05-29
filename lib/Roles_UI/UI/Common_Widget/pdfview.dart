@@ -145,7 +145,11 @@ class FullScreenPdfViewer extends StatelessWidget {
                 ],
               ),
             ),
-            Container(child: Expanded(child: SfPdfViewer.network(pdfUrl))),
+            Container(child: Expanded(child: GestureDetector(
+              onTap: (){},
+              child: SfPdfViewer.network(pdfUrl, canShowPaginationDialog: false,canShowScrollStatus: false,canShowScrollHead: false,
+              ),
+            ))),
           ],
         ),
       ),

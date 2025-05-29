@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -94,6 +95,9 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                   onChanged: (value) {
                     Get.find<EnquiredListController>().SearchEnquiredList(value);
                   },
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')), // Disallow spaces
+                  ],
                   validator: (val) => val!.isEmpty ? 'Enter the Topic' : null,
                   cursorColor: Colors.grey,
                   keyboardType: TextInputType.text,
@@ -145,17 +149,14 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                     );
                   }
                   if (controller.enquiryList.isEmpty) {
-                    return Padding(
-                        padding:
-                        const EdgeInsets.only(top: 40),
-                        child: Center(
-                          child: const Text(
-                            "Oops...No Data Found.",
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontStyle: FontStyle.italic),
-                          ),
-                        ));
+                    return Center(
+                      child: const Text(
+                        "Oops...No Enquired List Found.",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontStyle: FontStyle.italic),
+                      ),
+                    );
                   } else {
                     return ListView.separated(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -476,7 +477,7 @@ Widget buildTag(String text, Color bgColor) {
       style: GoogleFonts.nunito(
         color: Colors.white,
         fontWeight: FontWeight.w600,
-        fontSize: 12.h,
+        fontSize: 14.h,
       ),
     ),
   );

@@ -9,6 +9,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:patient/Service/Api_Service.dart';
 import 'package:patient/utils/color_util.dart';
 
+import '../Common_Widget/connectivity.dart';
 import '../Common_Widget/popups.dart';
 import '../Register_Page/Register.dart';
 import 'Otpforgotpassword.dart';
@@ -87,9 +88,9 @@ class ForgotPasswordState extends State<ForgotPassword> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 50.h, left: 15),
+                    padding: EdgeInsets.only(top: 40.h, left: 15),
                     child: Text(
-                      'Please Enter your Email',
+                      'Please Enter your Registered Email',
                       style: GoogleFonts.roboto(
                           color: Colors.blueGrey,
                           fontSize: 20.h,
@@ -116,14 +117,57 @@ class ForgotPasswordState extends State<ForgotPassword> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
       floatingActionButton: GestureDetector(
-        onTap: () async {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ForgotOtpScreen(phoneNumber: '',)
+        onTap: (){
+          checkInternet2(
+            context: context,
+            function: () async {
+              FocusScope.of(context).unfocus();
 
-              ));
+              if (_formKey.currentState!.validate()) {
+                context.loaderOverlay.show();
+
+                Map<String, dynamic> resp =
+                await ApiServices.forgotPasswordEmail(
+                 email:email.text );
+                context.loaderOverlay.hide();
+
+                // resp['data']['message'] == "Leave Applied Successfully"
+                if (resp['message'] == "OTP has been sent to your email") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgotOtpScreen( id:resp['user_id'] ?? 0,)
+
+                      ));
+
+                  ProductAppPopUps.submit(
+                    title: "Success",
+                    message: resp['message'],
+                    actionName: "Close",
+                    iconData: Icons.done,
+                    iconColor: Colors.green,
+                  );
+                } else {
+                  ProductAppPopUps.submit(
+                    title: "Error",
+                    message: "Something went wrong",
+                    actionName: "Close",
+                    iconData: Icons.error_outline_outlined,
+                    iconColor: Colors.red,
+                  );
+                }
+              }
+            },
+          );
         },
+        // onTap: () async {
+        //
+        //
+        //
+        //
+        //
+
+        // },
         child: Container(
 
           decoration: BoxDecoration(

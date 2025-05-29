@@ -9,11 +9,14 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:patient/Service/Api_Service.dart';
 import 'package:patient/utils/color_util.dart';
 
+import '../Common_Widget/connectivity.dart';
 import '../Common_Widget/popups.dart';
 import '../Register_Page/Register.dart';
+import 'login.dart';
 
 class SetPassword extends StatefulWidget {
-  const SetPassword({super.key});
+  final int id;
+  const SetPassword({super.key, required this.id});
 
   @override
   SetPasswordState createState() => SetPasswordState();
@@ -46,7 +49,7 @@ class SetPasswordState extends State<SetPassword> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 60, right: 10),
+          padding: const EdgeInsets.only(left: 10, top: 40, right: 10),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -66,7 +69,7 @@ class SetPasswordState extends State<SetPassword> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40.h),
+                  SizedBox(height: 20.h),
                   Container(
                     margin: EdgeInsets.only(left: 15.w),
                     child: Text(
@@ -184,7 +187,7 @@ class SetPasswordState extends State<SetPassword> {
                       },
                       validator: (val) {
                         if (val == null || val.trim().isEmpty) {
-                          return 'Please enter password.';
+                          return 'Please enter confirm password.';
                         }
                         String password = val.trim();
 
@@ -256,7 +259,45 @@ class SetPasswordState extends State<SetPassword> {
 
       floatingActionButton: GestureDetector(
         onTap: () async {
+          checkInternet2(
+              context: context,
+              function: () async {
+                FocusScope.of(context).unfocus();
 
+                context.loaderOverlay.show();
+
+                Map<String, dynamic> resp =
+                await ApiServices.resetPassword(
+                    id: widget.id, newPassword: password.text, confirm: confirmPassword.text);
+                context.loaderOverlay.hide();
+
+                // resp['data']['message'] == "Leave Applied Successfully"
+                if (resp["message"] == "Password has been reset successfully") {
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) {
+                      return LoginPage();
+                    },
+                  ));
+
+                  ProductAppPopUps.submit(
+                    title: "Success",
+                    message: resp['message'],
+                    actionName: "Close",
+                    iconData: Icons.done,
+                    iconColor: Colors.green,
+                  );
+                } else {
+                  ProductAppPopUps.submit(
+                    title: "Error",
+                    message: "Something went wrong",
+                    actionName: "Close",
+                    iconData: Icons.error_outline_outlined,
+                    iconColor: Colors.red,
+                  );
+                }
+              }
+
+          );
         },
         child: Container(
 
@@ -274,7 +315,7 @@ class SetPasswordState extends State<SetPassword> {
 
           child: Center(
             child: Text(
-              'SEND OTP',
+              'RESET PASSWORD',
               style: GoogleFonts.roboto(
                 color: Colors.white,
                 fontSize: 16.h,

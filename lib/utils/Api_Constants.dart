@@ -58,4 +58,7 @@ class ApiConstants {
   static String patientAppointmentdata = "/appointment/appointment/list/";
   static String addHumanTalk = "/accounts/available-doctors/";
   static String rejectedList = "/accounts/notapproved-users/";
+  static String forgotPassword = "/forgott_password/forgot/password/";
+  static String checkOtpForgot = "/forgott_password/verify/otp/";
+  static String resetPassword = "/forgott_password/new/password/";
 }

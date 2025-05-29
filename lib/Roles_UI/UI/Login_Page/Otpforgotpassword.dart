@@ -13,13 +13,14 @@ import 'package:patient/utils/color_util.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../Service/Api_Service.dart';
+import '../Common_Widget/connectivity.dart';
 import '../Common_Widget/popups.dart';
-import '../Register_Page/SetPassword.dart';
+import 'SetPassword.dart';
 
 class ForgotOtpScreen extends StatefulWidget {
-  final String phoneNumber;
+  int id;
 
-  const ForgotOtpScreen({Key? key, required this.phoneNumber}) : super(key: key);
+  ForgotOtpScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   State<ForgotOtpScreen> createState() => ForgotOtpScreenState();
@@ -58,45 +59,46 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
 
   void _submitOtp() {
     if (otpCode.text.length == 4) {
-      Get.snackbar('Failed', 'Submitted OTP: $otpCode',
+      Get.snackbar(
+        'Failed',
+        'Submitted OTP: $otpCode',
         snackPosition: SnackPosition.BOTTOM,
-        margin: const EdgeInsets.only(
-            bottom: 10,
-            left: 8,
-            right: 8), );
+        margin: const EdgeInsets.only(bottom: 10, left: 8, right: 8),
+      );
       // You can validate OTP here
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(content: Text("Submitted OTP: $_otpCode")),
       //
       // );
     } else {
-      Get.snackbar('Failed', 'Please enter full OTP',
+      Get.snackbar(
+        'Failed',
+        'Please enter full OTP',
         snackPosition: SnackPosition.BOTTOM,
-        margin: const EdgeInsets.only(
-            bottom: 10,
-            left: 8,
-            right: 8), );
+        margin: const EdgeInsets.only(bottom: 10, left: 8, right: 8),
+      );
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(content: Text("Please enter full OTP")),
       // );
     }
   }
 
-  void _resendOtp() async{
-    Map<String,dynamic> resp = await ApiServices.sendOTP(widget.phoneNumber);
+  // void _resendOtp() async {
+  //   Map<String, dynamic> resp = await ApiServices.sendOTP(widget.phoneNumber);
+  //
+  //   Get.snackbar(
+  //     'Success',
+  //     'OTP Resent Successfully',
+  //     snackPosition: SnackPosition.BOTTOM,
+  //     margin: const EdgeInsets.only(bottom: 10, left: 8, right: 8),
+  //   );
+  //   _startResendOtpTimer();
+  //
+  //   // ScaffoldMessenger.of(context).showSnackBar(
+  //   //   const SnackBar(content: Text("OTP Resent")),
+  //   // );
+  // }
 
-    Get.snackbar('Success', 'OTP Resent Successfully',
-      snackPosition: SnackPosition.BOTTOM,
-      margin: const EdgeInsets.only(
-          bottom: 10,
-          left: 8,
-          right: 8), );
-    _startResendOtpTimer();
-
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   const SnackBar(content: Text("OTP Resent")),
-    // );
-  }
   final defaultPinTheme = PinTheme(
     width: 56,
     height: 56,
@@ -116,10 +118,10 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
     _timer?.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -141,7 +143,6 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
@@ -181,7 +182,7 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 50.h, left: 15),
                   child: Text(
-                    'Enter the 4-digit OTP sent to your Email',
+                    'Enter the 6-digit OTP sent to your Email${widget.id}',
                     style: GoogleFonts.roboto(
                         color: Colors.blueGrey,
                         fontSize: 20.h,
@@ -193,13 +194,13 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
                 Center(
                   child: Pinput(
                     inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly, // allows only digits (0-9)
+                      FilteringTextInputFormatter.digitsOnly,
+                      // allows only digits (0-9)
                     ],
                     showCursor: true,
                     controller: otpCode,
-                    length: 4,
+                    length: 6,
                     autofocus: true,
-
                     defaultPinTheme: defaultPinTheme.copyWith(
                       textStyle: const TextStyle(
                           fontSize: 22, fontWeight: FontWeight.w400),
@@ -233,74 +234,115 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
                 // ),
                 const SizedBox(height: 50),
 
-                GestureDetector(
-                  onTap: ()async {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>SetPassword()
 
-
-                        ));
-
-                    _submitOtp
-                    ;
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colorutils.userdetailcolor,
-                      // gradient: LinearGradient(
-                      //   colors: [
-                      //     Colors.green.shade200,
-                      //     Colors.blue.shade200
-                      //   ], // Adjust colors to match your design
-                      //   begin: Alignment.topLeft,
-                      //   end: Alignment.bottomRight,
-                      // ),
-                      borderRadius: BorderRadius.circular(25.r),
-                    ),
-                    // width: 250.w,
-                    height: 45.h,
-                    child: Center(
-                      child: Text(
-                        'SUBMIT',
-                        style: GoogleFonts.roboto(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17.h,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
                 // Resend Button
-                const SizedBox(height: 15),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (_showResendButton)
-                        TextButton(
-                          onPressed: _resendOtp,
-                          child: const Text(
-                            "Resend OTP",
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                        )
-                      else
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Resend OTP in "),
-                            Text("$_secondsRemaining",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue),),
-                            Text(" seconds"),
-
-                          ],
-                        ),
-                    ],
-                  ),
-                ),
+                // const SizedBox(height: 15),
+                // Center(
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       if (_showResendButton)
+                //         TextButton(
+                //           onPressed: _resendOtp,
+                //           child: const Text(
+                //             "Resend OTP",
+                //             style: TextStyle(color: Colors.blue),
+                //           ),
+                //         )
+                //       else
+                //         Row(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Text("Resend OTP in "),
+                //             Text(
+                //               "$_secondsRemaining",
+                //               style: TextStyle(
+                //                   fontWeight: FontWeight.bold,
+                //                   color: Colors.blue),
+                //             ),
+                //             Text(" seconds"),
+                //           ],
+                //         ),
+                //     ],
+                //   ),
+                // ),
               ],
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+      floatingActionButton: GestureDetector(
+        onTap: (){
+          checkInternet2(
+            context: context,
+            function: () async {
+              FocusScope.of(context).unfocus();
+
+                context.loaderOverlay.show();
+
+                Map<String, dynamic> resp =
+                await ApiServices.checkOTp(
+                    id: widget.id, otp: otpCode.text);
+                context.loaderOverlay.hide();
+
+                // resp['data']['message'] == "Leave Applied Successfully"
+                if (resp["message"] == "OTP verified successfully. You can now reset your password.") {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SetPassword(id: widget.id,)));
+                  _submitOtp;
+
+                  ProductAppPopUps.submit(
+                    title: "Success",
+                    message: resp['message'],
+                    actionName: "Close",
+                    iconData: Icons.done,
+                    iconColor: Colors.green,
+                  );
+                } else {
+                  ProductAppPopUps.submit(
+                    title: "Error",
+                    message: "Something went wrong",
+                    actionName: "Close",
+                    iconData: Icons.error_outline_outlined,
+                    iconColor: Colors.red,
+                  );
+                }
+              }
+
+          );
+        },
+        // onTap: () async {
+        //
+        //
+        //
+        //
+        //
+
+        // },
+        child: Container(
+
+          decoration: BoxDecoration(
+            // gradient: LinearGradient(
+            //   colors: [Colors.green.shade300, Colors.blue.shade300], // Adjust colors to match your design
+            //   begin: Alignment.topLeft,
+            //   end: Alignment.bottomRight,
+            // ),
+            color: Colorutils.userdetailcolor,
+            borderRadius: BorderRadius.circular(20.r),
+          ),
+          width: 250.w,
+          height: 45.h,
+
+          child: Center(
+            child: Text(
+              'SUBMIT OTP',
+              style: GoogleFonts.roboto(
+                color: Colors.white,
+                fontSize: 16.h,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

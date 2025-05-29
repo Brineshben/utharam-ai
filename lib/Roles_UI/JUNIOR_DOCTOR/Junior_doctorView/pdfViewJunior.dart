@@ -102,7 +102,8 @@ class _FullScreenPdfViewerJuniorState extends State<FullScreenPdfViewerJunior> {
                       if (filePath.isEmpty) {
                         return const Center(child: CircularProgressIndicator());
                       }
-                      return SfPdfViewer.network(filePath);
+                      return SfPdfViewer.network(filePath, canShowPaginationDialog: false,canShowScrollStatus: false,canShowScrollHead: false,
+                      );
                     },
                   ),
                 ),
@@ -127,7 +128,6 @@ class _FullScreenPdfViewerJuniorState extends State<FullScreenPdfViewerJunior> {
                       left: 20.w, top: 5.h, right: 20.w, bottom: 10.h),
                   child: TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-
                     controller: textcontroller,
                     validator: (val) =>
                     val!.trim().isEmpty ? 'Please Enter Observation.' : null,
