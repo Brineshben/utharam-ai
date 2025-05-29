@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -57,6 +58,9 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
                       borderRadius: BorderRadius.all(Radius.circular(25))),
                   width: double.infinity,
                   child: TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp(r'\s')), // 👈 Disallows all whitespace
+                    ],
                     autofocus: false,
                     onChanged: (value) {
                       Get.find<ScheduleController>().sehduleList(value);

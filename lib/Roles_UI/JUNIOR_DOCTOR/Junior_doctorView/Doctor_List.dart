@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -108,6 +109,9 @@ class _DoctorListState extends State<DoctorList> {
                 validator: (val) => val!.isEmpty ? 'Enter the Topic' : null,
                 cursorColor: Colors.grey,
                 keyboardType: TextInputType.text,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r'\s')), // 👈 Disallows all whitespace
+                ],
                 decoration: InputDecoration(
                     hintStyle: const TextStyle(color: Colors.grey),
                     hintText: "Search Doctors",
@@ -154,7 +158,7 @@ class _DoctorListState extends State<DoctorList> {
                         padding: const EdgeInsets.only(top: 40),
                         child: Center(
                           child: const Text(
-                            "Oops...No Data Found.",
+                            "Oops...No Doctor Data Found.",
                             style: TextStyle(
                                 color: Colors.red, fontStyle: FontStyle.italic),
                           ),

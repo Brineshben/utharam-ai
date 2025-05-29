@@ -113,7 +113,7 @@ class _AddAssesmentState extends State<AddAssesment> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Add Observation",
+                        "Add Assignment",
                         style: GoogleFonts.shanti(
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.w900,
@@ -131,16 +131,17 @@ class _AddAssesmentState extends State<AddAssesment> {
                     bottom: 5.h,
                   ),
                   child: TextFormField(
+                    maxLength: 5000,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     controller: controller,
                     validator: (val) => val!.trim().isEmpty
-                        ? 'Please Enter Observation.'
+                        ? 'Please Add Assignment'
                         : null,
                     decoration: InputDecoration(
                         hintStyle: const TextStyle(color: Colors.black26),
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 10.h, horizontal: 20.w),
-                        hintText: " Enter Observation   ",
+                        hintText: " Enter Assignment   ",
                         border: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(
                             Radius.circular(10.0),
@@ -197,6 +198,8 @@ class _AddAssesmentState extends State<AddAssesment> {
             onTap: () async {
 
     if (_formKey.currentState!.validate()) {
+      context.loaderOverlay.show();
+
       Map<String,dynamic> resp = await ApiServices.assignmentCreate(patientId: widget.id, question: controller.text, token: widget.token);
       context.loaderOverlay.hide();
       print("----------redvffegvsp---------?$resp");

@@ -2,6 +2,7 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:patient/utils/color_util.dart';
 
 import '../../../Controller/Slot_Create_Controller.dart';
@@ -103,19 +104,13 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                         height: 50,
                         width: 50.h,
                         decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.9),
-                            border: Border.all(
-                              color: Colors.blue, // Border color
-                              width: 0.1, // Border width
-                            ),
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: Colors.grey.withOpacity(0.3),
-                            //     blurRadius: 1,
-                            //     spreadRadius: 0,
-                            //   ),
-                            // ],
-                            borderRadius: BorderRadius.circular(15).r),
+                          color: Colors.white.withOpacity(0.9),
+                          border: Border.all(
+                            color: Colors.blue,
+                            width: 0.1,
+                          ),
+                          borderRadius: BorderRadius.circular(15).r,
+                        ),
                         child: Icon(
                           Icons.arrow_back_ios_sharp,
                           color: Colors.grey,
@@ -127,17 +122,23 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            widget.drName.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 21.h,
-                              fontWeight: FontWeight.bold,
+                          SizedBox(
+                            width: 320.w, // Set a max width constraint
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                widget.drName.toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 17.h,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                           Text(
                             "(${widget.role})",
                             style: TextStyle(
-                              fontSize: 15.h,
+                              fontSize: 12.h,
                               color: Colors.grey,
                             ),
                           ),
@@ -186,8 +187,7 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                         ));
                   }
                   if (slotController.availableSlots.length == 0) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
+                    return Center(
                       child: Text(
                         'No slots available',
                         style: TextStyle(
@@ -303,9 +303,9 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         onTap: () async {
                           print('fksjflsjflsdjflsjdlf');
-
                           if (fromTime != null && toTime != null) {
                             print('clicked');
+
                             slotController.createSlot(
                                 date: slotController.selectedDate.value
                                     .toString(),
@@ -313,11 +313,16 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                                 fromtime: fromTime,
                                 totime: toTime,
                                 doctorName: widget.drName, token:widget.token);
+
                           } else {
                             Get.snackbar('Error', 'Please select time range',
-                                snackPosition: SnackPosition.BOTTOM);
+                                snackPosition: SnackPosition.BOTTOM,margin: const EdgeInsets.only(
+                                  bottom: 10,
+                                  left: 8,
+                                  right: 8),);
 
                           }
+
                         },
                         child: Ink(
                           height: 50,

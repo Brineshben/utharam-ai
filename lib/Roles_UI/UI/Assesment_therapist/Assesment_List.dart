@@ -80,17 +80,14 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
                     );
                   }
                   if (controller.patientAssesmentListDataList.isEmpty) {
-                    return Padding(
-                        padding:
-                        const EdgeInsets.only(top: 40),
-                        child: Center(
-                          child: const Text(
-                            "Oops...No Data Found.",
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontStyle: FontStyle.italic),
-                          ),
-                        ));
+                    return Center(
+                      child: const Text(
+                        "Oops...No Data Found.",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontStyle: FontStyle.italic),
+                      ),
+                    );
                   } else {
                     return ListView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -103,6 +104,9 @@ class _DoctorListSeniorState extends State<DoctorListSenior> {
                     borderRadius: BorderRadius.all(Radius.circular(25))),
                 width: double.infinity,
                 child: TextFormField(
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')), // 👈 Disallows all whitespace
+                  ],
                   autofocus: false,
                   onChanged: (value) {
                     Get.find<DoctorListController>().SearchDoctorList(value);
@@ -156,7 +160,7 @@ class _DoctorListSeniorState extends State<DoctorListSenior> {
                         padding: const EdgeInsets.only(top: 40),
                         child: Center(
                           child: const Text(
-                            "Oops...No Data Found.",
+                            "Oops...No Doctor Data Found.",
                             style: TextStyle(
                                 color: Colors.red, fontStyle: FontStyle.italic),
                           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -75,6 +76,9 @@ class _ReportsListState extends State<ReportsList> {
                 width: double.infinity,
                 child: TextFormField(
                   autofocus: false,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')), // 👈 Disallows all whitespace
+                  ],
                   onChanged: (value) {
                     Get.find<ReportPatientController>().searchReportPatientList(value);
                   },
@@ -120,15 +124,13 @@ class _ReportsListState extends State<ReportsList> {
               child: GetX<ReportPatientController>(
                 builder: (ReportPatientController controller) {
                   if (controller.reportList.isEmpty) {
-                    return Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: Center(
-                          child: const Text(
-                            "Oops...No Data Found.",
-                            style: TextStyle(
-                                color: Colors.red, fontStyle: FontStyle.italic),
-                          ),
-                        ));
+                    return Center(
+                      child: const Text(
+                        "Oops...No Data Found.",
+                        style: TextStyle(
+                            color: Colors.red, fontStyle: FontStyle.italic),
+                      ),
+                    );
                   } else {
                     return ListView.builder(
                       // separatorBuilder: (context, index) => Divider(),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -74,6 +75,9 @@ class _AssesmentPageState extends State<AssesmentPage> {
                 width: double.infinity,
                 child: TextFormField(
                   autofocus: false,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')), // 👈 Disallows all whitespace
+                  ],
                   onChanged: (value) {
                     Get.find<ScheduleController>().sehduleList(value);
                   },
@@ -119,17 +123,14 @@ class _AssesmentPageState extends State<AssesmentPage> {
               child: GetX<ScheduleController>(
                 builder: (ScheduleController controller) {
                   if (controller.scheduleList.isEmpty) {
-                    return Padding(
-                        padding:
-                        const EdgeInsets.only(top: 40),
-                        child: Center(
-                          child: const Text(
-                            "Oops...No Data Found.",
-                            style: TextStyle(
-                                color: Colors.red,
-                                fontStyle: FontStyle.italic),
-                          ),
-                        ));
+                    return Center(
+                      child: const Text(
+                        "Oops...No Data Found.",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontStyle: FontStyle.italic),
+                      ),
+                    );
                   } else {
                     return ListView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -161,42 +162,22 @@ class _AssesmentPageState extends State<AssesmentPage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              subtitle: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                                children: [
-                                  Text(
-                                    patient?.patientId ?? "No Name",
-                                    style: TextStyle(
-                                      fontSize: 14.h,
-                                      color: Colors.blueGrey,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Row(
-
-                                    children: [
-
-                                      // GestureDetector(child: _buildTag("ADD", Colorutils.userdetailcolor),onTap: (){
-                                      //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                      //     return AddAssesment(name: patient?.patientName ??"", patientId: patient?.patientId ??"", sevirity:patient?.aiSummary ??"", id: patient?.patient ??0, token: widget.token,);
-                                      //   },));
-                                      // },),  const SizedBox(width: 6),
-                                      GestureDetector(child: _buildTag("VIEW", Colors.red),onTap: (){
-
-
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                          return  AssesmentListPage(token: widget.token, name:patient?.patientName ??"", patientId: patient?.patientId ??"", id: patient?.patient ??0, sevirity:  patient?.aiSummary?.patientReport?.patientSummary ??"",);
-                                        },));
-                                      },),
-                                    ],
-                                  ),
-
-                                ],
+                              subtitle: Text(
+                                patient?.patientId ?? "No Name",
+                                style: TextStyle(
+                                  fontSize: 14.h,
+                                  color: Colors.blueGrey,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              onTap: () {
-                                // Handle navigation or action
-                              },
+                              trailing: GestureDetector(child: _buildTag("VIEW", Colors.red),onTap: (){
+
+
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return  AssesmentListPage(token: widget.token, name:patient?.patientName ??"", patientId: patient?.patientId ??"", id: patient?.patient ??0, sevirity:  patient?.aiSummary?.patientReport?.patientSummary ??"",);
+                                },));
+                              },),
+
                             ),
                             Divider(
                               thickness: 1,
@@ -233,7 +214,7 @@ Widget _buildTag(String text, Color bgColor) {
       style: GoogleFonts.nunito(
         color: Colors.white,
         fontWeight: FontWeight.w600,
-        fontSize: 12.h,
+        fontSize: 14.h,
       ),
     ),
   );

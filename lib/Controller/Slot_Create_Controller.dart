@@ -19,6 +19,7 @@ class CreateSlotController extends GetxController {
   }) async {
     try {
       print('dddddddddddddddddd');
+
       final response = await ApiServices.createSlot(
         fromTime: fromtime,
         toTime: totime,
@@ -30,7 +31,11 @@ class CreateSlotController extends GetxController {
 
       if (response['status'] == 'ok') {
         Get.snackbar('SUCCESS', 'Slot created successfully',
-            snackPosition: SnackPosition.BOTTOM);
+            snackPosition: SnackPosition.BOTTOM,
+          margin: const EdgeInsets.only(
+              bottom: 10,
+              left: 8,
+              right: 8),);
 
 
         fetchSlots(date: DateTime.parse(date), doctorName: doctorName, token: token);
@@ -38,11 +43,18 @@ class CreateSlotController extends GetxController {
       else {
 
         Get.snackbar('FAILED', 'Please select the correct time range.',
-            snackPosition: SnackPosition.BOTTOM);
+            snackPosition: SnackPosition.BOTTOM,
+          margin: const EdgeInsets.only(
+              bottom: 10,
+              left: 8,
+              right: 8),);
       }
     } catch (e) {
       Get.snackbar('Error', 'Please select the correct time range.',
-          snackPosition: SnackPosition.BOTTOM);
+          snackPosition: SnackPosition.BOTTOM,margin: const EdgeInsets.only(
+            bottom: 10,
+            left: 8,
+            right: 8),);
     }
   }
 
@@ -77,7 +89,10 @@ class CreateSlotController extends GetxController {
     } catch (e) {
       print("'Failed to fetch slots $e");
       Get.snackbar('Error', 'Failed to fetch slots: $e',
-          snackPosition: SnackPosition.BOTTOM);
+          snackPosition: SnackPosition.BOTTOM,margin: const EdgeInsets.only(
+            bottom: 10,
+            left: 8,
+            right: 8),);
     } finally {
       isLoading.value = false;
     }
