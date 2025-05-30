@@ -190,7 +190,7 @@ class _RegisterState extends State<Register> {
                       Row(
                         children: [
                           Expanded(
-                            child: buildTextField2(
+                            child: buildTextField(
                                 "Education",
                                 "assets/images/graduation-cap.svg",
                                 false,
@@ -200,7 +200,7 @@ class _RegisterState extends State<Register> {
                                 false),
                           ),
                           Expanded(
-                            child: buildTextField2(
+                            child: buildTextField(
                                 "Occupation",
                                 "assets/images/briefcase-blank.svg",
                                 false,
@@ -211,7 +211,7 @@ class _RegisterState extends State<Register> {
                           ),
                         ],
                       ),
-                      buildTextField2(
+                      buildTextField(
                           "Address",
                           "assets/images/address-book.svg",
                           false,
@@ -258,8 +258,25 @@ class _RegisterState extends State<Register> {
                           controller: password,
                           obscureText: _obscureText1,
                           decoration: InputDecoration(
-                              labelText: "Password",
-                              labelStyle: TextStyle(
+                              label: RichText(
+                                text: TextSpan(
+                                  text: "Password",
+                                  style: TextStyle(
+                                    fontSize: 15.h,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueGrey,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: ' *',
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 15.h,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),                              labelStyle: TextStyle(
                                 fontSize: 15.h,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blueGrey,
@@ -306,7 +323,7 @@ class _RegisterState extends State<Register> {
                           },
                           validator: (val) {
                             if (val == null || val.trim().isEmpty) {
-                              return 'Please enter password.';
+                              return 'Please enter Confirm Password.';
                             }
                             String password = val.trim();
 
@@ -332,7 +349,25 @@ class _RegisterState extends State<Register> {
                           controller: confirmPassword,
                           obscureText: _obscureText2,
                           decoration: InputDecoration(
-                              labelText: "Confirm Password",
+                              label: RichText(
+                                text: TextSpan(
+                                  text: "Confirm Password",
+                                  style: TextStyle(
+                                    fontSize: 15.h,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueGrey,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: ' *',
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 15.h,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               labelStyle: TextStyle(
                                 fontSize: 15.h,
                                 fontWeight: FontWeight.bold,
@@ -476,53 +511,9 @@ class _RegisterState extends State<Register> {
   }
 }
 
-Widget buildTextField(String hintText, String svgAssetPath, bool isPassword,
-    TextEditingController controller, bool validation) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
-    child: TextFormField(
-      validator: validation
-          ? (val) => val!.trim().isEmpty ? 'Please enter $hintText' : null
-          : null,
-      controller: controller,
-      obscureText: isPassword,
-      maxLength: 15,
-      decoration: InputDecoration(
-        hintText: hintText,
-        labelText: hintText,
-        labelStyle: TextStyle(
-          fontSize: 15.h,
-          fontWeight: FontWeight.bold,
-          color: Colors.blueGrey,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colorutils.userdetailcolor, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
-        ),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(14.0), // Adjust padding as needed
-          child: SvgPicture.asset(
-            svgAssetPath,
-            width: 10.w,
-            height: 10.h,
-            color: Colors.blueGrey,
-          ),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colorutils.userdetailcolor),
-        ),
-      ),
-    ),
-  );
-}
 
 
-Widget buildTextField2(
+Widget buildTextField(
   String hintText,
   String svgAssetPath,
   bool isPassword,
@@ -545,7 +536,7 @@ Widget buildTextField2(
           ? [] // Allow everything
           : [
               FilteringTextInputFormatter.allow(
-                  RegExp(r'[a-zA-Z0-9]')              ),
+                  RegExp(r'[a-zA-Z0-9 ]')              ),
             ],
       decoration: InputDecoration(
         hintText: hintText,
@@ -555,6 +546,83 @@ Widget buildTextField2(
           fontWeight: FontWeight.bold,
           color: Colors.blueGrey,
         ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colorutils.userdetailcolor, width: 1),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: SvgPicture.asset(
+            svgAssetPath,
+            width: 10.w,
+            height: 10.h,
+            color: Colors.blueGrey,
+          ),
+        ),
+        counterText: '',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colorutils.userdetailcolor),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget buildTextField2(
+    String hintText,
+    String svgAssetPath,
+    bool isPassword,
+    TextEditingController controller,
+    bool validation,
+    GlobalKey<FormState> formKey,
+    bool allowSpecialChars, // NEW PARAM
+    ) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 15, right: 15, top:8, bottom: 8),
+    child: TextFormField(
+      maxLength: 30,
+      controller: controller,
+      obscureText: isPassword,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: validation
+          ? (val) => val!.trim().isEmpty ? 'Please enter $hintText' : null
+          : null,
+      inputFormatters: allowSpecialChars
+          ? [] // Allow everything
+          : [
+        FilteringTextInputFormatter.allow(
+            RegExp(r'[a-zA-Z0-9 ]')              ),
+      ],
+      decoration: InputDecoration(
+        hintText: hintText,
+        label: RichText(
+          text: TextSpan(
+            text: hintText,
+            style: TextStyle(
+              fontSize: 15.h,
+              fontWeight: FontWeight.bold,
+              color: Colors.blueGrey,
+            ),
+            children: [
+              TextSpan(
+                text: ' *',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 15.h,
+                ),
+              ),
+            ],
+          ),
+        ),        labelStyle: TextStyle(
+        fontSize: 15.h,
+        fontWeight: FontWeight.bold,
+        color: Colors.blueGrey,
+      ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Colorutils.userdetailcolor, width: 1),
@@ -614,8 +682,25 @@ Widget buildTextField2Email(
           : [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))],
       decoration: InputDecoration(
         hintText: hintText,
-        labelText: hintText,
-        labelStyle: TextStyle(
+        label: RichText(
+          text: TextSpan(
+            text:  hintText,
+            style: TextStyle(
+              fontSize: 15.h,
+              fontWeight: FontWeight.bold,
+              color: Colors.blueGrey,
+            ),
+            children: [
+              TextSpan(
+                text: ' *',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 15.h,
+                ),
+              ),
+            ],
+          ),
+        ),        labelStyle: TextStyle(
           fontSize: 15.h,
           fontWeight: FontWeight.bold,
           color: Colors.blueGrey,
@@ -683,7 +768,25 @@ Widget buildTextField22(
       ],
       decoration: InputDecoration(
         hintText: hintText,
-        labelText: hintText,
+        label: RichText(
+          text: TextSpan(
+            text: hintText,
+            style: TextStyle(
+              fontSize: 15.h,
+              fontWeight: FontWeight.bold,
+              color: Colors.blueGrey,
+            ),
+            children: [
+              TextSpan(
+                text: ' *',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 15.h,
+                ),
+              ),
+            ],
+          ),
+        ),
         labelStyle: TextStyle(
           fontSize: 15.h,
           fontWeight: FontWeight.bold,
@@ -730,7 +833,25 @@ Widget buildTextFieldReadonly(String hintText, String svgAssetPath,
         obscureText: isPassword,
         decoration: InputDecoration(
           hintText: hintText,
-          labelText: hintText,
+          label: RichText(
+            text: TextSpan(
+              text: hintText,
+              style: TextStyle(
+                fontSize: 15.h,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey,
+              ),
+              children: [
+                TextSpan(
+                  text: ' *',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 15.h,
+                  ),
+                ),
+              ],
+            ),
+          ),
           labelStyle: TextStyle(
             fontSize: 15.h,
             fontWeight: FontWeight.bold,

@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -157,6 +158,7 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
     {'name': 'Zam', 'code': '+260'},
     {'name': 'Zim', 'code': '+263'},
   ];
+  final _formKey = GlobalKey<FormState>();
 
 
   @override
@@ -181,105 +183,144 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, top: 60, right: 10),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 50.h),
-                    child: SizedBox(
-                      height: 100.h,
-                      // height: 180.h,
-                      child: Image.asset(
-                        "assets/images/Utaram3d_Logo.png",
-                        fit: BoxFit.cover,
+            child: Form(
+              key:_formKey ,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 50.h),
+                      child: SizedBox(
+                        height: 100.h,
+                        // height: 180.h,
+                        child: Image.asset(
+                          "assets/images/Utaram3d_Logo.png",
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 40.h),
-                Container(
-                  margin: EdgeInsets.only(left: 15.w),
-                  child: Text(
-                    'Hello !',
-                    style: GoogleFonts.roboto(
-                        color: Colors.blueGrey,
-                        fontSize: 25.h,
-                        fontWeight: FontWeight.bold),
+                  SizedBox(height: 40.h),
+                  Container(
+                    margin: EdgeInsets.only(left: 15.w),
+                    child: Text(
+                      'Hello !',
+                      style: GoogleFonts.roboto(
+                          color: Colors.blueGrey,
+                          fontSize: 25.h,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 15.w),
-                  child: Text(
-                    'Welcome to MetroMind',
-                    style: TextStyle(
-                        fontSize: 12.h,
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic),
+                  Container(
+                    margin: EdgeInsets.only(left: 15.w),
+                    child: Text(
+                      'Welcome to MetroMind',
+                      style: TextStyle(
+                          fontSize: 12.h,
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 50.h, left: 15),
-                  child: Text(
-                    'Please Enter your phone number',
-                    style: GoogleFonts.roboto(
-                        color: Colors.blueGrey,
-                        fontSize: 20.h,
-                        fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: EdgeInsets.only(top: 50.h, left: 15),
+                    child: Text(
+                      'Please enter your phone number',
+                      style: GoogleFonts.roboto(
+                          color: Colors.blueGrey,
+                          fontSize: 20.h,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      // Country Code Dropdown
-                      Container(
-                        width: 150.w,
-                        // Set a smaller width
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                        // Add slight vertical padding too
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.blueGrey),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            dropdownColor: Colors.white,
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton2<String>(
                             isExpanded: true,
-                            // Make sure dropdown fills the container nicely
+                            dropdownStyleData: DropdownStyleData(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.white,
+                                ),
+                                offset: const Offset(0, 8),
+                                maxHeight: 330.h// Drop down appears below the field
+                            ),
+                            buttonStyleData: ButtonStyleData(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: Colors.blueGrey),
+                              ),
+                            ),
                             value: selectedCountry,
+                            items: countryCodes.map((country) {
+                              String fullName = '${country['name']} (${country['code']})';
+                              return DropdownMenuItem<String>(
+                                value: fullName,
+                                child: Text(
+                                  fullName,
+                                  style: const TextStyle(fontSize: 14),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              );
+                            }).toList(),
                             onChanged: (value) {
                               setState(() {
                                 selectedCountry = value!;
                               });
                             },
-                            items: countryCodes.map((country) {
-                              String fullName =
-                                  '${country['name']} (${country['code']})';
-                              return DropdownMenuItem<String>(
-                                value: fullName,
-                                child: Text(
-                                  fullName,
-                                  style: TextStyle(fontSize: 14),
-                                  overflow: TextOverflow
-                                      .ellipsis, // Prevent overflow text
-                                ),
-                              );
-                            }).toList(),
-                            icon: Icon(
+                            hint: const Icon(
                               Icons.arrow_drop_down,
                               color: Colors.blueGrey,
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 12),
-                      // Phone Number TextField
-                      Expanded(
-                        child: TextField(
+
+                        SizedBox(height: 15.w),
+                        // Phone Number TextField
+                        // TextFormField(
+                        //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                        //
+                        //   maxLength: 12,
+                        //   controller: phoneController,
+                        //   keyboardType: TextInputType.number,
+                        //   inputFormatters: [
+                        //     FilteringTextInputFormatter.digitsOnly,
+                        //     // allows only digits (0-9)
+                        //   ],
+                        //   validator: (value) {
+                        //     if (value == null || value.trim().length < 10) {
+                        //       return 'Enter at least 10 digits';
+                        //     }
+                        //     return null;
+                        //   },
+                        //   decoration: InputDecoration(
+                        //     hintText: 'Phone Number',
+                        //     filled: true,
+                        //     fillColor: Colors.white,
+                        //     contentPadding: EdgeInsets.symmetric(
+                        //         horizontal: 5, vertical: 15),
+                        //     border: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(12),
+                        //       borderSide: BorderSide(color: Colors.blueGrey),
+                        //     ),
+                        //     enabledBorder: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(12),
+                        //       borderSide: BorderSide(color: Colors.blueGrey),
+                        //     ),
+                        //     focusedBorder: OutlineInputBorder(
+                        //       borderRadius: BorderRadius.circular(12),
+                        //       borderSide: BorderSide(
+                        //           color: Colorutils.userdetailcolor, width: 2),
+                        //     ),
+                        //     counterText: '', // This hides the character count
+                        //   ),
+                        // ),
+                        TextFormField(
                           maxLength: 15,
                           controller: phoneController,
                           keyboardType: TextInputType.number,
@@ -287,19 +328,46 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
                             FilteringTextInputFormatter.digitsOnly,
                             // allows only digits (0-9)
                           ],
+                          validator: (value) {
+                            if (value == null || value.trim().length < 10) {
+                              return 'Enter at least 10 digits';
+                            }
+                            return null;
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
-                            hintText: 'Phone Number',
+                            label: RichText(
+                              text: TextSpan(
+                                text: "Phone Number",
+                                style: TextStyle(
+                                  fontSize: 15.h,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blueGrey,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: ' *',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 15.h,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),                                  hintStyle: TextStyle(
+                              color: Colors.blueGrey
+                          ),
                             filled: true,
                             fillColor: Colors.white,
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 5, vertical: 15),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.blueGrey),
+                              borderSide: BorderSide(color:Colors.grey.withOpacity(0.5)),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.blueGrey),
+                              borderSide: BorderSide(color:Colors.grey.withOpacity(0.5)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -308,12 +376,12 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
                             ),
                             counterText: '', // This hides the character count
                           ),
-                        ),
-                      ),
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -322,52 +390,57 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
 
       floatingActionButton: GestureDetector(
         onTap: () async {
-          FocusScope.of(context).unfocus();
 
-          String selectedCode = selectedCountry.substring(
-              selectedCountry.indexOf('(') + 1, selectedCountry.indexOf(')'));
+      if (_formKey.currentState!.validate()) {
 
-          String fullPhoneNumber =
-              '$selectedCode${phoneController.text.trim()}';
+        FocusScope.of(context).unfocus();
 
-          print('Phone Number: $fullPhoneNumber');
+        String selectedCode = selectedCountry.substring(
+            selectedCountry.indexOf('(') + 1, selectedCountry.indexOf(')'));
 
-          if (phoneController.text.isEmpty) {
-            Get.snackbar(
-              'Error',
-              'Please enter your phone number',
-              snackPosition: SnackPosition.BOTTOM,
-              margin: const EdgeInsets.only(
-                  bottom: 10,
-                  left: 8,
-                  right: 8), // Adjust the bottom space here
+        String fullPhoneNumber =
+            '$selectedCode${phoneController.text.trim()}';
+
+        print('Phone Number: $fullPhoneNumber');
+
+        if (phoneController.text.isEmpty) {
+          Get.snackbar(
+            'Error',
+            'Please enter your phone number',
+            snackPosition: SnackPosition.TOP,
+            margin: const EdgeInsets.only(
+                top: 15,
+                left: 8,
+                right: 8), // Adjust the bottom space here
+          );
+        } else {
+          context.loaderOverlay.show();
+
+          Map<String, dynamic> resp =
+          await ApiServices.sendOTP(fullPhoneNumber);
+          context.loaderOverlay.hide();
+          print("----------resp---------?$resp");
+          if (resp['status'] == "ok") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => OtpScreen(
+                  phoneNumber: fullPhoneNumber,
+                ),
+              ),
             );
           } else {
-            context.loaderOverlay.show();
-
-            Map<String, dynamic> resp =
-                await ApiServices.sendOTP(fullPhoneNumber);
-            context.loaderOverlay.hide();
-            print("----------resp---------?$resp");
-            if (resp['status'] == "ok") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OtpScreen(
-                    phoneNumber: fullPhoneNumber,
-                  ),
-                ),
-              );
-            } else {
-              ProductAppPopUps.submit(
-                title: "Failed",
-                message: resp['message'] ?? 'Something went wrong.',
-                actionName: "Close",
-                iconData: Icons.error_outline,
-                iconColor: Colors.red,
-              );
-            }
+            ProductAppPopUps.submit(
+              title: "Failed",
+              message: resp['message'] ?? 'Something went wrong.',
+              actionName: "Close",
+              iconData: Icons.error_outline,
+              iconColor: Colors.red,
+            );
           }
+        }
+      }
+
         },
         child: Container(
 

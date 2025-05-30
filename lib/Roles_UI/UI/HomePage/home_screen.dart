@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 10,bottom: 10),
                     child: PatientsList(name: widget.name, role: widget.role, token:widget.token, doctorID:  widget.doctorId, ),
                   ),
                   Padding(

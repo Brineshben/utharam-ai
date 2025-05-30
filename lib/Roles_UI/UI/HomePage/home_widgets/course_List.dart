@@ -302,230 +302,247 @@ class PatientsList extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: GetX<AssignedDoctorToPatientController>(
         builder: (AssignedDoctorToPatientController controller) {
-          return controller.assignedDoctorPatientList.isNotEmpty
-              ? Row(
-            children: List.generate(
-              controller.assignedDoctorPatientList.length,
-                  (index) {
-                final patientSummary =
-                (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
-                    ? controller.assignedDoctorPatientList[index]
-                    ?.patientDiagnosis?.first.aiReport?.patientReport?.patientSummary
-                    : "No patient summary available";
 
-                final sevirity =
-                (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
-                    ? controller.assignedDoctorPatientList[index]
-                    ?.patientDiagnosis?.first.aiReport?.therapistReport?.severity
-                    : 0;
+      if (controller.isLoading.value) {
 
-                final id =
-                (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
-                    ? controller.assignedDoctorPatientList[index]
-                    ?.patientDiagnosis?.first.id
-                    : 0;
-
-                final urlreport =
-                (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
-                    ? controller.assignedDoctorPatientList[index]
-                    ?.patientDiagnosis?.first.aiSummaryFile
-                    : "jdjw";
-
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return DoctorsPatientDetails(
-                          name: controller.assignedDoctorPatientList[index]?.patient?.name ?? "",
-                          age: controller.assignedDoctorPatientList[index]?.patient?.age ?? 0,
-                          gender: controller.assignedDoctorPatientList[index]?.patient?.gender ?? "",
-                          email: controller.assignedDoctorPatientList[index]?.patient?.email ?? "",
-                          phone: controller.assignedDoctorPatientList[index]?.patient?.mobileNumber ?? "",
-                          disease: '--',
-                          severity: sevirity.toString(),
-                          diagnosissummary: patientSummary ?? "---",
-                          patientId: controller.assignedDoctorPatientList[index]?.patient?.patientId ?? "",
-                          token: token,
-                          id: controller.assignedDoctorPatientList[index]?.patient?.id ?? 0,
-                          role: role,
-                          doctorID: doctorID,
-                          url: urlreport ?? "", diagnosisID:id?? 0, assignedId: controller.assignedDoctorPatientList[index]?.id ?? 0,
-                        );
-                      },
-                    ));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 15),
-                    child: Container(
-                      width: ScreenUtil().screenWidth * 0.83,
-                      height: 170.h,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blue, width: 0.3),
-                        gradient: LinearGradient(
-                          colors: [Colors.blue.shade50, Colors.white],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        borderRadius: BorderRadius.circular(25).r,
-                      ),
-                      child: Row(
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 165,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 30, left: 10),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "PATIENT DETAILS",
-                                              style: GoogleFonts.nunito(
-                                                color: Colors.blueGrey,
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: 15.h,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              controller
-                                                  .assignedDoctorPatientList[index]
-                                                  ?.patient
-                                                  ?.name
-                                                  ?.toUpperCase() ??
-                                                  "",
-                                              style: GoogleFonts.nunito(
-                                                color: Colors.blueGrey,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16.h,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              controller
-                                                  .assignedDoctorPatientList[index]
-                                                  ?.patient
-                                                  ?.patientId ??
-                                                  "Patient Id not generated",
-                                              style: GoogleFonts.nunito(
-                                                color: Colors.blueGrey,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 13.h,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return DoctorsPatientDetails(
-                                        assignedId: controller.assignedDoctorPatientList[index]?.id ?? 0,
-                                        name: controller.assignedDoctorPatientList[index]?.patient?.name ?? "",
-                                        age: controller.assignedDoctorPatientList[index]?.patient?.age ?? 0,
-                                        gender: controller.assignedDoctorPatientList[index]?.patient?.gender ?? "",
-                                        email: controller.assignedDoctorPatientList[index]?.patient?.email ?? "",
-                                        phone: controller.assignedDoctorPatientList[index]?.patient?.mobileNumber ?? "",
-                                        disease: '--',
-                                        severity: sevirity.toString(),
-                                        diagnosissummary: patientSummary ?? "---",
-                                        patientId: controller.assignedDoctorPatientList[index]?.patient?.patientId ?? "",
-                                        token: token,
-                                        id: controller.assignedDoctorPatientList[index]?.patient?.id ?? 0,
-                                        role: role,
-                                        doctorID: doctorID,
-                                        url: urlreport ?? "qsde", diagnosisID: id?? 0,
-                                      );
-                                    },
-                                  ));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Colorutils.userdetailcolor,
-                                    ),
-                                    padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 8.w),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Text(
-                                        "View Details",
-                                        style: GoogleFonts.nunito(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12.h,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 50),
-                            child: Container(
-                              height: 155.h,
-                              child: CustomCircularProgressIndicator(sevirity ?? 0),
-                            ),
-                          )
-                        ],
-                      ),
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: List.generate(2, (index) {
+              return Padding(
+                padding: const EdgeInsets.only(left: 5, right: 15),
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey.shade200,
+                  highlightColor: Colors.grey.shade50,
+                  child: Container(
+                    width: ScreenUtil().screenWidth * 0.83,
+                    height: 170.h,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25).r,
                     ),
                   ),
-                );
-              },
-            ),
-          )
-              : Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: List.generate(2, (index) {
-                return Padding(
+                ),
+              );
+            }),
+          ),
+        );
+
+      }else {
+        return controller.assignedDoctorPatientList.isNotEmpty
+            ? Row(
+          children: List.generate(
+            controller.assignedDoctorPatientList.length,
+                (index) {
+              final patientSummary =
+              (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
+                  ? controller.assignedDoctorPatientList[index]
+                  ?.patientDiagnosis?.first.aiReport?.patientReport?.patientSummary
+                  : "No patient summary available";
+
+              final sevirity =
+              (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
+                  ? controller.assignedDoctorPatientList[index]
+                  ?.patientDiagnosis?.first.aiReport?.therapistReport?.severity
+                  : 0;
+
+              final id =
+              (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
+                  ? controller.assignedDoctorPatientList[index]
+                  ?.patientDiagnosis?.first.id
+                  : 0;
+
+              final urlreport =
+              (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
+                  ? controller.assignedDoctorPatientList[index]
+                  ?.patientDiagnosis?.first.aiSummaryFile
+                  : "jdjw";
+
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return DoctorsPatientDetails(
+                        name: controller.assignedDoctorPatientList[index]?.patient?.name ?? "",
+                        age: controller.assignedDoctorPatientList[index]?.patient?.age ?? 0,
+                        gender: controller.assignedDoctorPatientList[index]?.patient?.gender ?? "",
+                        email: controller.assignedDoctorPatientList[index]?.patient?.email ?? "",
+                        phone: controller.assignedDoctorPatientList[index]?.patient?.mobileNumber ?? "",
+                        disease: '--',
+                        severity: sevirity.toString(),
+                        diagnosissummary: patientSummary ?? "---",
+                        patientId: controller.assignedDoctorPatientList[index]?.patient?.patientId ?? "",
+                        token: token,
+                        id: controller.assignedDoctorPatientList[index]?.patient?.id ?? 0,
+                        role: role,
+                        doctorID: doctorID,
+                        url: urlreport ?? "", diagnosisID:id?? 0, assignedId: controller.assignedDoctorPatientList[index]?.id ?? 0,
+                      );
+                    },
+                  ));
+                },
+                child: Padding(
                   padding: const EdgeInsets.only(left: 5, right: 15),
-                  child: Shimmer.fromColors(
-                    baseColor: Colors.grey.shade200,
-                    highlightColor: Colors.grey.shade50,
-                    child: Container(
-                      width: ScreenUtil().screenWidth * 0.83,
-                      height: 170.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25).r,
+                  child: Container(
+                    width: ScreenUtil().screenWidth * 0.83,
+                    height: 170.h,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blue, width: 0.3),
+                      gradient: LinearGradient(
+                        colors: [Colors.blue.shade50, Colors.white],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
                       ),
+                      borderRadius: BorderRadius.circular(25).r,
+                    ),
+                    child: Row(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 165,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 30, left: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "PATIENT DETAILS",
+                                            style: GoogleFonts.nunito(
+                                              color: Colors.blueGrey,
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 15.h,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            controller
+                                                .assignedDoctorPatientList[index]
+                                                ?.patient
+                                                ?.name
+                                                ?.toUpperCase() ??
+                                                "",
+                                            style: GoogleFonts.nunito(
+                                              color: Colors.blueGrey,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16.h,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            controller
+                                                .assignedDoctorPatientList[index]
+                                                ?.patient
+                                                ?.patientId ??
+                                                "Patient Id not generated",
+                                            style: GoogleFonts.nunito(
+                                              color: Colors.blueGrey,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 13.h,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return DoctorsPatientDetails(
+                                      assignedId: controller.assignedDoctorPatientList[index]?.id ?? 0,
+                                      name: controller.assignedDoctorPatientList[index]?.patient?.name ?? "",
+                                      age: controller.assignedDoctorPatientList[index]?.patient?.age ?? 0,
+                                      gender: controller.assignedDoctorPatientList[index]?.patient?.gender ?? "",
+                                      email: controller.assignedDoctorPatientList[index]?.patient?.email ?? "",
+                                      phone: controller.assignedDoctorPatientList[index]?.patient?.mobileNumber ?? "",
+                                      disease: '--',
+                                      severity: sevirity.toString(),
+                                      diagnosissummary: patientSummary ?? "---",
+                                      patientId: controller.assignedDoctorPatientList[index]?.patient?.patientId ?? "",
+                                      token: token,
+                                      id: controller.assignedDoctorPatientList[index]?.patient?.id ?? 0,
+                                      role: role,
+                                      doctorID: doctorID,
+                                      url: urlreport ?? "qsde", diagnosisID: id?? 0,
+                                    );
+                                  },
+                                ));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colorutils.userdetailcolor,
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 8.w),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Text(
+                                      "View Details",
+                                      style: GoogleFonts.nunito(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12.h,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 50),
+                          child: Container(
+                            height: 155.h,
+                            child: CustomCircularProgressIndicator(sevirity ?? 0),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                );
-              }),
-            ),
-          );
+                ),
+              );
+            },
+          ),
+        )
+            : Center(
+          child: const Text(
+            "Oops...No Patients Assigned For You Yet",
+            style: TextStyle(
+                color: Colors.red,
+                fontStyle: FontStyle.italic),
+          ),
+        );
+      }
+
+
+
         },
       ),
     );

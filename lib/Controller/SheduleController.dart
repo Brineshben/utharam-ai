@@ -27,7 +27,8 @@ class ScheduleController extends GetxController {
         print("-scheduleDataz resp----scheduleDataz resp---${scheduleData.value?.data}");
         scheduleList.value = scheduleData.value?.data ?? [];
 
-
+        scheduleList.sort((a, b) =>
+            (b?.assignedAt ?? '').compareTo(a?.assignedAt ?? ''));
 
         print("  scheduleList.value--${scheduleList.value.first?.patient}");
         scheduleListCopy.value = scheduleList.value;

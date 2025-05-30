@@ -16,7 +16,7 @@ class AssignedDoctorToPatientController extends GetxController {
   Future<void> assignedDoctorPatientData(String token, int patientId) async {
     isLoading.value = true;
     isLoaded.value = false;
-    // try {
+    try {
     Map<String, dynamic> resp = await ApiServices.AssignedDoctorPatientList(token: token, patientId:patientId);
     print("-------benben response----------$resp");
     if (resp['status'] == 'ok') {
@@ -32,12 +32,12 @@ class AssignedDoctorToPatientController extends GetxController {
     } else {
       isError.value = true;
     }
-    // } catch (e) {
-    //   isLoaded.value = false;
-    //
-    //   ///popup
-    // } finally {
-    //   isLoading.value = false;
-    // }
+    } catch (e) {
+      isLoaded.value = false;
+
+      ///popup
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

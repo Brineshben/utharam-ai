@@ -257,107 +257,109 @@ class _AddDoctorState extends State<AddDoctor> {
                   true,
                   isEmail: true,
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15,right: 15,bottom: 15),
+                  child: Container(
 
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 14,right: 14,bottom: 8,top: 8),
-                        child: Row(
-                          children: [
-                            // Country Code Dropdown
-                            Container(
-                              width: 150.w,
-                              // Set a smaller width
-                              padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-                              // Add slight vertical padding too
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Colors.grey.withOpacity(0.5)),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  dropdownColor: Colors.white,
-                                  isExpanded: true,
-                                  // Make sure dropdown fills the container nicely
-                                  value: selectedCountry,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedCountry = value!;
-                                    });
-                                  },
-                                  items: countryCodes.map((country) {
-                                    String fullName =
-                                        '${country['name']} (${country['code']})';
-                                    return DropdownMenuItem<String>(
-                                      value: fullName,
-                                      child: Text(
-                                        fullName,
-                                        style: TextStyle(fontSize: 14),
-                                        overflow: TextOverflow
-                                            .ellipsis, // Prevent overflow text
-                                      ),
-                                    );
-                                  }).toList(),
-                                  icon: Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.blueGrey,
-                                  ),
-                                ),
-                              ),
+                    padding:
+                    EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+                    // Add slight vertical padding too
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.withOpacity(0.5)),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        dropdownColor: Colors.white,
+                        isExpanded: true,
+                        // Make sure dropdown fills the container nicely
+                        value: selectedCountry,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedCountry = value!;
+                          });
+                        },
+                        items: countryCodes.map((country) {
+                          String fullName =
+                              '${country['name']} (${country['code']})';
+                          return DropdownMenuItem<String>(
+                            value: fullName,
+                            child: Text(
+                              fullName,
+                              style: TextStyle(fontSize: 14),
+                              overflow: TextOverflow
+                                  .ellipsis, // Prevent overflow text
                             ),
-                            SizedBox(width: 12),
-                            // Phone Number TextField
-                            Expanded(
-                              child: TextField(
-                                maxLength: 15,
-                                controller: phoneController,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  // allows only digits (0-9)
-                                ],
-                                decoration: InputDecoration(
-                                  hintText: 'Phone Number',
-                                  hintStyle: TextStyle(
-                                    color: Colors.blueGrey
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 15),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color:Colors.grey.withOpacity(0.5)),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color:Colors.grey.withOpacity(0.5)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                        color: Colorutils.userdetailcolor, width: 2),
-                                  ),
-                                  counterText: '', // This hides the character count
-                                ),
+                          );
+                        }).toList(),
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15,right: 15,bottom: 5),                  child: TextFormField(
+                    maxLength: 15,
+                    controller: phoneController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      // allows only digits (0-9)
+                    ],
+                    validator: (value) {
+                      if (value == null || value.trim().length < 10) {
+                        return 'Enter at least 10 digits';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      label: RichText(
+                        text: TextSpan(
+                          text: "Phone Number",
+                          style: TextStyle(
+                            fontSize: 15.h,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: ' *',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 15.h,
                               ),
                             ),
                           ],
                         ),
-                      ),
+                      ),                                  hintStyle: TextStyle(
+                        color: Colors.blueGrey
                     ),
-                    
-                    
-                    
-                    // Expanded(
-                    //   child: buildTextField2("Phone Number", "assets/images/phone-call.svg",
-                    //       false, phoneNumber, true, _formKey, true),
-                    // ),
-                  ],
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 15),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color:Colors.grey.withOpacity(0.5)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color:Colors.grey.withOpacity(0.5)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                            color: Colorutils.userdetailcolor, width: 2),
+                      ),
+                      counterText: '', // This hides the character count
+                    ),
+                  ),
                 ),
+
 
                 Row(
                   children: [
@@ -428,10 +430,16 @@ class _AddDoctorState extends State<AddDoctor> {
                 ),
                 buildTextField2("Address", "assets/images/address-book.svg",
                     false, address, true, _formKey, false),
-
                 Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 8),
+                  padding:
+                  const EdgeInsets.only(left: 15, right: 15, top: 8),
                   child: TextFormField(
+                    onChanged: (val) {
+                      if (_formKey.currentState != null) {
+                        _formKey.currentState!
+                            .validate(); // Re-validate when typing
+                      }
+                    },
                     validator: (val) {
                       if (val == null || val.trim().isEmpty) {
                         return 'Please enter password.';
@@ -460,29 +468,47 @@ class _AddDoctorState extends State<AddDoctor> {
                     controller: password,
                     obscureText: _obscureText1,
                     decoration: InputDecoration(
-                        labelText: "Password",
-                        labelStyle: TextStyle(
-                          fontSize: 15.h,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueGrey,
-                        ),
+                        label: RichText(
+                          text: TextSpan(
+                            text: "Password",
+                            style: TextStyle(
+                              fontSize: 15.h,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: ' *',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 15.h,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),                              labelStyle: TextStyle(
+                      fontSize: 15.h,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey,
+                    ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(
-                              color: Colorutils.userdetailcolor, width: 1),
+                              color: Colorutils.userdetailcolor,
+                              width: 1),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              BorderSide(color: Colors.grey.withOpacity(0.3)),
+                          borderSide: BorderSide(
+                              color: Colors.grey.withOpacity(0.3)),
                         ),
                         prefixIcon: Icon(Icons.lock_outline_rounded,
                             color: Colors.blueGrey),
                         hintText: "Password",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              BorderSide(color: Colors.grey.withOpacity(0.3)),
+                          borderSide: BorderSide(
+                              color: Colors.grey.withOpacity(0.3)),
                         ),
                         suffixIcon: GestureDetector(
                             onTap: () {
@@ -495,6 +521,7 @@ class _AddDoctorState extends State<AddDoctor> {
                                 : Icons.visibility))),
                   ),
                 ),
+
                 SizedBox(
                   height: 40,
                 ),
@@ -619,9 +646,28 @@ Widget buildTextFieldDropdown(
 
       decoration: InputDecoration(
               hintText: hintText,
-              labelText: hintText,
+        label: RichText(
+          text: TextSpan(
+            text: hintText,
+            style: TextStyle(
+              fontSize: 15.h,
+              fontWeight: FontWeight.bold,
+              color: Colors.blueGrey,
+            ),
+            children: [
+              TextSpan(
+                text: ' *',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 15.h,
+                ),
+              ),
+            ],
+          ),
+        ),
 
-              labelStyle: TextStyle(
+
+        labelStyle: TextStyle(
                 fontSize: 15.h,
                 fontWeight: FontWeight.bold,
                 color: Colors.blueGrey,

@@ -60,7 +60,7 @@ class _OtpScreenState extends State<OtpScreen> {
       Get.snackbar('Failed', 'Submitted OTP: $otpCode',
           snackPosition: SnackPosition.BOTTOM,
           margin: const EdgeInsets.only(
-              bottom: 10,
+              top: 15,
               left: 8,
               right: 8), );
       // You can validate OTP here
@@ -72,7 +72,7 @@ class _OtpScreenState extends State<OtpScreen> {
       Get.snackbar('Failed', 'Please enter full OTP',
           snackPosition: SnackPosition.BOTTOM,
           margin: const EdgeInsets.only(
-              bottom: 10,
+              top: 15,
               left: 8,
               right: 8), );
       // ScaffoldMessenger.of(context).showSnackBar(
@@ -180,7 +180,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 50.h, left: 15),
                   child: Text(
-                    'Enter the 4-digit OTP sent to your Phone number',
+                    'Enter the 4-digit OTP sent to your Phone Number',
                     style: GoogleFonts.roboto(
                         color: Colors.blueGrey,
                         fontSize: 20.h,
@@ -248,7 +248,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       );
                       ProductAppPopUps.submit(
                         title: "Success",
-                        message:"Phone number registered successfully,please enter your details to register",
+                        message:"Phone number registered successfully, Please enter your details to register.",
                         actionName: "Close",
                         iconData: Icons.done,
                         iconColor: Colors.green,
@@ -316,7 +316,10 @@ class _OtpScreenState extends State<OtpScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("Resend OTP in "),
+                            SizedBox(width: 2.w,),
                             Text("$_secondsRemaining",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue),),
+                            SizedBox(width: 2.w,),
+
                             Text(" seconds"),
 
                           ],

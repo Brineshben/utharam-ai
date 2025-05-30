@@ -154,7 +154,8 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                   selectionMode: SelectionMode.autoCenter(),
                   activeColor: const Color(0xFF51C2B9),
                   controller: _controller,
-                  firstDate: DateTime(2025, 05, 01),
+                  firstDate: DateTime.now(),
+
                   focusDate: slotController.selectedDate.value,
                   lastDate: DateTime(2030, 01, 01),
                   dayProps: EasyDayProps(

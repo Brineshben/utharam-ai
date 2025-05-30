@@ -110,7 +110,7 @@ class _DashchiefState extends State<Dashchief> {
                     style: GoogleFonts.nunito(
                       color: Colorutils.userdetailcolor,
                       fontWeight: FontWeight.w600,
-                      fontSize: 15.h,
+                      fontSize: 14.h,
                     ),
                   ),
                   SizedBox(height: 25.w,),
@@ -125,10 +125,10 @@ class _DashchiefState extends State<Dashchief> {
                         style: GoogleFonts.nunito(
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.w900,
-                          fontSize: 30.h,
+                          fontSize: 25.h,
                         ),
                       ),
-                      SizedBox(height: 15.w,),
+                      SizedBox(height: 10.w,),
                       if (item?.key == "Registered patients" && item?.value != 0)
                         Center(
                           child: GestureDetector(

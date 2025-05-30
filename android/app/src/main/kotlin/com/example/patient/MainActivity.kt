@@ -1,4 +1,4 @@
-package com.example.patient
+package com.utharam.metromind
 
 import io.flutter.embedding.android.FlutterActivity
 

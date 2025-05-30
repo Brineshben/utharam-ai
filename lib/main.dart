@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +8,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:lottie/lottie.dart';
 import 'package:patient/utils/color_util.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:upgrader/upgrader.dart';
 import 'Roles_UI/UI/SplashScreen/main_Splash.dart';
 import 'Service/SharedPreference.dart';
 import 'Service/controller_handling.dart';
@@ -54,25 +57,27 @@ class MyApp extends StatelessWidget {
         designSize: const Size(430, 930),
         minTextAdapt: true,
         splitScreenMode: true,
-        child: ScreenUtilInit(
-          designSize: const Size(430, 930),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          child: ShowCaseWidget(
-            builder: (context) => GetMaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Metro Mind',
-              theme: ThemeData(
-                primaryColor: Colorutils.userdetailcolor,
-                colorScheme: ColorScheme.fromSwatch().copyWith(
-                  primary: Colorutils.userdetailcolor,
-                  secondary: Colorutils.userdetailcolor,
-                ),
+        child: ShowCaseWidget(
+          builder: (context) => GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Metro Mind',
+            theme: ThemeData(
+              primaryColor: Colorutils.userdetailcolor,
+              colorScheme: ColorScheme.fromSwatch().copyWith(
+                primary: Colorutils.userdetailcolor,
+                secondary: Colorutils.userdetailcolor,
               ),
-              home: SplashScreen(),
+            ),
+            home: UpgradeAlert(
+              dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
+                upgrader: Upgrader(
+                  debugDisplayAlways: true,
+                  debugLogging: true,
+                ),
+                child: SplashScreen(),
             ),
           ),
-        )
+        ),
       )
     );
   }

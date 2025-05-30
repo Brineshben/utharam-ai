@@ -57,15 +57,13 @@ class TalkToHuman extends StatelessWidget {
             GetX<CallHumanController>(
               builder: (CallHumanController controller) {
                 if (controller.callHumanList.isEmpty) {
-                  return Padding(
-                      padding: const EdgeInsets.only(top: 180),
-                      child: Center(
-                        child: const Text(
-                          "Oops...No Data Found.",
-                          style: TextStyle(
-                              color: Colors.red, fontStyle: FontStyle.italic),
-                        ),
-                      ));
+                  return Center(
+                    child: const Text(
+                      "Oops...No Data Found.",
+                      style: TextStyle(
+                          color: Colors.red, fontStyle: FontStyle.italic),
+                    ),
+                  );
                 } else {
                   return Expanded(
                     child: ListView.builder(

@@ -201,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 50.h),
+                                SizedBox(height: 60.h),
                                 GestureDetector(
                                   onTap: () async {
                                     FocusScope.of(context).unfocus();
@@ -408,18 +408,18 @@ class _LoginPageState extends State<LoginPage> {
                                               'LOGIN',
                                               style: GoogleFonts.roboto(
                                                 color: Colors.white,
-                                                fontSize: 16.h,
+                                                fontSize: 18.h,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: Colors.white,
-                                              size: 16,
-                                            )
+                                            // SizedBox(
+                                            //   width: 10,
+                                            // ),
+                                            // Icon(
+                                            //   Icons.arrow_forward_ios,
+                                            //   color: Colors.white,
+                                            //   size: 16,
+                                            // )
                                           ],
                                         ),
                                       ),
@@ -427,87 +427,87 @@ class _LoginPageState extends State<LoginPage> {
                                   )),
                                 ),
                                 SizedBox(height: 10.h),
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Divider(
-                                        indent: 30.w,
-                                        thickness: 0.5,
-                                        color: Colors.grey[400],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 8.w),
-                                      child: Text(
-                                        'or',
-                                        style: TextStyle(
-                                          color: Colors.grey[600],
-                                          fontSize: 12.h,
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Divider(
-                                        thickness: 0.5,
-                                        color: Colors.grey[400],
-                                        endIndent: 30.w,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10.h),
-                                SizedBox(height: 10.h),
-                                GestureDetector(
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                              horizontal: 30)
-                                          .w,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.snackbar('Failed', 'Feature is under Maintenance',
-                                              snackPosition: SnackPosition.BOTTOM,
-                                            margin: const EdgeInsets.only(
-                                                bottom: 10,
-                                                left: 8,
-                                                right: 8),);
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(30.r),
-                                            border: Border.all(
-                                              color: Colorutils.userdetailcolor,
-                                              width: 0.8,
-                                            ),
-                                          ),
-                                          // width: 250.w,
-                                          height: 50.h,
-                                          child: Center(
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Image.asset(
-                                                  height: 25.h,
-                                                  "assets/images/google_logo.png",
-                                                  fit: BoxFit.fitHeight,
-                                                ),
-                                                SizedBox(width: 8.w),
-                                                Text(
-                                                  'Sign in with Google',
-                                                  style: GoogleFonts.inter(
-                                                    fontSize: 16.h,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                // Row(
+                                //   children: <Widget>[
+                                //     Expanded(
+                                //       child: Divider(
+                                //         indent: 30.w,
+                                //         thickness: 0.5,
+                                //         color: Colors.grey[400],
+                                //       ),
+                                //     ),
+                                //     Padding(
+                                //       padding:
+                                //           EdgeInsets.symmetric(horizontal: 8.w),
+                                //       child: Text(
+                                //         'or',
+                                //         style: TextStyle(
+                                //           color: Colors.grey[600],
+                                //           fontSize: 12.h,
+                                //         ),
+                                //       ),
+                                //     ),
+                                //     Expanded(
+                                //       child: Divider(
+                                //         thickness: 0.5,
+                                //         color: Colors.grey[400],
+                                //         endIndent: 30.w,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                                // SizedBox(height: 10.h),
+                                // SizedBox(height: 10.h),
+                                // GestureDetector(
+                                //   child: Center(
+                                //     child: Padding(
+                                //       padding: const EdgeInsets.symmetric(
+                                //               horizontal: 30)
+                                //           .w,
+                                //       child: GestureDetector(
+                                //         onTap: () {
+                                //           Get.snackbar('Failed', 'Feature is under Maintenance',
+                                //               snackPosition: SnackPosition.BOTTOM,
+                                //             margin: const EdgeInsets.only(
+                                //                 bottom: 10,
+                                //                 left: 8,
+                                //                 right: 8),);
+                                //         },
+                                //         child: Container(
+                                //           decoration: BoxDecoration(
+                                //             borderRadius:
+                                //                 BorderRadius.circular(30.r),
+                                //             border: Border.all(
+                                //               color: Colorutils.userdetailcolor,
+                                //               width: 0.8,
+                                //             ),
+                                //           ),
+                                //           // width: 250.w,
+                                //           height: 50.h,
+                                //           child: Center(
+                                //             child: Row(
+                                //               mainAxisSize: MainAxisSize.min,
+                                //               children: [
+                                //                 Image.asset(
+                                //                   height: 25.h,
+                                //                   "assets/images/google_logo.png",
+                                //                   fit: BoxFit.fitHeight,
+                                //                 ),
+                                //                 SizedBox(width: 8.w),
+                                //                 Text(
+                                //                   'Sign in with Google',
+                                //                   style: GoogleFonts.inter(
+                                //                     fontSize: 16.h,
+                                //                   ),
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
 
                                 // Center(
                                 //   child: Padding(
