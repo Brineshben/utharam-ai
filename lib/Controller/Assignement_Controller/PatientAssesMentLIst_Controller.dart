@@ -4,8 +4,6 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../../Model/Assignement_model/Patient_Assesment_ListModel.dart';
 import '../../Service/Api_Service.dart';
 
-
-
 class PatientAssignmentController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isLoaded = false.obs;
@@ -15,16 +13,17 @@ class PatientAssignmentController extends GetxController {
   RxList<Data?> patientAssesmentListDataList = RxList();
 
   Future<void> patientAssesmentListDataz(String token, int Id) async {
-    print("---patientAssesmentListDataz");
-
     isLoading.value = true;
     isLoaded.value = false;
     try {
-      Map<String, dynamic> resp = await ApiServices.patientAssesmentList(token: token, id: Id);
-      print("--patientAssesmentListDataz------$resp");
+      Map<String, dynamic> resp =
+          await ApiServices.patientAssesmentList(token: token, id: Id);
       if (resp['status'] == 'ok') {
-        patientAssesmentListData.value = patientAssesmentListModel.fromJson(resp);
-        patientAssesmentListDataList.value = patientAssesmentListData.value?.data ?? [];
+        patientAssesmentListData.value =
+            patientAssesmentListModel.fromJson(resp);
+        print("sfdtwqfdtwfd${patientAssesmentListData.value?.data} ");
+        patientAssesmentListDataList.value =
+            patientAssesmentListData.value?.data ?? [];
         isLoading.value = true;
       } else {
         isError.value = true;

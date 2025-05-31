@@ -256,9 +256,9 @@ class _DoneAssesmentState extends State<DoneAssesment> {
           child: Center(
             child: GestureDetector(
               onTap: () async {
+                context.loaderOverlay.show();
                 Map<String,dynamic> resp = await ApiServices.Editassignment( token: widget.token, thoughtsID:widget.thoughtID, response: replyController.text);
                 context.loaderOverlay.hide();
-                print("----------redvffegvsp---------?$resp");
                 if (resp['status'] == "Ok") {
                   // Navigator.push(
                   //   context,
@@ -305,7 +305,7 @@ class _DoneAssesmentState extends State<DoneAssesment> {
                       Text(
                         'SUBMIT ASSIGNMENT',
                         style: GoogleFonts.inter(
-                          fontSize: 16.h,
+                          fontSize: 14.h,
                         ),
                       ),
                     ],

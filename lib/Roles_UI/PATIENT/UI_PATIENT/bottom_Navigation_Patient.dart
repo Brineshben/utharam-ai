@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../Controller/Assignement_Controller/PatientAssesMentLIst_Controller.dart';
 import '../../../Controller/Call_HumanController.dart';
 import '../../../Controller/Medicine_Controller/Particular_medicineList_Controller.dart';
 import '../../../Controller/PatientAppointmentDetailsController.dart';
@@ -28,42 +29,87 @@ class PageIndexNavigationPatient extends StatefulWidget {
   final String date;
   final String patientId;
   final String tokenPatient;
-  const PageIndexNavigationPatient({Key? key, required this.tokenPatient, required this.role, required this.name, required this.date, required this.patientId, required this.userid}) : super(key: key);
+
+  const PageIndexNavigationPatient(
+      {Key? key,
+      required this.tokenPatient,
+      required this.role,
+      required this.name,
+      required this.date,
+      required this.patientId,
+      required this.userid})
+      : super(key: key);
 
   @override
   State<PageIndexNavigationPatient> createState() =>
       _PageIndexNavigationPatientState();
 }
 
-class _PageIndexNavigationPatientState
-    extends State<PageIndexNavigationPatient>  with SingleTickerProviderStateMixin{
-
-
+class _PageIndexNavigationPatientState extends State<PageIndexNavigationPatient>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
     Get.find<QuotesController>().QuotesData(widget.tokenPatient);
     Get.find<CallHumanController>().callHumanDataz(widget.tokenPatient);
-    Get.find<PatientdetailsController>().PatientDetailsDataz(widget.tokenPatient,widget.userid);
-    Get.find<ParticularMedicinelistController>().particularMedicineListDataz(widget.tokenPatient);
-    Get.find<Patientappointmentdetailscontroller>().patientAppointmentListDataz(widget.tokenPatient);
+    Get.find<PatientdetailsController>()
+        .PatientDetailsDataz(widget.tokenPatient, widget.userid);
+    Get.find<ParticularMedicinelistController>()
+        .particularMedicineListDataz(widget.tokenPatient);
+    Get.find<Patientappointmentdetailscontroller>()
+        .patientAppointmentListDataz(widget.tokenPatient);
 
     _screens = [
-      HomeScreenPatient(name:widget.name, role: widget.role, token: widget.tokenPatient, date: widget.date, patientId: widget.patientId,),
+      HomeScreenPatient(
+        name: widget.name,
+        role: widget.role,
+        token: widget.tokenPatient,
+        date: widget.date,
+        patientId: widget.patientId,
+      ),
       TalkToHuman(),
-      MyAssesmentListPage(token:  widget.tokenPatient, id: widget.userid),
+      MyAssesmentListPage(token: widget.tokenPatient, id: widget.userid),
       Medicinelistjunior(token: widget.tokenPatient)
     ];
+  }
 
+  void _handleTabTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Always call relevant API when a tab is selected
+    switch (index) {
+      case 0:
+        Get.find<QuotesController>().QuotesData(widget.tokenPatient);
+        Get.find<Patientappointmentdetailscontroller>()
+            .patientAppointmentListDataz(widget.tokenPatient);
+        Get.find<PatientdetailsController>()
+            .PatientDetailsDataz(widget.tokenPatient, widget.userid);
+        break;
+      case 1:
+        Get.find<CallHumanController>().callHumanDataz(widget.tokenPatient);
+
+        break;
+      case 2:
+        Get.find<PatientAssignmentController>().patientAssesmentListDataz(widget.tokenPatient,widget.userid);
+
+        break;
+      case 3:
+        Get.find<ParticularMedicinelistController>()
+            .particularMedicineListDataz(widget.tokenPatient);
+
+        break;
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
   }
+
   int _selectedIndex = 0;
   late final List<Widget> _screens;
-
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +119,9 @@ class _PageIndexNavigationPatientState
         backgroundColor: Colors.white,
         body: IndexedStack(
           index: _selectedIndex,
+
           children: _screens,
+
         ),
         floatingActionButton: GetX<PatientdetailsController>(
           builder: (PatientdetailsController controller) {
@@ -122,7 +170,6 @@ class _PageIndexNavigationPatientState
             }
           },
         ),
-
         bottomNavigationBar: SizedBox(
           height: 67.h,
           child: Stack(
@@ -147,11 +194,13 @@ class _PageIndexNavigationPatientState
                   selectedItemColor: Colorutils.userdetailcolor,
                   unselectedItemColor: Colors.grey,
                   currentIndex: _selectedIndex,
-                  onTap: (index) {
-                    setState(() {
-                      _selectedIndex = index;
-                    });
-                  },
+                  onTap: _handleTabTap,
+
+                  // onTap: (index) {
+                  //   setState(() {
+                  //     _selectedIndex = index;
+                  //   });
+                  // },
                   items: [
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
@@ -203,25 +252,28 @@ class _PageIndexNavigationPatientState
                         height: 25.h,
                         color: Colors.grey,
                         colorFilter: ColorFilter.mode(
-                          _selectedIndex == 2 ? Colorutils.userdetailcolor : Colors.grey,
+                          _selectedIndex == 2
+                              ? Colorutils.userdetailcolor
+                              : Colors.grey,
                           BlendMode.srcIn,
                         ),
                       ),
                       label: 'Assessments',
-
-                    ), BottomNavigationBarItem(
+                    ),
+                    BottomNavigationBarItem(
                       icon: SvgPicture.asset(
                         "assets/images/memo-pad.svg",
                         width: 25.w,
                         height: 25.h,
                         color: Colors.grey,
                         colorFilter: ColorFilter.mode(
-                          _selectedIndex == 3 ? Colorutils.userdetailcolor : Colors.grey,
+                          _selectedIndex == 3
+                              ? Colorutils.userdetailcolor
+                              : Colors.grey,
                           BlendMode.srcIn,
                         ),
                       ),
                       label: 'Medicine',
-
                     )
                   ],
                 ),

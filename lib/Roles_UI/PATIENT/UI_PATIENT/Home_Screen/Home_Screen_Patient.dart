@@ -329,6 +329,7 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                     ),
                   ),
                 ),
+                SizedBox(height: 15,)
               ],
             ),
           ),

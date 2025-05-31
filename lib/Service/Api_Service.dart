@@ -817,6 +817,8 @@ class ApiServices {
       print('patientAssignmentList------>${response}');
 
       var respString = await response.stream.bytesToString();
+      print('patientAsrespString--->${respString}');
+
       return json.decode(respString);
     } catch (e) {
       throw Exception("Service Error patientAssignmentList");
