@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import '../../../Controller/Login_Controller.dart';
 import '../../../Model/Login_Model.dart';
 import '../../../Service/SharedPreference.dart';
+import '../../../utils/Api_Constants.dart';
 import '../../../utils/Constants.dart';
 import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
 import '../../JUNIOR_DOCTOR/bottom_navigation_Junior.dart';
@@ -328,7 +329,7 @@ class _SplashState extends State<Splash> {
                             ),
                             Center(
                               child: Text(
-                                "Version 0.1",
+                                "Version ${ApiConstants.version}",
                                 style: TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 10.h,

@@ -138,14 +138,16 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
                                       color: Colors.blueGrey,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                  ),Column(
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "QUESTION :",
                                         style: TextStyle(
                                           fontSize: 14.h,
-                                          color: Colors.blueGrey,
+                                          color: Colors.blue,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -159,6 +161,7 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
                                       ),
                                     ],
                                   ),
+                                  SizedBox(height: 5,),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -166,7 +169,7 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
                                         "ANSWER :",
                                         style: TextStyle(
                                           fontSize: 14.h,
-                                          color: Colors.blueGrey,
+                                          color: Colors.green,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

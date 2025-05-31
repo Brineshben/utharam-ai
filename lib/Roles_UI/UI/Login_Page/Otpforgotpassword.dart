@@ -182,7 +182,7 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 50.h, left: 15),
                   child: Text(
-                    'Enter the 6-digit OTP sent to your Email${widget.id}',
+                    'Enter the 6-digit OTP sent to your Email.',
                     style: GoogleFonts.roboto(
                         color: Colors.blueGrey,
                         fontSize: 20.h,
@@ -209,6 +209,10 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
                     onCompleted: (pin) {
                       setState(() {
                         otpCode.text = pin;
+
+
+
+
                       });
                     },
                   ),

@@ -134,14 +134,17 @@ class _MyAssesmentListPageState extends State<MyAssesmentListPage> {
                                       color: Colors.blueGrey,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                  ),Column(
+                                  ),
+                                  SizedBox(height: 5,),
+
+                                  Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "QUESTION :",
                                         style: TextStyle(
                                           fontSize: 14.h,
-                                          color: Colors.blueGrey,
+                                          color: Colors.blue,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -155,7 +158,10 @@ class _MyAssesmentListPageState extends State<MyAssesmentListPage> {
                                       ),
                                     ],
                                   ),
+                                  SizedBox(height: 5,),
+
                                   patient?.responseText !=null?
+
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -163,7 +169,7 @@ class _MyAssesmentListPageState extends State<MyAssesmentListPage> {
                                         "ANSWER :",
                                         style: TextStyle(
                                           fontSize: 14.h,
-                                          color: Colors.blueGrey,
+                                          color: Colors.green,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

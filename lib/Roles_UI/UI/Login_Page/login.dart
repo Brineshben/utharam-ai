@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:patient/utils/Api_Constants.dart';
 import '../../../Controller/Login_Controller.dart';
 import '../../../utils/Constants.dart';
 import '../../../utils/color_util.dart';
@@ -561,7 +562,7 @@ class _LoginPageState extends State<LoginPage> {
 
                                     },
                                     child: Text(
-                                      "Version 0.1",
+                                      "Version ${ApiConstants.version}",
                                       style: TextStyle(
                                         color: Colors.blueGrey,
                                         fontSize: 10.h,
