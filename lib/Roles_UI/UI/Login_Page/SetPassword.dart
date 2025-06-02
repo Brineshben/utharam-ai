@@ -49,7 +49,7 @@ class SetPasswordState extends State<SetPassword> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 40, right: 10),
+          padding: const EdgeInsets.only(left: 10, top: 30, right: 10),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -91,7 +91,7 @@ class SetPasswordState extends State<SetPassword> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 50.h, left: 15),
+                    padding: EdgeInsets.only(top: 20.h, left: 15),
                     child: Text(
                       'Enter New Password',
                       style: GoogleFonts.roboto(

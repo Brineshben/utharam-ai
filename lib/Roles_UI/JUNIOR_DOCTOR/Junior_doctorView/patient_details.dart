@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -107,11 +108,10 @@ class _PatientDetailsState extends State<PatientDetails> {
         ),
       ),
       builder: (context) {
-        return Padding(
-          // Add keyboard-aware padding
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
+        final screenHeight = MediaQuery.of(context).size.height;
+        return SizedBox(
+          height: screenHeight * 0.8, // 80% of screen height
+
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -156,6 +156,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                         Get.find<ConsultDoctorListController>()
                             .SearchDoctorList(value);
                       },
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r'\s')), // Disallow spaces
+                      ],
                       validator: (val) =>
                           val!.isEmpty ? 'Enter the Topic' : null,
                       cursorColor: Colors.grey,
@@ -202,49 +205,66 @@ class _PatientDetailsState extends State<PatientDetails> {
                 // Doctor List
                 GetX<ConsultDoctorListController>(
                   builder: (controller) {
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.consultDoctorList.length,
-                      itemBuilder: (context, index) {
-                        final doctor = controller.consultDoctorList[index];
-                        return ListTile(
-                          leading: ClipOval(
-                            child: Image.asset(
-                              "assets/images/profileimage.jpg",
-                              fit: BoxFit.cover,
-                              width: 35.w,
-                              height: 35.w,
+                    if (controller.isLoading.value) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: Colorutils.userdetailcolor,
+                        ),
+                      );
+                    }
+                    if (controller.consultDoctorList.isEmpty) {
+                      return Center(
+                        child: const Text(
+                          "Oops...No Doctor Found.",
+                          style: TextStyle(
+                              color: Colors.red, fontStyle: FontStyle.italic),
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.consultDoctorList.length,
+                        itemBuilder: (context, index) {
+                          final doctor = controller.consultDoctorList[index];
+                          return ListTile(
+                            leading: ClipOval(
+                              child: Image.asset(
+                                "assets/images/profileimage.jpg",
+                                fit: BoxFit.cover,
+                                width: 35.w,
+                                height: 35.w,
+                              ),
                             ),
-                          ),
-                          title: Text(
-                            doctor?.name ?? "",
-                            style: const TextStyle(
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.bold,
+                            title: Text(
+                              doctor?.name ?? "",
+                              style: const TextStyle(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          subtitle: Text(
-                            doctor?.role ?? "",
-                            style: const TextStyle(
-                              color: Colors.blueGrey,
-                              fontWeight: FontWeight.bold,
+                            subtitle: Text(
+                              doctor?.role ?? "",
+                              style: const TextStyle(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          onTap: () async {
-                            setState(() {
-                              data = doctor;
-                            });
-                            // await Get.find<DoctorToPatientController>()
-                            //     .doctorToPatientData(
-                            //     widget.token, doctor?.id ?? 0, widget.id);
-                            Navigator.of(context)
-                                .pop(); // Dismisses the BottomSheet
-                          },
-                        );
-                      },
-                    );
+                            onTap: () async {
+                              setState(() {
+                                data = doctor;
+                              });
+                              // await Get.find<DoctorToPatientController>()
+                              //     .doctorToPatientData(
+                              //     widget.token, doctor?.id ?? 0, widget.id);
+                              Navigator.of(context)
+                                  .pop(); // Dismisses the BottomSheet
+                            },
+                          );
+                        },
+                      );
+                    }
                   },
                 ),
                 const SizedBox(height: 20), // Optional space at bottom
@@ -369,51 +389,52 @@ class _PatientDetailsState extends State<PatientDetails> {
                 AiReport(
                   summary: widget.diagnosissummary,
                   details: "details",
-                  repoturl: widget.url, name: widget.name,
+                  repoturl: widget.url,
+                  name: widget.name,
                 ),
-                widget.disease==false?
-                Padding(
-                  padding: EdgeInsets.only(left: 20.w, right: 10.w),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Enable Secondary Chat".toUpperCase(),
-                        style: GoogleFonts.shanti(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 18.h,
+                widget.disease == false
+                    ? Padding(
+                        padding: EdgeInsets.only(left: 20.w, right: 10.w),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Enable Secondary Chat".toUpperCase(),
+                              style: GoogleFonts.shanti(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 18.h,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Switch(
+                              value: isSwitched,
+                              onChanged: (value) {
+                                toggleSwitch(value, widget.id);
+                              },
+                              inactiveTrackColor: Colors.grey.withOpacity(0.2),
+                              activeColor: Colorutils.userdetailcolor,
+                              inactiveThumbColor: Colors.grey,
+                            )
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-
-                      Switch(
-                        value: isSwitched,
-                        onChanged: (value) {
-                          toggleSwitch(value, widget.id);
-                        },
-inactiveTrackColor:Colors.grey.withOpacity(0.2) ,                        activeColor: Colorutils.userdetailcolor,
-                        inactiveThumbColor: Colors.grey,
                       )
-                    ],
-                  ),
-                ): Padding(
-                  padding: EdgeInsets.only(left: 20.w, right: 10.w),
-                  child: Row(
-                    children: [
-                      Text(
-                        "SECONDARY CHAT ENABLED".toUpperCase(),
-                        style: GoogleFonts.shanti(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 18.h,
+                    : Padding(
+                        padding: EdgeInsets.only(left: 20.w, right: 10.w),
+                        child: Row(
+                          children: [
+                            Text(
+                              "SECONDARY CHAT ENABLED".toUpperCase(),
+                              style: GoogleFonts.shanti(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 18.h,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-
-                    ],
-                  ),
-                ),
                 Column(
                   children: [
                     Padding(
@@ -449,14 +470,17 @@ inactiveTrackColor:Colors.grey.withOpacity(0.2) ,                        activeC
                               Flexible(
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  child: Text(
-                                    'Recommend Specialists: ${data?.name?.toUpperCase() ?? "Select Doctor"}',
-                                    style: GoogleFonts.roboto(
-                                      color: Colors.white,
-                                      fontSize: 16.h,
-                                      fontWeight: FontWeight.bold,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 10,right: 10),
+                                    child: Text(
+                                      'Recommend Specialists: ${data?.name?.toUpperCase() ?? "Select Doctor"}',
+                                      style: GoogleFonts.roboto(
+                                        color: Colors.white,
+                                        fontSize: 16.h,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
@@ -498,41 +522,50 @@ inactiveTrackColor:Colors.grey.withOpacity(0.2) ,                        activeC
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 15, right: 15, top: 10),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                border: Border.all(
-                                  color: Colorutils.userdetailcolor,
-                                  width: 0.8,
-                                ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 15, right: 15),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('DATE : $fromDate',
-                                        style: TextStyle(
-                                            fontSize: 15.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.blueGrey)),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.calendar_month,
-                                        color: Colorutils.userdetailcolor,
-                                        size: 20,
-                                      ),
-                                      onPressed: () async {
-                                        await _selectFromDate(context);
+                            child: GestureDetector(
+                              onTap: () async {
+                                await _selectFromDate(context);
 
-                                        await Get.find<
-                                                SlottopateientController>()
-                                            .slotToPatientData(widget.token,
-                                                data?.name ?? "", fromDate);
-                                      },
-                                    ),
-                                  ],
+                                await Get.find<SlottopateientController>()
+                                    .slotToPatientData(widget.token,
+                                        data?.name ?? "", fromDate);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  border: Border.all(
+                                    color: Colorutils.userdetailcolor,
+                                    width: 0.8,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text('DATE : $fromDate',
+                                          style: TextStyle(
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.blueGrey)),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.calendar_month,
+                                          color: Colorutils.userdetailcolor,
+                                          size: 20,
+                                        ),
+                                        onPressed: () async {
+                                          await _selectFromDate(context);
+
+                                          await Get.find<
+                                                  SlottopateientController>()
+                                              .slotToPatientData(widget.token,
+                                                  data?.name ?? "", fromDate);
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -542,81 +575,102 @@ inactiveTrackColor:Colors.grey.withOpacity(0.2) ,                        activeC
                 fromDate != 'YYYY-MM-DD'
                     ? GetX<SlottopateientController>(
                         builder: (SlottopateientController controller) {
-                        return controller.slotToPatientList.isEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: 25),
-                                child: Center(
-                                    child: const Text(
-                                  "Oops.No Slot Available for particular doctor on particular date",
-                                  style: TextStyle(
-                                      color: Colors.red,
-                                      fontStyle: FontStyle.italic),
-                                )),
-                              )
-                            : Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 10.h, left: 20.w, right: 10.w),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Please Select Slot",
-                                          style: GoogleFonts.shanti(
-                                            color: Colors.blueGrey,
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: 18.h,
-                                          ),
-                                        ),
-                                      ],
+                        if (controller.isLoading.value) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: SizedBox(
+                                height: 30.h, // Set your desired height
+                                width: 30.w, // Set your desired width
+                                child: CircularProgressIndicator(
+                                  color: Colorutils.userdetailcolor,
+                                  strokeWidth: 4, // Optional: adjust thickness
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                        if (controller.slotToPatientList.isEmpty) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 25),
+                            child: Center(
+                                child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 16, right: 16),
+                              child: const Text(
+                                "Oops.No Slot Available for particular doctor on particular date",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontStyle: FontStyle.italic),
+                              ),
+                            )),
+                          );
+                        } else {
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: 10.h, left: 20.w, right: 10.w),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Please Select Slot",
+                                      style: GoogleFonts.shanti(
+                                        color: Colors.blueGrey,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 18.h,
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Wrap(
-                                        spacing: 8,
-                                        runSpacing: 8,
-                                        children: List.generate(
-                                          controller.slotToPatientList.length,
-                                          (index) => GestureDetector(
-                                            onTap: () {
-                                              print(selectedIndex);
-                                              setState(() {
-                                                selectedIndex = index;
-                                              });
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.only(
-                                                  top: 8,
-                                                  bottom: 8,
-                                                  left: 10,
-                                                  right: 10),
-                                              decoration: BoxDecoration(
-                                                color: selectedIndex == index
-                                                    ? Colors
-                                                        .blue // Highlighted color
-                                                    : Colors.blue.shade100,
-                                                // Normal color
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: Text(
-                                                "${controller.slotToPatientList[index]?.fromTime ?? ""}-${controller.slotToPatientList[index]?.toTime ?? ""}",
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: selectedIndex == index
-                                                      ? Colors.white
-                                                      : Colors.black,
-                                                ),
-                                              ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Wrap(
+                                    spacing: 8,
+                                    runSpacing: 8,
+                                    children: List.generate(
+                                      controller.slotToPatientList.length,
+                                      (index) => GestureDetector(
+                                        onTap: () {
+                                          print(selectedIndex);
+                                          setState(() {
+                                            selectedIndex = index;
+                                          });
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              top: 8,
+                                              bottom: 8,
+                                              left: 10,
+                                              right: 10),
+                                          decoration: BoxDecoration(
+                                            color: selectedIndex == index
+                                                ? Colors
+                                                    .blue // Highlighted color
+                                                : Colors.blue.shade100,
+                                            // Normal color
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Text(
+                                            "${controller.slotToPatientList[index]?.fromTime ?? ""}-${controller.slotToPatientList[index]?.toTime ?? ""}",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: selectedIndex == index
+                                                  ? Colors.white
+                                                  : Colors.black,
                                             ),
                                           ),
                                         ),
-                                      )),
-                                ],
-                              );
+                                      ),
+                                    ),
+                                  )),
+                            ],
+                          );
+                        }
                       })
                     : SizedBox()
 
@@ -736,7 +790,8 @@ inactiveTrackColor:Colors.grey.withOpacity(0.2) ,                        activeC
                                     widget.token, data?.id ?? 0, widget.id);
                             await Get.find<PatientQueueController>()
                                 .patientData(widget.token);
-                            await Get.find<JuniorDashboardController>().juniorData(widget.token);
+                            await Get.find<JuniorDashboardController>()
+                                .juniorData(widget.token);
 
                             // Navigator.of(context).pop();
                             ProductAppPopUps.submit2Back(

@@ -158,299 +158,302 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                       ),
                     );
                   } else {
-                    return ListView.separated(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w),
-                      shrinkWrap: true,
-                      itemCount: controller.enquiryList.length,
-                      itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: ListView.separated(
+                        padding: EdgeInsets.symmetric(horizontal: 5.w,),
+                        shrinkWrap: true,
+                        itemCount: controller.enquiryList.length,
+                        itemBuilder: (context, index) {
 
-                        final patientEnquired = controller.enquiryList[index];
-                        final patientSummary = (patientEnquired?.diagnosis?.isNotEmpty ?? false)
-                            ? patientEnquired?.diagnosis?.first.id
-                            : 0;
+                          final patientEnquired = controller.enquiryList[index];
+                          final patientSummary = (patientEnquired?.diagnosis?.isNotEmpty ?? false)
+                              ? patientEnquired?.diagnosis?.first.id
+                              : 0;
 
-                        final showButtons = (patientEnquired?.diagnosis?.isNotEmpty ?? false)
-                            ? patientEnquired?.diagnosis?.first.isApproved
-                            : false;
-                        return ListTile(
-                          leading:  CircleAvatar(
-                            backgroundColor:
-                            Colors.white,
-                            child: ClipOval(
-                              child: Image.asset(
-                                "assets/images/profileimage.jpg",
-                                fit: BoxFit.cover,
-                                width: 30,
-                                height: 30,
-                              ),
-                            ),
-                          ),
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                patientEnquired?.name?.toUpperCase() ?? "No Name",
-                                style: TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontSize: 15.h,
-                                  fontWeight: FontWeight.bold,
+                          final showButtons = (patientEnquired?.diagnosis?.isNotEmpty ?? false)
+                              ? patientEnquired?.diagnosis?.first.isApproved
+                              : false;
+                          return ListTile(
+                            leading:  CircleAvatar(
+                              backgroundColor:
+                              Colors.white,
+                              child: ClipOval(
+                                child: Image.asset(
+                                  "assets/images/profileimage.jpg",
+                                  fit: BoxFit.cover,
+                                  width: 30,
+                                  height: 30,
                                 ),
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            ),
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  patientEnquired?.name?.toUpperCase() ?? "No Name",
+                                  style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontSize: 15.h,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                                children: [
-                                  Text(
-                                    patientEnquired?.mobileNumber?.toUpperCase() ?? "No Number",
-                                    style: TextStyle(
-                                      color: Colors.blueGrey,
-                                      fontSize: 12.h,
-                                      fontWeight: FontWeight.bold,
+                                  children: [
+                                    Text(
+                                      patientEnquired?.mobileNumber?.toUpperCase() ?? "No Number",
+                                      style: TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontSize: 12.h,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
 
-                                  Row(
-                                    children: [
+                                    Row(
+                                      children: [
 
-                                      GestureDetector(
+                                        GestureDetector(
 
-                                        child:Image.asset(
-                                          "assets/images/whatsapp.png",
-                                          fit: BoxFit.cover,
-                                          width: 25,
-                                          height: 25,
+                                          child:Image.asset(
+                                            "assets/images/whatsapp.png",
+                                            fit: BoxFit.cover,
+                                            width: 25,
+                                            height: 25,
+                                          ),
+                                          onTap: (){
+                                            // makePhoneCall( callHuman?.callId ?? 0);
+                                            //
+                                            openWhatsAppChat( phoneNumber: patientEnquired?.mobileNumber ??"");
+
+                                          },
                                         ),
-                                        onTap: (){
-                                          // makePhoneCall( callHuman?.callId ?? 0);
-                                          //
-                                          openWhatsAppChat( phoneNumber: patientEnquired?.mobileNumber ??"");
+                                        SizedBox(width: 15,),
+                                        GestureDetector(
 
-                                        },
-                                      ),
-                                      SizedBox(width: 15,),
-                                      GestureDetector(
+                                          child: SvgPicture.asset(
+                                            "assets/images/phone-call.svg",
 
-                                        child: SvgPicture.asset(
-                                          "assets/images/phone-call.svg",
+                                            width: 25.w,
+                                            height: 25.h,
+                                          ),
+                                          onTap: (){
+                                            // makePhoneCall( callHuman?.callId ?? 0);
+                                            //
+                                            makePhoneCall(patientEnquired?.mobileNumber ??"");
 
-                                          width: 25.w,
-                                          height: 25.h,
+                                          },
                                         ),
-                                        onTap: (){
-                                          // makePhoneCall( callHuman?.callId ?? 0);
-                                          //
-                                          makePhoneCall(patientEnquired?.mobileNumber ??"");
-
-                                        },
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 5,),
-                              (showButtons == false && patientEnquired?.hasSecondAssessment ==false) ?
-                              GestureDetector(child: buildTag("Generate AI Report", Colorutils.userdetailcolor),onTap: () async{
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 5,),
+                                (showButtons == false && patientEnquired?.hasSecondAssessment ==false) ?
+                                GestureDetector(child: buildTag("Generate AI Report", Colorutils.userdetailcolor),onTap: () async{
 
 
 
 
-                                context.loaderOverlay.show();
-                                Map<String, dynamic> resp =
-                                await ApiServices.generateReport(
-                                    token: widget.token, id: patientEnquired?.id ?? 0);
-                                context.loaderOverlay.hide();
+                                  context.loaderOverlay.show();
+                                  Map<String, dynamic> resp =
+                                  await ApiServices.generateReport(
+                                      token: widget.token, id: patientEnquired?.id ?? 0);
+                                  context.loaderOverlay.hide();
 
-                                if (resp['status'] == "ok") {
+                                  if (resp['status'] == "ok") {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      return FullScreenPdfViewerJunior( token:  widget.token, patientid:  patientEnquired?.id ?? 0, doctorID: widget.doctorID, diagnosisId: patientSummary ?? 0,);
+                                    },));
+
+                                    ProductAppPopUps.submit(
+                                      title: "Success",
+                                      message: "AI Report Generated Successfully",
+                                      actionName: "Close",
+                                      iconData: Icons.done,
+                                      iconColor: Colors.green,
+                                    );
+                                  } else {
+                                    ProductAppPopUps.submit(
+                                      title: "Error",
+                                      message:  "Patient Not Complete the AI Chat Yet",
+                                      actionName: "Close",
+                                      iconData: Icons.error_outline_outlined,
+                                      iconColor: Colors.red,
+                                    );
+                                  }
+
+                                },):SizedBox(),
+                                SizedBox(height: 5,),
+                                (showButtons == true &&patientEnquired?.hasSecondAssessment ==false) ?
+                                GestureDetector(child: buildTag("START SECOND ASSESMENT", Colors.blue),onTap: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                    return FullScreenPdfViewerJunior( token:  widget.token, patientid:  patientEnquired?.id ?? 0, doctorID: widget.doctorID, diagnosisId: patientSummary ?? 0,);
+                                    return SecondAssesment(token: widget.token, userID: patientEnquired?.id ?? 0, name: patientEnquired?.name ?? "",);
                                   },));
-
-                                  ProductAppPopUps.submit(
-                                    title: "Success",
-                                    message: "AI Report Generated Successfully",
-                                    actionName: "Close",
-                                    iconData: Icons.done,
-                                    iconColor: Colors.green,
-                                  );
-                                } else {
-                                  ProductAppPopUps.submit(
-                                    title: "Error",
-                                    message:  "Patient Not Complete the AI Chat Yet",
-                                    actionName: "Close",
-                                    iconData: Icons.error_outline_outlined,
-                                    iconColor: Colors.red,
-                                  );
-                                }
-
-                              },):SizedBox(),
-                              SizedBox(height: 5,),
-                              (showButtons == true &&patientEnquired?.hasSecondAssessment ==false) ?
-                              GestureDetector(child: buildTag("START SECOND ASSESMENT", Colors.blue),onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return SecondAssesment(token: widget.token, userID: patientEnquired?.id ?? 0, name: patientEnquired?.name ?? "",);
-                                },));
-                              },) : SizedBox(),
-                              SizedBox(height: 5,),
-                            patientEnquired?.hasSecondAssessment ==true ?
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    child: buildTag("APPROVE", Colorutils.userdetailcolor),
-                                    onTap: () async {
-                                      context.loaderOverlay.show(); // Show loader before API call
-                                      final resp = await ApiServices.approveEnquiredList(
-                                        token: widget.token,
-                                        id: patientEnquired?.id ?? 0,
-                                      );
-                                      context.loaderOverlay.hide(); // Hide loader after API call
-
-                                      print("Approve Response: $resp");
-
-                                      if (resp['status'] == "ok") {
-                                        ProductAppPopUps.submit(
-                                          title: "Success",
-                                          message: "Patient Enquiry Approved Successfully.",
-                                          actionName: "Close",
-                                          iconData: Icons.done,
-                                          iconColor: Colorutils.userdetailcolor,
+                                },) : SizedBox(),
+                                SizedBox(height: 5,),
+                              patientEnquired?.hasSecondAssessment ==true ?
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      child: buildTag("APPROVE", Colorutils.userdetailcolor),
+                                      onTap: () async {
+                                        context.loaderOverlay.show(); // Show loader before API call
+                                        final resp = await ApiServices.approveEnquiredList(
+                                          token: widget.token,
+                                          id: patientEnquired?.id ?? 0,
                                         );
-                                        await Get.find<EnquiredListController>().enquiryListData(widget.token);
-                                        await Get.find<JuniorDashboardController>().juniorData(widget.token);
+                                        context.loaderOverlay.hide(); // Hide loader after API call
 
-                                      } else {
-                                        ProductAppPopUps.submit(
-                                          title: "Failed",
-                                          message: resp['message'] ?? 'Something went wrong.',
-                                          actionName: "Close",
-                                          iconData: Icons.error_outline,
-                                          iconColor: Colors.red,
+                                        print("Approve Response: $resp");
+
+                                        if (resp['status'] == "ok") {
+                                          ProductAppPopUps.submit(
+                                            title: "Success",
+                                            message: "Patient Enquiry Approved Successfully.",
+                                            actionName: "Close",
+                                            iconData: Icons.done,
+                                            iconColor: Colorutils.userdetailcolor,
+                                          );
+                                          await Get.find<EnquiredListController>().enquiryListData(widget.token);
+                                          await Get.find<JuniorDashboardController>().juniorData(widget.token);
+
+                                        } else {
+                                          ProductAppPopUps.submit(
+                                            title: "Failed",
+                                            message: resp['message'] ?? 'Something went wrong.',
+                                            actionName: "Close",
+                                            iconData: Icons.error_outline,
+                                            iconColor: Colors.red,
+                                          );
+                                        }
+                                      },
+                                    ),
+                                    const SizedBox(width: 8),
+                                    GestureDetector(
+                                      child: buildTag("REJECT", Colors.red),
+                                      onTap: () async {
+                                        context.loaderOverlay.show();
+                                        final resp = await ApiServices.rejectEnquiredList(
+                                          token: widget.token,
+                                          id: patientEnquired?.id ?? 0,
                                         );
-                                      }
-                                    },
-                                  ),
-                                  const SizedBox(width: 8),
-                                  GestureDetector(
-                                    child: buildTag("REJECT", Colors.red),
-                                    onTap: () async {
-                                      context.loaderOverlay.show();
-                                      final resp = await ApiServices.rejectEnquiredList(
-                                        token: widget.token,
-                                        id: patientEnquired?.id ?? 0,
-                                      );
-                                      context.loaderOverlay.hide();
+                                        context.loaderOverlay.hide();
 
-                                      print("Reject Response: $resp");
+                                        print("Reject Response: $resp");
 
-                                      if (resp['status'] == "ok") {
-                                        ProductAppPopUps.submit(
-                                          title: "Success",
-                                          message: "Patient Enquiry Rejected Successfully.",
-                                          actionName: "Close",
-                                          iconData: Icons.done,
-                                          iconColor: Colorutils.userdetailcolor,
-                                        );
-                                        Get.find<EnquiredListController>().enquiryListData(widget.token);
-                                      } else {
-                                        ProductAppPopUps.submit(
-                                          title: "Failed",
-                                          message: resp['message'] ?? 'Something went wrong.',
-                                          actionName: "Close",
-                                          iconData: Icons.error_outline,
-                                          iconColor: Colors.red,
-                                        );
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ):SizedBox(),
-                          // patientEnquired?.hasSecondAssessment == true
-                          //     ? Row(
-                          //   children: [
-                          //     GestureDetector(
-                          //       child: _buildTag("APPROVE", Colorutils.userdetailcolor),
-                          //       onTap: () async {
-                          //         context.loaderOverlay.show(); // Show loader before API call
-                          //         final resp = await ApiServices.approveEnquiredList(
-                          //           token: widget.token,
-                          //           id: patientEnquired?.id ?? 0,
-                          //         );
-                          //         context.loaderOverlay.hide(); // Hide loader after API call
-                          //
-                          //         print("Approve Response: $resp");
-                          //
-                          //         if (resp['status'] == "ok") {
-                          //           ProductAppPopUps.submit(
-                          //             title: "Success",
-                          //             message: "Patient Enquiry Approved Successfully.",
-                          //             actionName: "Close",
-                          //             iconData: Icons.done,
-                          //             iconColor: Colorutils.userdetailcolor,
-                          //           );
-                          //           Get.find<EnquiredListController>().enquiryListData(widget.token);
-                          //         } else {
-                          //           ProductAppPopUps.submit(
-                          //             title: "Failed",
-                          //             message: resp['message'] ?? 'Something went wrong.',
-                          //             actionName: "Close",
-                          //             iconData: Icons.error_outline,
-                          //             iconColor: Colors.red,
-                          //           );
-                          //         }
-                          //       },
-                          //     ),
-                          //     const SizedBox(width: 8),
-                          //     GestureDetector(
-                          //       child: _buildTag("REJECT", Colors.red),
-                          //       onTap: () async {
-                          //         context.loaderOverlay.show();
-                          //         final resp = await ApiServices.rejectEnquiredList(
-                          //           token: widget.token,
-                          //           id: patientEnquired?.id ?? 0,
-                          //         );
-                          //         context.loaderOverlay.hide();
-                          //
-                          //         print("Reject Response: $resp");
-                          //
-                          //         if (resp['status'] == "ok") {
-                          //           ProductAppPopUps.submit(
-                          //             title: "Success",
-                          //             message: "Patient Enquiry Rejected Successfully.",
-                          //             actionName: "Close",
-                          //             iconData: Icons.done,
-                          //             iconColor: Colorutils.userdetailcolor,
-                          //           );
-                          //           Get.find<EnquiredListController>().enquiryListData(widget.token);
-                          //         } else {
-                          //           ProductAppPopUps.submit(
-                          //             title: "Failed",
-                          //             message: resp['message'] ?? 'Something went wrong.',
-                          //             actionName: "Close",
-                          //             iconData: Icons.error_outline,
-                          //             iconColor: Colors.red,
-                          //           );
-                          //         }
-                          //       },
-                          //     ),
-                          //   ],
-                          // )
-                          //     : const SizedBox(),
+                                        if (resp['status'] == "ok") {
+                                          ProductAppPopUps.submit(
+                                            title: "Success",
+                                            message: "Patient Enquiry Rejected Successfully.",
+                                            actionName: "Close",
+                                            iconData: Icons.done,
+                                            iconColor: Colorutils.userdetailcolor,
+                                          );
+                                          Get.find<EnquiredListController>().enquiryListData(widget.token);
+                                        } else {
+                                          ProductAppPopUps.submit(
+                                            title: "Failed",
+                                            message: resp['message'] ?? 'Something went wrong.',
+                                            actionName: "Close",
+                                            iconData: Icons.error_outline,
+                                            iconColor: Colors.red,
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ):SizedBox(),
+                            // patientEnquired?.hasSecondAssessment == true
+                            //     ? Row(
+                            //   children: [
+                            //     GestureDetector(
+                            //       child: _buildTag("APPROVE", Colorutils.userdetailcolor),
+                            //       onTap: () async {
+                            //         context.loaderOverlay.show(); // Show loader before API call
+                            //         final resp = await ApiServices.approveEnquiredList(
+                            //           token: widget.token,
+                            //           id: patientEnquired?.id ?? 0,
+                            //         );
+                            //         context.loaderOverlay.hide(); // Hide loader after API call
+                            //
+                            //         print("Approve Response: $resp");
+                            //
+                            //         if (resp['status'] == "ok") {
+                            //           ProductAppPopUps.submit(
+                            //             title: "Success",
+                            //             message: "Patient Enquiry Approved Successfully.",
+                            //             actionName: "Close",
+                            //             iconData: Icons.done,
+                            //             iconColor: Colorutils.userdetailcolor,
+                            //           );
+                            //           Get.find<EnquiredListController>().enquiryListData(widget.token);
+                            //         } else {
+                            //           ProductAppPopUps.submit(
+                            //             title: "Failed",
+                            //             message: resp['message'] ?? 'Something went wrong.',
+                            //             actionName: "Close",
+                            //             iconData: Icons.error_outline,
+                            //             iconColor: Colors.red,
+                            //           );
+                            //         }
+                            //       },
+                            //     ),
+                            //     const SizedBox(width: 8),
+                            //     GestureDetector(
+                            //       child: _buildTag("REJECT", Colors.red),
+                            //       onTap: () async {
+                            //         context.loaderOverlay.show();
+                            //         final resp = await ApiServices.rejectEnquiredList(
+                            //           token: widget.token,
+                            //           id: patientEnquired?.id ?? 0,
+                            //         );
+                            //         context.loaderOverlay.hide();
+                            //
+                            //         print("Reject Response: $resp");
+                            //
+                            //         if (resp['status'] == "ok") {
+                            //           ProductAppPopUps.submit(
+                            //             title: "Success",
+                            //             message: "Patient Enquiry Rejected Successfully.",
+                            //             actionName: "Close",
+                            //             iconData: Icons.done,
+                            //             iconColor: Colorutils.userdetailcolor,
+                            //           );
+                            //           Get.find<EnquiredListController>().enquiryListData(widget.token);
+                            //         } else {
+                            //           ProductAppPopUps.submit(
+                            //             title: "Failed",
+                            //             message: resp['message'] ?? 'Something went wrong.',
+                            //             actionName: "Close",
+                            //             iconData: Icons.error_outline,
+                            //             iconColor: Colors.red,
+                            //           );
+                            //         }
+                            //       },
+                            //     ),
+                            //   ],
+                            // )
+                            //     : const SizedBox(),
 
 
-                          ],
-                          ),
-                          onTap: () {},
-                        );
-                      },
-                      separatorBuilder: (context, index) => Divider(
-                        color: Colors.grey[300],
-                        thickness: 1,
-                        indent: 10,
-                        endIndent: 10,
+                            ],
+                            ),
+                            onTap: () {},
+                          );
+                        },
+                        separatorBuilder: (context, index) => Divider(
+                          color: Colors.grey[300],
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
                       ),
                     );
 
