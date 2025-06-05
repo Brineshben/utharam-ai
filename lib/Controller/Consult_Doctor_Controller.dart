@@ -23,7 +23,7 @@ class ConsultDoctorListController extends GetxController {
       print("------consultDoctorList--------$resp");
       if (resp['status'] == 'ok') {
         consultDoctorData.value = ConsultDoctorModel.fromJson(resp);
-        print("patient list${consultDoctorData.value?.users}");
+        print("patient listdwfwerfwerfgrw3${consultDoctorData.value?.users}");
         consultDoctorList.value = consultDoctorData.value?.users ?? [];
         consultDoctorListCopy.value = consultDoctorList.value;
         isLoading.value = true;

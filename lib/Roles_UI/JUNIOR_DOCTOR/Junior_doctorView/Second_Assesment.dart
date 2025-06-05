@@ -160,12 +160,12 @@ class _SecondAssesmentState extends State<SecondAssesment> {
                               await ApiServices.addSecondAssesment(
               
                                   token: widget.token, userID: widget.userID, vaLUE: textcontroller.text);
-                              context.loaderOverlay.hide();
-              
+
                               if (resp['status'] == "ok") {
-                                Get.find<EnquiredListController>().enquiryListData(widget.token);
-              
-                                ProductAppPopUps.submit2Back(
+                                await Get.find<EnquiredListController>().enquiryListData(widget.token);
+                                context.loaderOverlay.hide();
+
+                                ProductAppPopUps.submit22Back(
                                   title: "Success",
                                   message: "Second Assessment Report is Generated",
                                   actionName: "Close",
@@ -173,6 +173,8 @@ class _SecondAssesmentState extends State<SecondAssesment> {
                                   iconColor: Colors.green,
                                 );
                               } else {
+                                context.loaderOverlay.hide();
+
                                 ProductAppPopUps.submit(
                                   title: "Error",
                                   message: "Second Assessment Report Generating is Failed",

@@ -416,8 +416,6 @@
 //   }
 // }
 
-
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -426,17 +424,14 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
-import 'package:patient/utils/Api_Constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../Controller/Login_Controller.dart';
 import '../../../Service/SharedPreference.dart';
 import '../../../utils/Constants.dart';
 import '../../../utils/color_util.dart';
-import '../../PATIENT/UI_PATIENT/Home_Screen/Home_Screen_Patient.dart';
-import '../../PATIENT/UI_PATIENT/bottom_Navigation_Patient.dart';
+
 import '../../UI/Common_Widget/popups.dart';
 
 class ChatScreen2 extends StatefulWidget {
@@ -453,7 +448,8 @@ class ChatScreen2 extends StatefulWidget {
     required this.name,
     required this.date,
     required this.patientId,
-    required this.tokenPatient, required this.userid,
+    required this.tokenPatient,
+    required this.userid,
   });
 
   @override
@@ -467,13 +463,127 @@ class _ChatScreen2State extends State<ChatScreen2> {
   List<types.Message> _messages = [];
   final _user = types.User(id: '1');
   final _otherUser = types.User(id: '2', firstName: 'MetroMind AI');
+
   // final String _apiUrl = "http://192.168.1.29:8000/accounts/psychiatrist_chat/";
-  final String _apiUrl = "https://metromind-web-backend-euh0gkdwg9deaudd.uaenorth-01.azurewebsites.net/accounts/preliminary-chat/";
+  final String _apiUrl =
+      "https://metromind-web-backend-euh0gkdwg9deaudd.uaenorth-01.azurewebsites.net/accounts/preliminary-chat/";
 
   String? sessionId;
 
-  void _sendMessage(types.PartialText message, {bool switchPress = false}) async {
-    if (_isAwaitingResponse) return; // prevent sending if awaiting response
+  @override
+  void initState() {
+    _loadSessionId2();
+    super.initState();
+  }
+
+  // void _sendMessage(types.PartialText message, {bool switchPress = false}) async {
+  //   if (_isAwaitingResponse) return; // prevent sending if awaiting response
+  //   _isAwaitingResponse = true;
+  //
+  //   final msg = types.TextMessage(
+  //     id: const Uuid().v4(),
+  //     author: _user,
+  //     text: message.text,
+  //     createdAt: DateTime.now().millisecondsSinceEpoch,
+  //   );
+  //
+  //   setState(() {
+  //     _messages.insert(0, msg);
+  //   });
+  //
+  //   final typingIndicator = types.TextMessage(
+  //
+  //     id: 'typing',
+  //     author: _otherUser,
+  //     text: 'Thinking...',
+  //     createdAt: DateTime.now().millisecondsSinceEpoch,
+  //   );
+  //
+  //   setState(() {
+  //     _messages.insert(0, typingIndicator);
+  //   });
+  //
+  //   Map<String, dynamic> requestBody = {'message': message.text};
+  //
+  //   if (sessionId != null && sessionId!.isNotEmpty) {
+  //     requestBody['session_id'] = sessionId;
+  //     requestBody['switch_press'] = switchPress;
+  //   }
+  //
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse(_apiUrl),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer ${widget.tokenPatient}',
+  //       },
+  //       body: jsonEncode(requestBody),
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       final responseData = jsonDecode(utf8.decode(response.bodyBytes));
+  //       sessionId = responseData['session_id'];
+  //
+  //       setState(() {
+  //         _messages.removeWhere((msg) => msg.id == 'typing');
+  //       });
+  //
+  //       final replyMsg = types.TextMessage(
+  //         id: const Uuid().v4(),
+  //         author: _otherUser,
+  //         text: responseData['message'],
+  //         createdAt: DateTime.now().millisecondsSinceEpoch,
+  //       );
+  //
+  //       setState(() {
+  //         _messages.insert(0, replyMsg);
+  //       });
+  //
+  //       if (responseData['switch_press'] == true) {
+  //         Get.back();
+  //         // Navigator.pushReplacement(
+  //         //   context,
+  //         //   MaterialPageRoute(
+  //         //     builder: (context) => PageIndexNavigationPatient(
+  //         //       tokenPatient: Get.find<UserAuthController>()
+  //         //           .loginData
+  //         //           .value
+  //         //           ?.data
+  //         //           ?.accessToken ??
+  //         //           "",
+  //         //       role: widget.role,
+  //         //       name: widget.name,
+  //         //       date: widget.date,
+  //         //       patientId: widget.patientId,
+  //         //       userid: widget.userid,
+  //         //     ),
+  //         //   ),
+  //         // );
+  //
+  //         ProductAppPopUps.submit(
+  //           title: "Success",
+  //           message:
+  //           "Thanks for your valuable input. Please wait while our therapist reviews your report. We will notify you soon!",
+  //           actionName: "Close",
+  //           iconData: Icons.done,
+  //           iconColor: Colorutils.userdetailcolor,
+  //         );
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print("Error sending message: $e");
+  //   } finally {
+  //     _isAwaitingResponse = false;
+  //   }
+  // }
+
+  void _loadSessionId2() async {
+    sessionId = await SharedPrefrence2().getSessionId2();
+  }
+
+  void _sendMessage(types.PartialText message,
+      {bool switchPress = false}) async {
+    if (_isAwaitingResponse) return;
     _isAwaitingResponse = true;
 
     final msg = types.TextMessage(
@@ -488,7 +598,6 @@ class _ChatScreen2State extends State<ChatScreen2> {
     });
 
     final typingIndicator = types.TextMessage(
-
       id: 'typing',
       author: _otherUser,
       text: 'Thinking...',
@@ -520,6 +629,9 @@ class _ChatScreen2State extends State<ChatScreen2> {
         final responseData = jsonDecode(utf8.decode(response.bodyBytes));
         sessionId = responseData['session_id'];
 
+        // Save session ID
+        await SharedPrefrence2().setSessionId2(sessionId!);
+
         setState(() {
           _messages.removeWhere((msg) => msg.id == 'typing');
         });
@@ -536,30 +648,13 @@ class _ChatScreen2State extends State<ChatScreen2> {
         });
 
         if (responseData['switch_press'] == true) {
+          await SharedPrefrence2().clearSessionId2();
           Get.back();
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => PageIndexNavigationPatient(
-          //       tokenPatient: Get.find<UserAuthController>()
-          //           .loginData
-          //           .value
-          //           ?.data
-          //           ?.accessToken ??
-          //           "",
-          //       role: widget.role,
-          //       name: widget.name,
-          //       date: widget.date,
-          //       patientId: widget.patientId,
-          //       userid: widget.userid,
-          //     ),
-          //   ),
-          // );
 
           ProductAppPopUps.submit(
             title: "Success",
             message:
-            "Thanks for your valuable input. Please wait while our therapist reviews your report. We will notify you soon!",
+                "Thanks for your valuable input. Please wait while our therapist reviews your report. We will notify you soon!",
             actionName: "Close",
             iconData: Icons.done,
             iconColor: Colorutils.userdetailcolor,
@@ -571,7 +666,9 @@ class _ChatScreen2State extends State<ChatScreen2> {
     } finally {
       _isAwaitingResponse = false;
     }
-  }  @override
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: systemUiOverlayStyleDark,
@@ -583,8 +680,8 @@ class _ChatScreen2State extends State<ChatScreen2> {
               height: 130.h,
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(
-                    width: 0.2, color: Colorutils.userdetailcolor),
+                border:
+                    Border.all(width: 0.2, color: Colorutils.userdetailcolor),
                 gradient: LinearGradient(
                   colors: [Colors.blue.shade50, Colors.white],
                   begin: Alignment.topCenter,
@@ -608,14 +705,14 @@ class _ChatScreen2State extends State<ChatScreen2> {
                         SizedBox(width: 12.w),
                         SizedBox(width: 12.w),
                         GestureDetector(
-                          onTap: ()async{
-                            await  SharedPrefs().removeLoginData();
-
-                          },
+                          onTap: () async {
+                            await SharedPrefrence2().clearSessionId2();                          },
                           child: CircleAvatar(
-                            radius:20,
+                            radius: 20,
                             backgroundColor: Colors.transparent,
-                            backgroundImage: AssetImage('assets/images/Utaram3d_Logo.png',),
+                            backgroundImage: AssetImage(
+                              'assets/images/Utaram3d_Logo.png',
+                            ),
                           ),
                         ),
                         SizedBox(width: 10.w),
@@ -646,7 +743,7 @@ class _ChatScreen2State extends State<ChatScreen2> {
                         ),
                         SizedBox(width: 12.w),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             // Navigator.pushReplacement(
                             //   context,
                             //   MaterialPageRoute(
@@ -667,17 +764,17 @@ class _ChatScreen2State extends State<ChatScreen2> {
                             FocusScope.of(context).unfocus();
 
                             _sendMessage(
-                              types.PartialText(text: "Generate utharamAI report"),
+                              types.PartialText(
+                                  text: "Generate utharamAI report"),
                               switchPress: true,
                             );
                           },
                           child: Card(
                             color: Colors.white,
-
                             elevation: 4,
                             shape: RoundedRectangleBorder(
-
-                              borderRadius: BorderRadius.circular(40), // circular for round shape
+                              borderRadius: BorderRadius.circular(
+                                  40), // circular for round shape
                             ),
                             child: Container(
                               width: 50,
@@ -707,7 +804,8 @@ class _ChatScreen2State extends State<ChatScreen2> {
                   sendButtonVisibilityMode: SendButtonVisibilityMode.always,
                 ),
                 messages: _messages,
-                onSendPressed: (_) {}, // Not needed because we use a custom input
+                onSendPressed: (_) {},
+                // Not needed because we use a custom input
                 user: _user,
                 theme: const DefaultChatTheme(
                   primaryColor: Colorutils.userdetailcolor,
@@ -806,25 +904,27 @@ class _ChatScreen2State extends State<ChatScreen2> {
               ),
             ),
             Container(
-              decoration:  BoxDecoration(
-                color: _isAwaitingResponse ? Colors.grey :Colorutils.userdetailcolor,
+              decoration: BoxDecoration(
+                color: _isAwaitingResponse
+                    ? Colors.grey
+                    : Colorutils.userdetailcolor,
                 shape: BoxShape.circle,
               ),
               child: IconButton(
-                icon:  Icon(
+                icon: Icon(
                   Icons.send_sharp,
                   color: _isAwaitingResponse ? Colors.white : Colors.white,
                 ),
                 onPressed: _isAwaitingResponse
                     ? null
                     : () {
-                  if (_messageController.text.trim().isNotEmpty) {
-                    _sendMessage(
-                      types.PartialText(text: _messageController.text),
-                    );
-                    _messageController.clear();
-                  }
-                },
+                        if (_messageController.text.trim().isNotEmpty) {
+                          _sendMessage(
+                            types.PartialText(text: _messageController.text),
+                          );
+                          _messageController.clear();
+                        }
+                      },
               ),
             ),
           ],
@@ -841,7 +941,9 @@ Widget _customAvatarBuilder(types.User user) {
       child: CircleAvatar(
         radius: 12,
         backgroundColor: Colors.white,
-        backgroundImage: AssetImage('assets/images/Utaram3d_Logo.png',),
+        backgroundImage: AssetImage(
+          'assets/images/Utaram3d_Logo.png',
+        ),
       ),
     );
   } else {

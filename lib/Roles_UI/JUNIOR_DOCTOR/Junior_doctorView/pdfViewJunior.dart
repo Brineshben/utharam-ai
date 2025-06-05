@@ -175,13 +175,13 @@ class _FullScreenPdfViewerJuniorState extends State<FullScreenPdfViewerJunior> {
                             await ApiServices.AddData(
 
                                 token: widget.token, add_on_obs: textcontroller.text, doctor_id: widget.doctorID, patient_id: widget.patientid, diagnosis_id:widget.diagnosisId );
-                            context.loaderOverlay.hide();
 
                             if (resp['status'] == "ok") {
                               await ApiServices.diagnosisADD(id: widget.diagnosisId, token: widget.token);
                               await Get.find<EnquiredListController>().enquiryListData(widget.token);
+                              context.loaderOverlay.hide();
 
-                              ProductAppPopUps.submit2Back(
+                              ProductAppPopUps.submit22Back(
                                 title: "Success",
                                 message: resp['message'],
                                 actionName: "Close",
@@ -189,6 +189,8 @@ class _FullScreenPdfViewerJuniorState extends State<FullScreenPdfViewerJunior> {
                                 iconColor: Colors.green,
                               );
                             } else {
+                              context.loaderOverlay.hide();
+
                               ProductAppPopUps.submit(
                                 title: "Error",
                                 message: resp['message'],

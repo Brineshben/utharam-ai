@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
@@ -28,6 +30,8 @@ class Medicine extends StatefulWidget {
 }
 
 class _MedicineState extends State<Medicine> {
+  bool spinner = false;
+
   // TextEditingController phoneNumber = TextEditingController();
   // List<String> data = [];
   // List<TextEditingController> controllerList= List.generate(
@@ -395,6 +399,9 @@ class _MedicineState extends State<Medicine> {
                                           height: 45.h,
                                           width: double.infinity,
                                           child: TextFormField(
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly, // Allows only numbers
+                                            ],
                                             keyboardType: TextInputType.number,
 
                                             controller: controller.medicineControllers[index]['Period'],
@@ -440,6 +447,9 @@ class _MedicineState extends State<Medicine> {
                                           height: 45.h,
                                           width: double.infinity,
                                           child: TextFormField(
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter.digitsOnly, // Allows only numbers
+                                            ],
                                             keyboardType: TextInputType.number,
 
                                             controller: controller.medicineControllers[index]['Quantity'],
@@ -545,7 +555,7 @@ class _MedicineState extends State<Medicine> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar:Container(
         height: 70.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -554,7 +564,6 @@ class _MedicineState extends State<Medicine> {
           ),
           gradient: LinearGradient(
             colors: [Colors.teal.shade50, Colors.white],
-            // Adjust colors to match your design
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -567,50 +576,46 @@ class _MedicineState extends State<Medicine> {
             ),
           ],
         ),
-        child: Padding(
+        child: spinner
+            ?  Container(
+            margin: EdgeInsets.only(top: 15.h),
+            child: Center(child: spinkitNew)
+        )
+            :  Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(
-                child: GestureDetector(
-                  onTap: () async {
+              GestureDetector(
+                onTap: () async {
+                  setState(() {
+                    spinner = true;
+                  });
 
-                    print("dwbjfidjifdifihdwifhew");
-                    // checkInternet2(
-                    //   context: context,
-                    //   function: () async {
-                    Get.find<AddMedicineController>().addMedicineData.value.forEach((element) {
-                      print("-------Strength--------${element.strength}");
-                    },);
-                    Get.find<AddMedicineController>().addmedicineDataz(
-                        widget.patientToken, widget.patientId);
+                  await Get.find<AddMedicineController>().addmedicineDataz(
+                    widget.patientToken,
+                    widget.patientId,
+                  );
 
-                    //   },
-                    // );
-                  },
-                  child: Container(
-                    width: 180.w,
-                    height: 45.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.r),
-                      border: Border.all(
-                        color: Colorutils.userdetailcolor,
-                        width: 0.8,
-                      ),
+                  setState(() {
+                    spinner = false;
+                  });
+                },
+                child: Container(
+                  width: 180.w,
+                  height: 45.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.r),
+                    border: Border.all(
+                      color: Colorutils.userdetailcolor,
+                      width: 0.8,
                     ),
-                    // width: 250.w,
-                    child: Center(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'SUBMIT',
-                            style: GoogleFonts.inter(
-                              fontSize: 16.h,
-                            ),
-                          ),
-                        ],
+                  ),
+                  child: Center(
+                    child: Text(
+                      'SUBMIT',
+                      style: GoogleFonts.inter(
+                        fontSize: 16.h,
                       ),
                     ),
                   ),
@@ -620,6 +625,80 @@ class _MedicineState extends State<Medicine> {
           ),
         ),
       ),
+      // bottomNavigationBar:      spinner
+      //     ? Container(
+      //
+      //     child: Center(child: CircularProgressIndicator())): Container(
+      //   height: 70.h,
+      //   decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.only(
+      //       topRight: Radius.circular(15),
+      //       topLeft: Radius.circular(15),
+      //     ),
+      //     gradient: LinearGradient(
+      //       colors: [Colors.teal.shade50, Colors.white],
+      //       // Adjust colors to match your design
+      //       begin: Alignment.topCenter,
+      //       end: Alignment.bottomCenter,
+      //     ),
+      //     boxShadow: [
+      //       BoxShadow(
+      //         color: Colors.teal.withOpacity(0.3),
+      //         blurRadius: 0.1,
+      //         spreadRadius: 0.1,
+      //         offset: Offset(0, 1),
+      //       ),
+      //     ],
+      //   ),
+      //   child: Padding(
+      //     padding: const EdgeInsets.all(8.0),
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: [
+      //
+      //         Center(
+      //           child: GestureDetector(
+      //             onTap: () async {
+      //               spinner=true;
+      //
+      //               Get.find<AddMedicineController>().addmedicineDataz(
+      //                   widget.patientToken, widget.patientId);
+      //
+      //
+      //               //   },
+      //               // );
+      //             },
+      //             child: Container(
+      //               width: 180.w,
+      //               height: 45.h,
+      //               decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(30.r),
+      //                 border: Border.all(
+      //                   color: Colorutils.userdetailcolor,
+      //                   width: 0.8,
+      //                 ),
+      //               ),
+      //               // width: 250.w,
+      //               child: Center(
+      //                 child: Row(
+      //                   mainAxisSize: MainAxisSize.min,
+      //                   children: [
+      //                     Text(
+      //                       'SUBMIT',
+      //                       style: GoogleFonts.inter(
+      //                         fontSize: 16.h,
+      //                       ),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         onPressed: () {
@@ -697,3 +776,11 @@ class _MedicineState extends State<Medicine> {
 //     ),
 //   );
 // }
+final spinkitNew = SpinKitWave(
+  itemBuilder: (BuildContext context, int index) {
+    return DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colorutils.userdetailcolor,
+        ));
+  },
+);

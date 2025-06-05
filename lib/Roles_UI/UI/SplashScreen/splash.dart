@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../../../Controller/Login_Controller.dart';
 import '../../../Model/Login_Model.dart';
@@ -152,200 +155,207 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: systemUiOverlayStyleDark,
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          body: SizedBox(
-            height: ScreenUtil().screenHeight,
-            width: ScreenUtil().screenWidth,
-            child: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Center(
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 80.h),
-                                child: SizedBox(
-                                  height: 100.h,
-                                  // height: 180.h,
-                                  child: Image.asset(
-                                    "assets/images/Utaram3d_Logo.png",
-                                    fit: BoxFit.cover,
+    return UpgradeAlert(
+      dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
+      upgrader: Upgrader(
+        debugDisplayAlways: true,
+        debugLogging: true,
+      ),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: systemUiOverlayStyleDark,
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            body: SizedBox(
+              height: ScreenUtil().screenHeight,
+              width: ScreenUtil().screenWidth,
+              child: SingleChildScrollView(
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Center(
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 80.h),
+                                  child: SizedBox(
+                                    height: 100.h,
+                                    // height: 180.h,
+                                    child: Image.asset(
+                                      "assets/images/Utaram3d_Logo.png",
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
 
-                            SizedBox(height: 2.h),
+                              SizedBox(height: 2.h),
 
-                            CarouseWidget(carouselItems: items),
+                              CarouseWidget(carouselItems: items),
 
-                            SizedBox(height: 60.h),
-                            // Text(
-                            //   "SWIPE TO DISCOVER MORE",
-                            //   style: TextStyle(
-                            //     fontSize: 15.h,
-                            //     fontWeight: FontWeight.w400,
-                            //     color: Colors.black87,
-                            //   ),
-                            // ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return PhoneNumberEntryPage();
-                                },));
-                                // Navigator.push(context, MaterialPageRoute(
-                                //   builder: (context) {
-                                //     return Register(phoneNumbers: "hshsh");
-                                //   },
-                                // ));
-                              },
-                              child: Center(
-                                  child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 30)
-                                        .w,
-                                child: GestureDetector(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.blueGrey,
-                                      borderRadius: BorderRadius.circular(20.r),
+                              SizedBox(height: 60.h),
+                              // Text(
+                              //   "SWIPE TO DISCOVER MORE",
+                              //   style: TextStyle(
+                              //     fontSize: 15.h,
+                              //     fontWeight: FontWeight.w400,
+                              //     color: Colors.black87,
+                              //   ),
+                              // ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                    return PhoneNumberEntryPage();
+                                  },));
+                                  // Navigator.push(context, MaterialPageRoute(
+                                  //   builder: (context) {
+                                  //     return Register(phoneNumbers: "hshsh");
+                                  //   },
+                                  // ));
+                                },
+                                child: Center(
+                                    child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 30)
+                                          .w,
+                                  child: GestureDetector(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.blueGrey,
+                                        borderRadius: BorderRadius.circular(20.r),
+                                      ),
+                                      // width: 250.w,
+                                      height: 50.h,
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'GET STARTED',
+                                              style: GoogleFonts.roboto(
+                                                color: Colors.white,
+                                                fontSize: 20.h,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                    // width: 250.w,
-                                    height: 50.h,
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                  ),
+                                )),
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return LoginPage();
+                                    },
+                                  ));
+                                },
+                                child: Center(
+                                  child: SizedBox(
+                                    width: 280.w,
+                                    child: Text.rich(
+                                      TextSpan(
                                         children: [
-                                          Text(
-                                            'GET STARTED',
-                                            style: GoogleFonts.roboto(
-                                              color: Colors.white,
+                                          TextSpan(
+                                            text: 'Already have an account?',
+                                            style: GoogleFonts.oxygen(
+                                              color: Colors.black,
+                                              fontSize: 17.h,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: ' LOGIN',
+                                            style: GoogleFonts.oxygen(
+                                              color: Colors.black,
                                               fontSize: 20.h,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ],
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                  ),
-                                ),
-                              )),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return LoginPage();
-                                  },
-                                ));
-                              },
-                              child: Center(
-                                child: SizedBox(
-                                  width: 280.w,
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'Already have an account?',
-                                          style: GoogleFonts.oxygen(
-                                            color: Colors.black,
-                                            fontSize: 17.h,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: ' LOGIN',
-                                          style: GoogleFonts.oxygen(
-                                            color: Colors.black,
-                                            fontSize: 20.h,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
-                            ),
 
-                            // Center(
-                            //   child: Padding(
-                            //     padding:
-                            //         const EdgeInsets.symmetric(horizontal: 30).w,
-                            //     child: GestureDetector(
-                            //       onTap: () async {
-                            //         // context.loaderOverlay.show();
-                            //         // await signIn().then(
-                            //         //         (_) => context.loaderOverlay.hide());
-                            //       },
-                            //       child: Container(
-                            //         decoration: BoxDecoration(
-                            //           borderRadius: BorderRadius.circular(30.r),
-                            //           border: Border.all(
-                            //             color: Colorutils.userdetailcolor,
-                            //             width: 0.8,
-                            //           ),
-                            //         ),
-                            //         // width: 250.w,
-                            //         height: 45.h,
-                            //         child: Center(
-                            //           child: Row(
-                            //             mainAxisSize: MainAxisSize.min,
-                            //             children: [
-                            //               Image.asset(
-                            //                 height: 25.h,
-                            //                 "assets/google_logo.png",
-                            //                 fit: BoxFit.fitHeight,
-                            //               ),
-                            //               SizedBox(width: 8.w),
-                            //               Text(
-                            //                 'Sign in with Google',
-                            //                 style: GoogleFonts.inter(
-                            //                   fontSize: 16.h,
-                            //                 ),
-                            //               ),
-                            //             ],
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            SizedBox(
-                              height: 40,
-                            ),
-                            Center(
-                              child: Text(
-                                "Version ${ApiConstants.version}",
-                                style: TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontSize: 10.h,
+                              // Center(
+                              //   child: Padding(
+                              //     padding:
+                              //         const EdgeInsets.symmetric(horizontal: 30).w,
+                              //     child: GestureDetector(
+                              //       onTap: () async {
+                              //         // context.loaderOverlay.show();
+                              //         // await signIn().then(
+                              //         //         (_) => context.loaderOverlay.hide());
+                              //       },
+                              //       child: Container(
+                              //         decoration: BoxDecoration(
+                              //           borderRadius: BorderRadius.circular(30.r),
+                              //           border: Border.all(
+                              //             color: Colorutils.userdetailcolor,
+                              //             width: 0.8,
+                              //           ),
+                              //         ),
+                              //         // width: 250.w,
+                              //         height: 45.h,
+                              //         child: Center(
+                              //           child: Row(
+                              //             mainAxisSize: MainAxisSize.min,
+                              //             children: [
+                              //               Image.asset(
+                              //                 height: 25.h,
+                              //                 "assets/google_logo.png",
+                              //                 fit: BoxFit.fitHeight,
+                              //               ),
+                              //               SizedBox(width: 8.w),
+                              //               Text(
+                              //                 'Sign in with Google',
+                              //                 style: GoogleFonts.inter(
+                              //                   fontSize: 16.h,
+                              //                 ),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              Center(
+                                child: Text(
+                                  "Version ${ApiConstants.version}",
+                                  style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontSize: 10.h,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: 20.h),
-                          ],
+                              SizedBox(height: 20.h),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }

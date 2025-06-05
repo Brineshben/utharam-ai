@@ -65,7 +65,7 @@ class _AddTalkToHumanState extends State<AddTalkToHuman> {
                   if (controller.callHuman1List.isEmpty) {
                     return Center(
                       child: Text(
-                        "Oops...No Data Found.",
+                        "No Data Found.",
                         style: TextStyle(
                           color: Colors.red,
                           fontStyle: FontStyle.italic,
@@ -110,65 +110,7 @@ class _AddTalkToHumanState extends State<AddTalkToHuman> {
                                   Switch(
                                     value: callHuman?.isCallAvailable ?? false,
                                     onChanged: (value) async{
-                                      // setState(() async{
-                                      //   if(callHuman?.isCallAvailable == true){
-                                      //     print("beneferfgrefgr");
-                                      //     context.loaderOverlay.show();
-                                      //
-                                      //     Map<String, dynamic> resp =
-                                      //         await ApiServices.addTalkToHumanList(
-                                      //         token: widget.token, doctorId: callHuman?.id  ?? 0 , status:false);
-                                      //     context.loaderOverlay.hide();
-                                      //
-                                      //     if (resp['status'] == "ok") {
-                                      //       Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
-                                      //
-                                      //
-                                      //       ProductAppPopUps.submit(
-                                      //         title: "Success",
-                                      //         message: "Talk to human deactivated",
-                                      //         actionName: "Close",
-                                      //         iconData: Icons.done,
-                                      //         iconColor: Colors.green,
-                                      //       );
-                                      //     } else {
-                                      //       ProductAppPopUps.submit(
-                                      //         title: "Error",
-                                      //         message:  "Something went wrong 1st",
-                                      //         actionName: "Close",
-                                      //         iconData: Icons.error_outline_outlined,
-                                      //         iconColor: Colors.red,
-                                      //       );
-                                      //     }
-                                      //   }else{
-                                      //     Map<String, dynamic> resp =
-                                      //         await ApiServices.addTalkToHumanList(
-                                      //         token: widget.token, doctorId: callHuman?.id  ?? 0 , status:true);
-                                      //     context.loaderOverlay.hide();
-                                      //
-                                      //     if (resp['status'] == "ok") {
-                                      //
-                                      //       Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
-                                      //
-                                      //       ProductAppPopUps.submit(
-                                      //         title: "Success",
-                                      //         message: "Talk to human activated",
-                                      //         actionName: "Close",
-                                      //         iconData: Icons.done,
-                                      //         iconColor: Colors.green,
-                                      //       );
-                                      //     } else {
-                                      //       ProductAppPopUps.submit(
-                                      //         title: "Error",
-                                      //         message:  "Something went wrong 2nd",
-                                      //         actionName: "Close",
-                                      //         iconData: Icons.error_outline_outlined,
-                                      //         iconColor: Colors.red,
-                                      //       );
-                                      //     }
-                                      //
-                                      //   }
-                                      // });
+
                                       if(callHuman?.isCallAvailable == true){
                                         print("beneferfgrefgr");
                                         context.loaderOverlay.show();

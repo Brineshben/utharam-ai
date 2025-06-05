@@ -170,7 +170,7 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                     );
                   },
                 )),
-                SizedBox(height: 20),
+                SizedBox(height: 25),
 
                 /// Slot List
                 /// Slot List
@@ -178,7 +178,7 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                   if (slotController.isLoading.value) {
                     return Center(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 30),
+                          padding: const EdgeInsets.only(top: 25),
                           child: SizedBox(
                               width: 25,
                               height: 25,
@@ -314,6 +314,11 @@ class _CreateSlotScreenState extends State<CreateSlotScreen> {
                                 fromtime: fromTime,
                                 totime: toTime,
                                 doctorName: widget.drName, token:widget.token);
+
+                            setState(() {
+                              fromTime = null;
+                              toTime = null;
+                            });
 
                           } else {
                             Get.snackbar('Error', 'Please select time range',

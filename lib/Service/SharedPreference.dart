@@ -95,3 +95,26 @@ class SharedPrefrence {
 
 // Existing methods like removeLoginData() stay here
 }
+
+
+
+class SharedPrefrence2 {
+  final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
+
+  Future<void> setSessionId2(String sessionId) async {
+    final prefs = await _prefs2;
+    await prefs.setString('chat_session_id', sessionId);
+  }
+
+  Future<String?> getSessionId2() async {
+    final prefs = await _prefs2;
+    return prefs.getString('chat_session_id');
+  }
+
+  Future<void> clearSessionId2() async {
+    final prefs = await _prefs2;
+    await prefs.remove('chat_session_id');
+  }
+
+// Existing methods like removeLoginData() stay here
+}

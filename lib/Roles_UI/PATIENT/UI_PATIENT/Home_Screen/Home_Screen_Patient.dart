@@ -318,7 +318,7 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                         } else {
                           return Center(
                             child: const Text(
-                              "Oops...No Recent Activity found",
+                              "No Recent Activity found",
                               style: TextStyle(
                                   color: Colors.red,
                                   fontStyle: FontStyle.italic),

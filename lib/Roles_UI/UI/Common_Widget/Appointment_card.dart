@@ -47,8 +47,7 @@ class AppointmentCard2 extends StatelessWidget {
                     color: Colors.black87,
                   ),
                 ),
-                const Spacer(),
-                Icon(Icons.more_vert, color:  Colors.blueGrey),
+
               ],
             ),
             const SizedBox(height: 16),

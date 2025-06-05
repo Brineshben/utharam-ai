@@ -507,7 +507,7 @@ class PatientsList extends StatelessWidget {
                                       style: GoogleFonts.nunito(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 12.h,
+                                        fontSize: 16.h,
                                       ),
                                     ),
                                   ),
@@ -533,7 +533,7 @@ class PatientsList extends StatelessWidget {
         )
             : Center(
           child: const Text(
-            "Oops...No Patients Assigned For You Yet",
+            "No Patients Assigned For You Yet",
             style: TextStyle(
                 color: Colors.red,
                 fontStyle: FontStyle.italic),

@@ -181,7 +181,7 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 60, right: 10),
+          padding: const EdgeInsets.only(left: 10, top: 30, right: 10),
           child: SingleChildScrollView(
             child: Form(
               key:_formKey ,
@@ -190,7 +190,7 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
                 children: [
                   Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 50.h),
+                      padding: EdgeInsets.only(top: 30.h),
                       child: SizedBox(
                         height: 100.h,
                         // height: 180.h,
@@ -201,7 +201,7 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40.h),
+                  SizedBox(height: 20.h),
                   Container(
                     margin: EdgeInsets.only(left: 15.w),
                     child: Text(
@@ -223,7 +223,7 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 50.h, left: 15),
+                    padding: EdgeInsets.only(top: 30.h, left: 15),
                     child: Text(
                       'Please enter your phone number',
                       style: GoogleFonts.roboto(

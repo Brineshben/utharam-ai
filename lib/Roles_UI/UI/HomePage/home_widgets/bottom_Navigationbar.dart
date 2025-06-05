@@ -178,8 +178,8 @@ class _PageIndexNavigationTherapistState
     // Always call relevant API when a tab is selected
     switch (index) {
       case 0:
-        // Get.find<SeniorDashboardController>()
-        //     .SeniorDashboardData(widget.token);
+        Get.find<AssignedDoctorToPatientController>()
+            .assignedDoctorPatientData(widget.token, widget.doctorId);
         break;
       case 1:
         Get.find<ScheduleController>().scheduleDataz(widget.token);

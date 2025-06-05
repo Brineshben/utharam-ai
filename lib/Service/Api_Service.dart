@@ -533,6 +533,30 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
+  ///disable chat
+  static Future<Map<String, dynamic>> disableChat({
+    required int patientId,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.disableChat}";
+    print('URL---->${url}');
+    Map apiBody = {
+      "patient_id": patientId,
+    };
+    try {
+      print('apiBodyapiBodyapiBody---->${apiBody}');
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+      request.headers.addAll({'Content-Type': 'application/json'});
+
+      http.StreamedResponse response = await request.send();
+      var respString = await response.stream.bytesToString();
+      print('respString---->${respString}');
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
 
   ///Add Slot
   static Future<Map<String, dynamic>> addSlot({

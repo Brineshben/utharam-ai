@@ -100,6 +100,7 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
   // }
 
   final defaultPinTheme = PinTheme(
+
     width: 56,
     height: 56,
     textStyle: const TextStyle(

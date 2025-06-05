@@ -59,7 +59,7 @@ class _RejectedPatientListState extends State<RejectedPatientList> {
                   if (controller.rejected1List.isEmpty) {
                     return Center(
                       child: Text(
-                        "Oops...No Data Found.",
+                        "No Patient Details Found",
                         style: TextStyle(
                           color: Colors.red,
                           fontStyle: FontStyle.italic,

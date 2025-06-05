@@ -184,7 +184,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 1,
       child: Padding(
-        padding: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 5),
+        padding: EdgeInsets.only(left: 10, right: 10, top: 25, bottom: 25),
         child: Column(
           children: [
             Row(
@@ -217,54 +217,54 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                             color: Colors.blueGrey)),
                     Text(role,
                         style: TextStyle(fontSize: 14, color: Colors.blueGrey)),
-                    Row(
-                      children: [
-                        Text("Availability",
-                            style: TextStyle(
-                                fontSize: 14, color: Colors.blueGrey)),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: Transform.scale(
-                            scale: 0.7,
-                            // Increase or decrease this value to adjust size
-                            child: Switch(
-                              activeColor: Colorutils.userdetailcolor,
-                              value: availability,
-                              onChanged: (val) =>
-                                  setState(() => availability = val),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text("Notifications",
-                            style: TextStyle(
-                                fontSize: 14, color: Colors.blueGrey)),
-                        Row(
-                          children: [
-                            Checkbox(
-                                value: email,
-                                checkColor: Colors.white,
-                                activeColor: Colorutils.userdetailcolor,
-                                onChanged: (val) =>
-                                    setState(() => email = val!)),
-                            Text("Email",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.blueGrey)),
-                            Checkbox(
-                                value: sms,
-                                checkColor: Colors.white,
-                                activeColor: Colorutils.userdetailcolor,
-                                onChanged: (val) => setState(() => sms = val!)),
-                            Text("SMS",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.blueGrey)),
-                          ],
-                        )
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Text("Availability",
+                    //         style: TextStyle(
+                    //             fontSize: 14, color: Colors.blueGrey)),
+                    //     Padding(
+                    //       padding: const EdgeInsets.only(left: 5, right: 5),
+                    //       child: Transform.scale(
+                    //         scale: 0.7,
+                    //         // Increase or decrease this value to adjust size
+                    //         child: Switch(
+                    //           activeColor: Colorutils.userdetailcolor,
+                    //           value: availability,
+                    //           onChanged: (val) =>
+                    //               setState(() => availability = val),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     Text("Notifications",
+                    //         style: TextStyle(
+                    //             fontSize: 14, color: Colors.blueGrey)),
+                    //     Row(
+                    //       children: [
+                    //         Checkbox(
+                    //             value: email,
+                    //             checkColor: Colors.white,
+                    //             activeColor: Colorutils.userdetailcolor,
+                    //             onChanged: (val) =>
+                    //                 setState(() => email = val!)),
+                    //         Text("Email",
+                    //             style: TextStyle(
+                    //                 fontSize: 12, color: Colors.blueGrey)),
+                    //         Checkbox(
+                    //             value: sms,
+                    //             checkColor: Colors.white,
+                    //             activeColor: Colorutils.userdetailcolor,
+                    //             onChanged: (val) => setState(() => sms = val!)),
+                    //         Text("SMS",
+                    //             style: TextStyle(
+                    //                 fontSize: 12, color: Colors.blueGrey)),
+                    //       ],
+                    //     )
+                    //   ],
+                    // ),
                   ],
                 ),
               ],

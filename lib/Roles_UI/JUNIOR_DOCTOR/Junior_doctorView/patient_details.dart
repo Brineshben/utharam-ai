@@ -56,20 +56,28 @@ class PatientDetails extends StatefulWidget {
 }
 
 class _PatientDetailsState extends State<PatientDetails> {
-  bool isSwitched = false;
+  late bool isSwitched;
 
+  @override
+  void initState() {
+  isSwitched = widget.disease;
+  super.initState();
+  }
   void toggleSwitch(bool value, int patientId) async {
     setState(() {
-      isSwitched = value;
+      isSwitched = !isSwitched;
     });
 
     try {
-      if (value) {
+      if (value== true) {
+        context.loaderOverlay.show();
         final response = await ApiServices.enableChat(patientId: patientId);
+        context.loaderOverlay.hide();
         print('Enable Chat Response: $response');
 
         if (response['status'] == true) {
           Get.find<EnquiredListController>().enquiryListData(widget.token);
+          Get.find<PatientQueueController>().patientData(widget.token);
 
           ProductAppPopUps.submit(
             title: "Success",
@@ -80,8 +88,23 @@ class _PatientDetailsState extends State<PatientDetails> {
           );
         }
       } else {
-        print("Switch turned OFF – no API call");
-      }
+        context.loaderOverlay.show();
+        final response = await ApiServices.disableChat(patientId: patientId);
+        context.loaderOverlay.hide();
+        print('Enable Chat Response: $response');
+
+        if (response['status'] == true) {
+          Get.find<EnquiredListController>().enquiryListData(widget.token);
+          Get.find<PatientQueueController>().patientData(widget.token);
+
+          ProductAppPopUps.submit(
+            title: "Success",
+            message: "Chat Functionality Disabled",
+            actionName: "Close",
+            iconData: Icons.done,
+            iconColor: Colors.green,
+          );
+        }      }
     } catch (e) {
       print('Error in toggleSwitch API call: $e');
     }
@@ -215,7 +238,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                     if (controller.consultDoctorList.isEmpty) {
                       return Center(
                         child: const Text(
-                          "Oops...No Doctor Found.",
+                          "No Doctor Found.",
                           style: TextStyle(
                               color: Colors.red, fontStyle: FontStyle.italic),
                         ),
@@ -392,8 +415,9 @@ class _PatientDetailsState extends State<PatientDetails> {
                   repoturl: widget.url,
                   name: widget.name,
                 ),
-                widget.disease == false
-                    ? Padding(
+                // widget.disease == false
+                //     ?
+                Padding(
                         padding: EdgeInsets.only(left: 20.w, right: 10.w),
                         child: Row(
                           children: [
@@ -411,6 +435,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                             Switch(
                               value: isSwitched,
                               onChanged: (value) {
+                                print("------value----$value");
                                 toggleSwitch(value, widget.id);
                               },
                               inactiveTrackColor: Colors.grey.withOpacity(0.2),
@@ -419,22 +444,22 @@ class _PatientDetailsState extends State<PatientDetails> {
                             )
                           ],
                         ),
-                      )
-                    : Padding(
-                        padding: EdgeInsets.only(left: 20.w, right: 10.w),
-                        child: Row(
-                          children: [
-                            Text(
-                              "SECONDARY CHAT ENABLED".toUpperCase(),
-                              style: GoogleFonts.shanti(
-                                color: Colors.blueGrey,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 18.h,
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
+                    // : Padding(
+                    //     padding: EdgeInsets.only(left: 20.w, right: 10.w),
+                    //     child: Row(
+                    //       children: [
+                    //         Text(
+                    //           "SECONDARY CHAT ENABLED".toUpperCase(),
+                    //           style: GoogleFonts.shanti(
+                    //             color: Colors.blueGrey,
+                    //             fontWeight: FontWeight.w900,
+                    //             fontSize: 18.h,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
                 Column(
                   children: [
                     Padding(
@@ -598,7 +623,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                               padding:
                                   const EdgeInsets.only(left: 16, right: 16),
                               child: const Text(
-                                "Oops.No Slot Available for particular doctor on particular date",
+                                "No Slot Available for particular doctor on particular date",
                                 style: TextStyle(
                                     color: Colors.red,
                                     fontStyle: FontStyle.italic),
@@ -782,7 +807,6 @@ class _PatientDetailsState extends State<PatientDetails> {
                                           ?.id ??
                                       0);
 
-                          context.loaderOverlay.hide();
 
                           if (resp['status'] == "ok") {
                             await Get.find<DoctorToPatientController>()
@@ -792,9 +816,8 @@ class _PatientDetailsState extends State<PatientDetails> {
                                 .patientData(widget.token);
                             await Get.find<JuniorDashboardController>()
                                 .juniorData(widget.token);
-
-                            // Navigator.of(context).pop();
-                            ProductAppPopUps.submit2Back(
+                            context.loaderOverlay.hide();
+                            ProductAppPopUps.submit22Back(
                               title: "Success",
                               message: resp['message'],
                               actionName: "Close",
@@ -802,6 +825,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                               iconColor: Colors.green,
                             );
                           } else {
+                            context.loaderOverlay.hide();
                             ProductAppPopUps.submit(
                               title: "Error",
                               message: resp['message'],
@@ -811,6 +835,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                             );
                           }
                         } else {
+                          context.loaderOverlay.hide();
                           ProductAppPopUps.submit(
                             title: "Error",
                             message: "Please Select the Doctor Slot to proceed",

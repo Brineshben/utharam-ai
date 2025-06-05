@@ -59,7 +59,7 @@ class TalkToHuman extends StatelessWidget {
                 if (controller.callHumanList.isEmpty) {
                   return Center(
                     child: const Text(
-                      "Oops...No Data Found.",
+                      "No Data Found.",
                       style: TextStyle(
                           color: Colors.red, fontStyle: FontStyle.italic),
                     ),

@@ -53,18 +53,45 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header Text
             Padding(
-              padding: const EdgeInsets.only(top: 50, left: 20),
-              child: Text(
-                "PATIENT LIST",
-                style: GoogleFonts.shanti(
-                  color: Colors.blueGrey,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 20.h,
-                ),
+              padding: const EdgeInsets.only(top: 50, left: 10),              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.9),
+                        border: Border.all(
+                          color: Colors.blue,
+                          width: 0.1,
+                        ),
+                        borderRadius: BorderRadius.circular(15).r,
+                      ),
+                      child: Icon(
+                        Icons.arrow_back_ios_sharp,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10,),
+                  Text(
+                    "PATIENT LIST",
+                    style: GoogleFonts.shanti(
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 20.h,
+                    ),
+                  ),
+                ],
               ),
             ),
+            // Header Text
+
             SizedBox(
               height: 20.h,
             ),
@@ -82,7 +109,7 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
                   if (controller.patientAssesmentListDataList.isEmpty) {
                     return Center(
                       child: const Text(
-                        "Oops...No Data Found.",
+                        "No  Details Found",
                         style: TextStyle(
                             color: Colors.red,
                             fontStyle: FontStyle.italic),

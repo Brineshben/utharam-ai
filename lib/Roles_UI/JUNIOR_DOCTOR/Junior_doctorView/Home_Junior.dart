@@ -75,7 +75,7 @@ class _HomeScreenJuniorState extends State<HomeScreenJunior> {
                             padding: const EdgeInsets.only(top: 180),
                             child: Center(
                               child: const Text(
-                                "Oops...No Data Found.",
+                                "No Patient Details Found",
                                 style: TextStyle(
                                     color: Colors.red,
                                     fontStyle: FontStyle.italic),

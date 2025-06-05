@@ -53,6 +53,7 @@ class ApiConstants {
   static String patientDetails = "/accounts/user/detail/";
   static String addSecondAssesment = "/accounts/second-assessment-api/";
   static String enableChat = "/accounts/enable_chat_api/";
+  static String disableChat = "/accounts/disable_chat_api/";
   static String reportPatientList = "/senior_function/assigned/patient/list/";
   static String multipleReports = "/senior_function/assigned/patient/diagnosis/list/";
   static String patientAppointmentdata = "/appointment/appointment/list/";

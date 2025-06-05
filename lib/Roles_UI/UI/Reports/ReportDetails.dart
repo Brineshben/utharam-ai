@@ -37,16 +37,16 @@ class _ReportsDetailsState extends State<ReportsDetails> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.blue.shade50,
-              Colors.white,
-              Colors.white,
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+        gradient: LinearGradient(
+          colors: [
+            Colors.blue.shade50,
+            Colors.white,
+            Colors.white,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
+      ),
         child: GetX<MultipleReportsController>(
           builder: (MultipleReportsController controller) {
             if (controller.isLoading.value) {
@@ -93,7 +93,7 @@ class _ReportsDetailsState extends State<ReportsDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 50, left: 20),
+                      padding: const EdgeInsets.only(top: 50, left: 15),
                       child: Text(
                         "PATIENT REPORT LIST",
                         style: GoogleFonts.shanti(
@@ -116,7 +116,7 @@ class _ReportsDetailsState extends State<ReportsDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "preliminary Report",
+                        "Preliminary Report",
                         style: GoogleFonts.shanti(
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.w900,

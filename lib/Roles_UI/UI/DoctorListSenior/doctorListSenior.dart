@@ -160,7 +160,7 @@ class _DoctorListSeniorState extends State<DoctorListSenior> {
                         padding: const EdgeInsets.only(top: 40),
                         child: Center(
                           child: const Text(
-                            "Oops...No Doctor Data Found.",
+                            "No Doctor Data Found.",
                             style: TextStyle(
                                 color: Colors.red, fontStyle: FontStyle.italic),
                           ),
@@ -226,6 +226,7 @@ class _DoctorListSeniorState extends State<DoctorListSenior> {
                               IconButton(
                                 icon: Icon(Icons.arrow_forward_ios, size: 20.w, color: Colors.blueGrey),
                                 onPressed: () {
+
                                   print(doctor?.id ?? '');
                                   print(doctor?.name ?? '');
                                   Navigator.push(

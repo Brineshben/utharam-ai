@@ -292,7 +292,7 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if(widget.role == "psychiatrist")
+                // if(widget.role == "psychiatrist")
                 GestureDetector(
                   child: Center(
                     child: GestureDetector(
@@ -352,13 +352,13 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                                       observation: _observationController.text,
                                       patientId: widget.id,
                                       doctorId: widget.doctorID, diagnosis: widget.diagnosisID, assignedId: widget.assignedId);
-                              context.loaderOverlay.hide();
 
                               if (resp['status'] == "ok") {
                                 await Get.find<SeniorDashboardController>().SeniorDashboardData(widget.token);
                                 await Get.find<AssignedDoctorToPatientController>()
                                     .assignedDoctorPatientData(widget.token, widget.doctorID);
-                                ProductAppPopUps.submit2Back(
+                                context.loaderOverlay.hide();
+                                ProductAppPopUps.submit22Back(
                                   title: "Success",
                                   message: resp['message'],
                                   actionName: "Close",
@@ -366,6 +366,7 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                                   iconColor: Colors.green,
                                 );
                               } else {
+                                context.loaderOverlay.hide();
                                 ProductAppPopUps.submit(
                                   title: "Error",
                                   message: resp['message'],

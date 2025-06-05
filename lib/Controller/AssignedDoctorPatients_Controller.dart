@@ -16,6 +16,9 @@ class AssignedDoctorToPatientController extends GetxController {
   Future<void> assignedDoctorPatientData(String token, int patientId) async {
     isLoading.value = true;
     isLoaded.value = false;
+    assignedDoctorPatientDataz.value =null;
+    assignedDoctorPatientList.value =[];
+    patientDiagnosisDetails.value =[];
     try {
     Map<String, dynamic> resp = await ApiServices.AssignedDoctorPatientList(token: token, patientId:patientId);
     print("-------benben response----------$resp");

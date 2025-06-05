@@ -151,7 +151,7 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                   if (controller.enquiryList.isEmpty) {
                     return Center(
                       child: const Text(
-                        "Oops...No Enquired List Found.",
+                        "No Enquired List Found.",
                         style: TextStyle(
                             color: Colors.red,
                             fontStyle: FontStyle.italic),

@@ -46,7 +46,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 60, right: 10),
+          padding: const EdgeInsets.only(left: 10, top: 30, right: 10),
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -55,7 +55,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                 children: [
                   Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 50.h),
+                      padding: EdgeInsets.only(top: 30.h),
                       child: SizedBox(
                         height: 100.h,
                         // height: 180.h,
@@ -66,7 +66,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40.h),
+                  SizedBox(height: 20.h),
                   Container(
                     margin: EdgeInsets.only(left: 15.w),
                     child: Text(
@@ -88,7 +88,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 40.h, left: 15),
+                    padding: EdgeInsets.only(top: 20.h, left: 15),
                     child: Text(
                       'Please Enter your Registered Email',
                       style: GoogleFonts.roboto(

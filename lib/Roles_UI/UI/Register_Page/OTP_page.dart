@@ -156,7 +156,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 40.h),
+                SizedBox(height: 30.h),
                 Container(
                   margin: EdgeInsets.only(left: 15.w),
                   child: Text(
@@ -178,12 +178,12 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 50.h, left: 15),
+                  padding: EdgeInsets.only(top: 30.h, left: 15),
                   child: Text(
                     'Enter the 4-digit OTP sent to your Phone Number',
                     style: GoogleFonts.roboto(
                         color: Colors.blueGrey,
-                        fontSize: 20.h,
+                        fontSize: 16.h,
                         fontWeight: FontWeight.bold),
                   ),
                 ),

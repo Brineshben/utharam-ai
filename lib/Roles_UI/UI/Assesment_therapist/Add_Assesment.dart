@@ -201,7 +201,7 @@ class _AddAssesmentState extends State<AddAssesment> {
       context.loaderOverlay.show();
 
       Map<String,dynamic> resp = await ApiServices.assignmentCreate(patientId: widget.id, question: controller.text, token: widget.token);
-      context.loaderOverlay.hide();
+
       print("----------redvffegvsp---------?$resp");
       if (resp['status'] == "ok") {
         // Navigator.push(
@@ -212,9 +212,10 @@ class _AddAssesmentState extends State<AddAssesment> {
         //     ),
         //   ),
         // );
-        Get.find<PatientAssignmentController>().patientAssesmentListDataz(widget.token,widget.id);
+        await Get.find<PatientAssignmentController>().patientAssesmentListDataz(widget.token,widget.id);
+        context.loaderOverlay.hide();
 
-        ProductAppPopUps.submit2Back(
+        ProductAppPopUps.submit22Back(
           title: "Success",
           message: resp['message'] ?? 'Something went wrong.',
           actionName: "Close",
@@ -223,6 +224,7 @@ class _AddAssesmentState extends State<AddAssesment> {
         );
 
       } else {
+        context.loaderOverlay.hide();
         ProductAppPopUps.submit(
           title: "Failed",
           message: resp['message'] ?? 'Something went wrong.',

@@ -54,7 +54,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
             Padding(
               padding: const EdgeInsets.only(top: 50, left: 20),
               child: Text(
-                "PATIENT LIST",
+                "PATIENT ASSESMENT LIST",
                 style: GoogleFonts.shanti(
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.w900,
@@ -125,7 +125,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
                   if (controller.scheduleList.isEmpty) {
                     return Center(
                       child: const Text(
-                        "Oops...No Data Found.",
+                        "No Patient details found",
                         style: TextStyle(
                             color: Colors.red,
                             fontStyle: FontStyle.italic),

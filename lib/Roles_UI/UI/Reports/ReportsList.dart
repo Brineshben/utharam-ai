@@ -126,7 +126,7 @@ class _ReportsListState extends State<ReportsList> {
                   if (controller.reportList.isEmpty) {
                     return Center(
                       child: const Text(
-                        "Oops...No Data Found.",
+                        "No Reports Found.",
                         style: TextStyle(
                             color: Colors.red, fontStyle: FontStyle.italic),
                       ),

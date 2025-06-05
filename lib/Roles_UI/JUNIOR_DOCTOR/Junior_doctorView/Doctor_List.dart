@@ -158,7 +158,7 @@ class _DoctorListState extends State<DoctorList> {
                         padding: const EdgeInsets.only(top: 40),
                         child: Center(
                           child: const Text(
-                            "Oops...No Doctor's Data Found.",
+                            "No Doctor's Data Found.",
                             style: TextStyle(
                                 color: Colors.red, fontStyle: FontStyle.italic),
                           ),

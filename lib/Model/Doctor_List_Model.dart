@@ -33,15 +33,18 @@ class Users {
   String? username;
   String? email;
   String? mobileNumber;
-  Null? medicalReport;
-  Null? medicalReportUrl;
+  String? medicalReport;
+  String? medicalReportUrl;
   String? role;
   int? age;
   String? gender;
   String? occupation;
   String? education;
   String? address;
-  String? patientId;
+  int? patientId;
+  String? verified;
+  bool? chatEnabled;
+  bool? isCallAvailable;
 
   Users(
       {this.id,
@@ -57,7 +60,10 @@ class Users {
         this.occupation,
         this.education,
         this.address,
-        this.patientId});
+        this.patientId,
+        this.verified,
+        this.chatEnabled,
+        this.isCallAvailable});
 
   Users.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -74,6 +80,9 @@ class Users {
     education = json['education'];
     address = json['address'];
     patientId = json['patient_id'];
+    verified = json['verified'];
+    chatEnabled = json['chat_enabled'];
+    isCallAvailable = json['is_call_available'];
   }
 
   Map<String, dynamic> toJson() {
@@ -92,6 +101,9 @@ class Users {
     data['education'] = this.education;
     data['address'] = this.address;
     data['patient_id'] = this.patientId;
+    data['verified'] = this.verified;
+    data['chat_enabled'] = this.chatEnabled;
+    data['is_call_available'] = this.isCallAvailable;
     return data;
   }
 }
