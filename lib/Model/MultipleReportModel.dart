@@ -439,10 +439,10 @@ class GeneralChats {
   String? createdAt;
   AiReport? aiReport;
   bool? isPreliminary;
-  Null? aiSummaryFile;
+  String? aiSummaryFile;
   bool? isApproved;
-  Null? aiReportUrl;
-  Null? aiPatientSummaryFile;
+  String? aiReportUrl;
+  String? aiPatientSummaryFile;
 
   GeneralChats(
       {this.id,

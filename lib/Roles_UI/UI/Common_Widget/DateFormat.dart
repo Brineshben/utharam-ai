@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 String formatDate(String? isoDateString) {
@@ -25,6 +28,22 @@ String getSeverityLevel(String value) {
       return 'critical';
     default:
       return '----'; // for unexpected string values
+  }
+}
+Color getSeverityColor(String severity) {
+  switch (severity) {
+    case '1':
+      return Colors.green; // Low severity
+    case '2':
+      return Colors.green.shade800; // Dark green for mild
+    case '3':
+      return Colors.yellow; // High
+    case '4':
+      return Colors.orange; // Severe
+    case '5':
+      return Colors.red; // Critical
+    default:
+      return Colors.grey; // Unknown / default
   }
 }
 String convertDateFormat(String date) {

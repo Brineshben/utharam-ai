@@ -45,7 +45,7 @@ class AddMedicineController extends GetxController {
       Map<String, dynamic> resp = await ApiServices.addMedicineList(token: token, addData: addMedicineModel);
       print("---medicine resp-------$resp");
       if (resp['message'] != 'Medicines retrieve error.') {
-        ProductAppPopUps.submit2Back(
+        ProductAppPopUps.submit22Back(
           title: "SUCCESS",
           message: "Medicine added successfully.",
           actionName: "Close",

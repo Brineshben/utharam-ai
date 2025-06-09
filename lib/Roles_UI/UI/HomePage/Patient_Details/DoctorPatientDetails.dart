@@ -292,7 +292,7 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // if(widget.role == "psychiatrist")
+                if(widget.role == "psychiatrist")
                 GestureDetector(
                   child: Center(
                     child: GestureDetector(
@@ -471,7 +471,7 @@ class PatientCard extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.red,
+                      color:getSeverityColor(sevirity),
                     ),
                     padding:
                         EdgeInsets.symmetric(vertical: 3.h, horizontal: 8.w),
@@ -482,10 +482,9 @@ class PatientCard extends StatelessWidget {
                         getSeverityLevel(sevirity).toUpperCase(),
                         style: GoogleFonts.nunito(
                           color: Colors.white,
-                          // Ensure ColorUtils is defined or use a custom color.
                           fontWeight: FontWeight.w600,
                           fontSize: 12
-                              .h, // Ensure you're using flutter_screenutil to define font size responsively.
+                              .h,
                         ),
                       ),
                     ),
