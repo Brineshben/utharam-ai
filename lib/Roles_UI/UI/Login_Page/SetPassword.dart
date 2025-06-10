@@ -111,13 +111,18 @@ class SetPasswordState extends State<SetPassword> {
                               .validate(); // Re-validate when typing
                         }
                       },
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r'\s')), // Disallow spaces
+                      ],
                       validator: (val) {
+
                         if (val == null || val.trim().isEmpty) {
                           return 'Please enter password.';
                         }
                         String password = val.trim();
-
-                        // Password validation rules
+                        if (password.contains('')) {
+                          return 'Password must not contain spaces.';
+                        }
                         if (password.length < 8) {
                           return 'Password must be at least 8 characters long.';
                         }
@@ -133,7 +138,9 @@ class SetPasswordState extends State<SetPassword> {
                         if (!RegExp(r'[!@#\$&*~^%()_+\-=\[\]{};:"\\|,.<>\/?]').hasMatch(password)) {
                           return 'Password must contain at least one special character.';
                         }
-
+                        if (password.contains(' ')) {
+                          return 'Password must not contain spaces.';
+                        }
                         return null;
                       },
                       controller: password,
@@ -185,6 +192,9 @@ class SetPasswordState extends State<SetPassword> {
                               .validate(); // Re-validate when typing
                         }
                       },
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r'\s')), // Disallow spaces
+                      ],
                       validator: (val) {
                         if (val == null || val.trim().isEmpty) {
                           return 'Please enter confirm password.';
@@ -207,7 +217,9 @@ class SetPasswordState extends State<SetPassword> {
                         if (!RegExp(r'[!@#\$&*~^%()_+\-=\[\]{};:"\\|,.<>\/?]').hasMatch(password)) {
                           return 'Password must contain at least one special character.';
                         }
-
+                        if (password.contains(' ')) {
+                          return 'Password must not contain spaces.';
+                        }
                         return null;
                       },
                       controller: confirmPassword,
@@ -262,7 +274,9 @@ class SetPasswordState extends State<SetPassword> {
           checkInternet2(
               context: context,
               function: () async {
-                FocusScope.of(context).unfocus();
+                if (_formKey.currentState!.validate()) {
+
+                  FocusScope.of(context).unfocus();
 
                 context.loaderOverlay.show();
 
@@ -286,17 +300,19 @@ class SetPasswordState extends State<SetPassword> {
                     iconData: Icons.done,
                     iconColor: Colors.green,
                   );
-                } else {
-                  ProductAppPopUps.submit(
-                    title: "Error",
-                    message: "Something went wrong",
-                    actionName: "Close",
-                    iconData: Icons.error_outline_outlined,
-                    iconColor: Colors.red,
-                  );
                 }
-              }
 
+                // else {
+                //   ProductAppPopUps.submit(
+                //     title: "Error",
+                //     message: "Something went wrong",
+                //     actionName: "Close",
+                //     iconData: Icons.error_outline_outlined,
+                //     iconColor: Colors.red,
+                //   );
+                // }
+              }
+}
           );
         },
         child: Container(

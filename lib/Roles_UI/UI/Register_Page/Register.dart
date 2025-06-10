@@ -178,6 +178,7 @@ class _RegisterState extends State<Register> {
                               dropdownOptions: [
                                 'Male',
                                 'Female',
+                                'Other',
                               ],
                             ),
                           ),

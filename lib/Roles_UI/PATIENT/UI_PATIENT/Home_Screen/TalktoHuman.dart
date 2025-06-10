@@ -3,9 +3,12 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../Controller/Call_HumanController.dart';
+import '../../../../Service/Api_Service.dart';
+import '../../../UI/Common_Widget/popups.dart';
 import '../../../UI/Personal_Chat/Chat_Page.dart';
 
 class TalkToHuman extends StatelessWidget {
@@ -107,9 +110,35 @@ class TalkToHuman extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              onTap: () {
-                                print("----------------------calll");
-                                makePhoneCall(callHuman?.mobileNumber ?? "");
+                              onTap: () async {
+                                context.loaderOverlay.show();
+
+                                Map<String, dynamic> resp =
+                                    await ApiServices.voxBayTalk( destination:removePlus(callHuman?.mobileNumber ?? "") , extension: callHuman?.voxbayDetails?.extNo ?? ""
+                                   );
+                                context.loaderOverlay.hide();
+
+                                if (resp['status'] == "success") {
+
+
+                                  ProductAppPopUps.submit(
+                                    title: "Success",
+                                    message: "The call has been initiated, we will contact you shortly.",
+                                    actionName: "Close",
+                                    iconData: Icons.done,
+                                    iconColor: Colors.green,
+                                  );
+                                } else {
+                                  ProductAppPopUps.submit(
+                                    title: "Error",
+                                    message:  "Something went wrong 1st",
+                                    actionName: "Close",
+                                    iconData: Icons.error_outline_outlined,
+                                    iconColor: Colors.red,
+                                  );
+                                }
+                                // print("----------------------calll");
+                                // makePhoneCall(callHuman?.mobileNumber ?? "");
                               },
                             ),
                             Divider(
@@ -131,4 +160,7 @@ class TalkToHuman extends StatelessWidget {
       ),
     );
   }
+}
+String removePlus(String phoneNumber) {
+  return phoneNumber.replaceAll('+', '');
 }

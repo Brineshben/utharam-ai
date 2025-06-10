@@ -133,7 +133,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
 
                 // resp['data']['message'] == "Leave Applied Successfully"
                 if (resp['message'] == "OTP has been sent to your email") {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => ForgotOtpScreen( id:resp['user_id'] ?? 0,)
@@ -150,7 +150,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                 } else {
                   ProductAppPopUps.submit(
                     title: "Error",
-                    message: "Something went wrong",
+                    message: "Email id not registered",
                     actionName: "Close",
                     iconData: Icons.error_outline_outlined,
                     iconColor: Colors.red,

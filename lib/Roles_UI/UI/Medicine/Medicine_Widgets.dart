@@ -66,7 +66,7 @@ Widget buildDropdownSearchField({
   return Padding(
     padding: const EdgeInsets.all(4),
     child: SizedBox(
-      height: 45.h, // Reduced from 50 to 40
+      height: 60.h, // Reduced from 50 to 40
       width: double.infinity,
       child: DropdownSearch<String>(
         items: items,

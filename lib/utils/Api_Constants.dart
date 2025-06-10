@@ -14,7 +14,7 @@ class ApiConstants {
  static String version ="1.0.0";
   ///URLS
   static String login = "/accounts/login/";
-  // static String chat = "/accounts/psychiatrist-chat/";
+  static String voxBay = "/voxbay/click-to-call/";
   static String chat = "/accounts/psychiatrist_chat/";
   static String registerPatient = "/accounts/register/";
   static String patientQueue = "/assign_doctor/new/patience/list/";
@@ -47,7 +47,8 @@ class ApiConstants {
   static String enquiredList = "/accounts/unverified-users/";
   static String approveEnquiredList = "/accounts/approve-user/";
   static String rejectEnquiredList = "/accounts/approve-user/";
-  static String talkToHuman = "/accounts/available-doctors-patient/";
+  static String talkToHuman2 = "/accounts/available-doctors-patient/";
+  static String talkToHuman = "/accounts/available-doctors/";
   static String generateReport = "/accounts/generate_pdf/";
   static String addAddon = "/doctor_observations/preliminary-addons/create/";
   static String patientDetails = "/accounts/user/detail/";
@@ -57,7 +58,7 @@ class ApiConstants {
   static String reportPatientList = "/senior_function/assigned/patient/list/";
   static String multipleReports = "/senior_function/assigned/patient/diagnosis/list/";
   static String patientAppointmentdata = "/appointment/appointment/list/";
-  static String addHumanTalk = "/accounts/available-doctors/";
+  static String addHumanTalk = "/accounts/available-doctors-admin/";
   static String rejectedList = "/accounts/notapproved-users/";
   static String forgotPassword = "/forgott_password/forgot/password/";
   static String checkOtpForgot = "/forgott_password/verify/otp/";

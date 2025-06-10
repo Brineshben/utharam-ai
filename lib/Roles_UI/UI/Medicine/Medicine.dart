@@ -128,6 +128,7 @@ class _MedicineState extends State<Medicine> {
                                           color: Colors.red,
                                         ),
                                         onTap: () {
+
                                           Get.find<AddMedicineController>().addMedicineData.value.remove(
                                             MedicinesList(),
                                           );
@@ -201,7 +202,6 @@ class _MedicineState extends State<Medicine> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: SizedBox(
-                                          height: 45.h,
                                           width: double.infinity,
                                           child: TextFormField(
                                             controller: controller.medicineControllers[index]['Strength'],
@@ -243,11 +243,11 @@ class _MedicineState extends State<Medicine> {
                                     ),
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(4),
+                                        padding: const EdgeInsets.all(1),
                                         child: SizedBox(
-                                          height: 45.h,
                                           width: double.infinity,
                                           child: TextFormField(
+
                                             controller: controller.medicineControllers[index]['Dosage'],
                                             validator: false
                                                 ? (val) => val!.trim().isEmpty ? 'Please enter Strength' : null
@@ -303,7 +303,6 @@ class _MedicineState extends State<Medicine> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: SizedBox(
-                                          height: 45.h,
                                           width: double.infinity,
                                           child: TextFormField(
                                             controller: controller.medicineControllers[index]['UOM'],
@@ -346,7 +345,6 @@ class _MedicineState extends State<Medicine> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: SizedBox(
-                                          height: 45.h,
                                           width: double.infinity,
                                           child: TextFormField(
                                             controller: controller.medicineControllers[index]['Route'],
@@ -396,7 +394,6 @@ class _MedicineState extends State<Medicine> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: SizedBox(
-                                          height: 45.h,
                                           width: double.infinity,
                                           child: TextFormField(
                                             inputFormatters: [
@@ -444,7 +441,6 @@ class _MedicineState extends State<Medicine> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: SizedBox(
-                                          height: 45.h,
                                           width: double.infinity,
                                           child: TextFormField(
                                             inputFormatters: [
@@ -498,7 +494,6 @@ class _MedicineState extends State<Medicine> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: SizedBox(
-                                          height: 45.h,
                                           width: double.infinity,
                                           child: TextFormField(
 

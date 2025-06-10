@@ -383,6 +383,7 @@ class _AddDoctorState extends State<AddDoctor> {
                         dropdownOptions: [
                           'Male',
                           'Female',
+                          'Other',
                         ],
                       ),
                     ),

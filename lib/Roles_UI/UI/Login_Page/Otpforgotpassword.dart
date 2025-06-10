@@ -294,7 +294,7 @@ class ForgotOtpScreenState extends State<ForgotOtpScreen> {
 
                 // resp['data']['message'] == "Leave Applied Successfully"
                 if (resp["message"] == "OTP verified successfully. You can now reset your password.") {
-                  Navigator.push(context,
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => SetPassword(id: widget.id,)));
                   _submitOtp;
 

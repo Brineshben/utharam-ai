@@ -10,6 +10,7 @@ import '../../../Controller/AddTalktoHumanController.dart';
 import '../../../Service/Api_Service.dart';
 import '../../../utils/color_util.dart';
 import '../../UI/Common_Widget/popups.dart';
+import 'Voxpayadd.dart';
 
 class AddTalkToHuman extends StatefulWidget {
   final String token;
@@ -106,74 +107,81 @@ class _AddTalkToHumanState extends State<AddTalkToHuman> {
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  IconButton(
+                                    icon: Icon(Icons.arrow_forward_ios, size: 20.w, color: Colors.blueGrey),
+                                    onPressed: (){
 
-                                  Switch(
-                                    value: callHuman?.isCallAvailable ?? false,
-                                    onChanged: (value) async{
-
-                                      if(callHuman?.isCallAvailable == true){
-                                        print("beneferfgrefgr");
-                                        context.loaderOverlay.show();
-
-                                        Map<String, dynamic> resp =
-                                        await ApiServices.addTalkToHumanList(
-                                            token: widget.token, doctorId: callHuman?.id  ?? 0 , status:false);
-                                        context.loaderOverlay.hide();
-
-                                        if (resp['status'] == "ok") {
-                                          Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
-
-
-                                          ProductAppPopUps.submit(
-                                            title: "Success",
-                                            message: "Talk to human deactivated",
-                                            actionName: "Close",
-                                            iconData: Icons.done,
-                                            iconColor: Colors.green,
-                                          );
-                                        } else {
-                                          ProductAppPopUps.submit(
-                                            title: "Error",
-                                            message:  "Something went wrong 1st",
-                                            actionName: "Close",
-                                            iconData: Icons.error_outline_outlined,
-                                            iconColor: Colors.red,
-                                          );
-                                        }
-                                      }else{
-                                        Map<String, dynamic> resp =
-                                        await ApiServices.addTalkToHumanList(
-                                            token: widget.token, doctorId: callHuman?.id  ?? 0 , status:true);
-                                        context.loaderOverlay.hide();
-
-                                        if (resp['status'] == "ok") {
-
-                                          Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
-
-                                          ProductAppPopUps.submit(
-                                            title: "Success",
-                                            message: "Talk to human activated",
-                                            actionName: "Close",
-                                            iconData: Icons.done,
-                                            iconColor: Colors.green,
-                                          );
-                                        } else {
-                                          ProductAppPopUps.submit(
-                                            title: "Error",
-                                            message:  "Something went wrong 2nd",
-                                            actionName: "Close",
-                                            iconData: Icons.error_outline_outlined,
-                                            iconColor: Colors.red,
-                                          );
-                                        }
-
-                                      }
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                        return VoksBayAdd();
+                                      },));
                                     },
-                                    activeColor: Colorutils.userdetailcolor.withOpacity(0.1),
-                                    activeTrackColor: Colorutils.userdetailcolor,
-                                    inactiveThumbColor:  Colorutils.userdetailcolor.withOpacity(0.1),
-                                    inactiveTrackColor: Colors.grey.shade400,
-                                  ),
+                                  )                              // Switch(
+                                  //   value: callHuman?.isCallAvailable ?? false,
+                                  //   onChanged: (value) async{
+                                  //
+                                  //     if(callHuman?.isCallAvailable == true){
+                                  //       print("beneferfgrefgr");
+                                  //       context.loaderOverlay.show();
+                                  //
+                                  //       Map<String, dynamic> resp =
+                                  //       await ApiServices.addTalkToHumanList(
+                                  //           token: widget.token, doctorId: callHuman?.id  ?? 0 , status:false);
+                                  //       context.loaderOverlay.hide();
+                                  //
+                                  //       if (resp['status'] == "ok") {
+                                  //         Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
+                                  //
+                                  //
+                                  //         ProductAppPopUps.submit(
+                                  //           title: "Success",
+                                  //           message: "Talk to human deactivated",
+                                  //           actionName: "Close",
+                                  //           iconData: Icons.done,
+                                  //           iconColor: Colors.green,
+                                  //         );
+                                  //       } else {
+                                  //         ProductAppPopUps.submit(
+                                  //           title: "Error",
+                                  //           message:  "Something went wrong 1st",
+                                  //           actionName: "Close",
+                                  //           iconData: Icons.error_outline_outlined,
+                                  //           iconColor: Colors.red,
+                                  //         );
+                                  //       }
+                                  //     }else{
+                                  //       Map<String, dynamic> resp =
+                                  //       await ApiServices.addTalkToHumanList(
+                                  //           token: widget.token, doctorId: callHuman?.id  ?? 0 , status:true);
+                                  //       context.loaderOverlay.hide();
+                                  //
+                                  //       if (resp['status'] == "ok") {
+                                  //
+                                  //         Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
+                                  //
+                                  //         ProductAppPopUps.submit(
+                                  //           title: "Success",
+                                  //           message: "Talk to human activated",
+                                  //           actionName: "Close",
+                                  //           iconData: Icons.done,
+                                  //           iconColor: Colors.green,
+                                  //         );
+                                  //       } else {
+                                  //         ProductAppPopUps.submit(
+                                  //           title: "Error",
+                                  //           message:  "Something went wrong 2nd",
+                                  //           actionName: "Close",
+                                  //           iconData: Icons.error_outline_outlined,
+                                  //           iconColor: Colors.red,
+                                  //         );
+                                  //       }
+                                  //
+                                  //     }
+                                  //   },
+                                  //   activeColor: Colorutils.userdetailcolor.withOpacity(0.1),
+                                  //   activeTrackColor: Colorutils.userdetailcolor,
+                                  //   inactiveThumbColor:  Colorutils.userdetailcolor.withOpacity(0.1),
+                                  //   inactiveTrackColor: Colors.grey.shade400,
+                                  // ),
                                 ],
                               ),
                               onTap: () async{

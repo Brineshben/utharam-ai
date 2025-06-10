@@ -509,6 +509,38 @@ class ApiServices {
     }
   }
 
+  ///Add to talk to human new voxbay
+  static Future<Map<String, dynamic>> voxBayTalk({
+    required String destination,
+    required String extension,
+  }) async {
+    String url =
+        "${ApiConstants.baseURL}${ApiConstants.voxBay}";
+    print('URL-voxBayTalk--->${url}');
+    Map apiBody = {
+      "destination": destination,
+      "extension": extension,
+    };
+    try {
+      var request = http.Request('POST', Uri.parse(url));
+      print('Api body---->$apiBody');
+      request.body = (json.encode(apiBody));
+      request.headers.addAll({'Content-Type': 'application/json'});
+      // request.headers.addAll({'Authorization': "Bearer $token"});
+
+      // request.headers.addAll(
+      //   {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
+      // );
+      http.StreamedResponse response = await request.send();
+      var respString = await response.stream.bytesToString();
+      print('respString---->${respString}');
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
+
   ///Enable chat
   static Future<Map<String, dynamic>> enableChat({
     required int patientId,

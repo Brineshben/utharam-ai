@@ -11,6 +11,7 @@ class CallHumanController extends GetxController {
   Rx<CallHumanModel?> callHumanData = Rx(null);
 
   RxList<Data?> callHumanList = RxList();
+  Rx<VoxbayDetails?> VoxbayDetails1 = Rx(null);
 
   Future<void> callHumanDataz(String token) async {
     isLoading.value = true;
@@ -22,6 +23,7 @@ class CallHumanController extends GetxController {
         callHumanData.value = CallHumanModel.fromJson(resp);
         print("patient list${callHumanData.value?.data}");
         callHumanList.value = callHumanData.value?.data ?? [];
+        VoxbayDetails1.value =callHumanList.value.first?.voxbayDetails ;
         isLoading.value = true;
       } else {
         isError.value = true;
