@@ -42,7 +42,7 @@ class CreateSlotController extends GetxController {
       }
       else {
 
-        Get.snackbar('FAILED', 'Please select the correct time range.',
+        Get.snackbar('Error', 'The selected time range is invalid or overlaps with another scheduled slot. Please choose a different range',
             snackPosition: SnackPosition.BOTTOM,
           margin: const EdgeInsets.only(
               bottom: 10,

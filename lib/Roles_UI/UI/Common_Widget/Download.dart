@@ -34,10 +34,8 @@ Future<void> downloadPdfToDownloads(String url,String name) async {
         'AI Report Downloaded Successfully',
         snackPosition: SnackPosition.BOTTOM,
         duration: Duration(seconds: 5),
-        margin: const EdgeInsets.only(
-            top: 15,
-            left: 8,
-            right: 8,bottom: 10),
+        margin: const EdgeInsets.only(top: 15, left: 8,
+            right: 8,bottom: 70),
         mainButton: TextButton(
 
           onPressed: () => OpenFilex.open(filePath),

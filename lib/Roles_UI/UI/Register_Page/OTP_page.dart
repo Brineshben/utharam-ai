@@ -59,10 +59,8 @@ class _OtpScreenState extends State<OtpScreen> {
     if (otpCode.text.length == 4) {
       Get.snackbar('Failed', 'Submitted OTP: $otpCode',
           snackPosition: SnackPosition.BOTTOM,
-          margin: const EdgeInsets.only(
-              top: 15,
-              left: 8,
-              right: 8), );
+        margin: const EdgeInsets.only(top: 15, left: 8,
+            right: 8,bottom: 70), );
       // You can validate OTP here
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(content: Text("Submitted OTP: $_otpCode")),

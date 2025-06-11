@@ -278,7 +278,7 @@ class _PageIndexNavigationTherapistState
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: 'Assessments',
+                    label: 'Assessment',
                   ),
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(

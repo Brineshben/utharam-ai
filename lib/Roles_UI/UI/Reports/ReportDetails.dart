@@ -133,7 +133,7 @@ class _ReportsDetailsState extends State<ReportsDetails> {
                   details: "details",
                   repoturl: preliminarySummaryUrl ?? "", name: widget.name,
                 ),
-
+                controller.SecondaryDiagnosesData.isNotEmpty?
                 Padding(
                   padding: EdgeInsets.only(
                       top: 5.h, bottom: 5.h, left: 20.w, right: 10.w),
@@ -150,14 +150,15 @@ class _ReportsDetailsState extends State<ReportsDetails> {
                       ),
                     ],
                   ),
-                ),
+                ):SizedBox(),
+                controller.SecondaryDiagnosesData.isNotEmpty?
                 AiReport(
                   summary: SecondaryDiagnosesDataSummary ??
                       "No diagnosis summary available",
                   details: "details",
                   repoturl: SecondaryDiagnosesDataSummaryUrl ?? "", name: widget.name,
-                ),
-
+                ):SizedBox(),
+                controller.GeneralChatsData.isNotEmpty?
                 Padding(
                   padding: EdgeInsets.only(
                       top: 5.h, bottom: 5.h, left: 20.w, right: 10.w),
@@ -174,13 +175,15 @@ class _ReportsDetailsState extends State<ReportsDetails> {
                       ),
                     ],
                   ),
-                ),
+                ):SizedBox(),
+                controller.GeneralChatsData.isNotEmpty?
+
                 AiReport(
                   summary: GeneralChatsDataSummary ??
                       "No diagnosis summary available",
                   details: "details",
                   repoturl: GeneralChatsDataSummaryUrl ?? "", name: widget.name,
-                ),
+                ):SizedBox(),
               ],
             );
           },

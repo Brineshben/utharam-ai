@@ -21,6 +21,8 @@ import '../../UI/Common_Widget/pdfview.dart';
 import '../../UI/Common_Widget/popups.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
+import '../../UI/DoctorListSenior/doctorListSenior.dart';
+
 class PatientDetails extends StatefulWidget {
   final String name;
   final String url;
@@ -186,7 +188,7 @@ class _PatientDetailsState extends State<PatientDetails> {
                           val!.isEmpty ? 'Enter the Topic' : null,
                       cursorColor: Colors.grey,
                       decoration: InputDecoration(
-                        hintText: "Search Patients",
+                        hintText: "Search Doctors",
                         hintStyle: const TextStyle(color: Colors.grey),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -261,15 +263,18 @@ class _PatientDetailsState extends State<PatientDetails> {
                               ),
                             ),
                             title: Text(
-                              doctor?.name ?? "",
-                              style: const TextStyle(
+                              doctor?.name?.toUpperCase() ?? "",
+                              style:  TextStyle(
+                                fontSize: 15.h,
                                 color: Colors.blueGrey,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             subtitle: Text(
-                              doctor?.role ?? "",
-                              style: const TextStyle(
+                              formatString(doctor?.role ?? "No Role"),
+
+                              style:  TextStyle(
+                                fontSize: 13.h,
                                 color: Colors.blueGrey,
                                 fontWeight: FontWeight.bold,
                               ),

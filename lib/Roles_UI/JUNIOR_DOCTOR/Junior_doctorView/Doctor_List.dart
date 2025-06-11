@@ -9,6 +9,7 @@ import 'package:patient/utils/color_util.dart';
 
 import '../../../Controller/Doctor_List_Controller.dart';
 import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
+import '../../UI/DoctorListSenior/doctorListSenior.dart';
 import 'Add_Doctor.dart';
 import 'Slot_Create.dart';
 
@@ -194,7 +195,7 @@ class _DoctorListState extends State<DoctorList> {
                             ),
                           ),
                           subtitle: Text(
-                            doctor?.role ?? "No Role",
+                            formatString(doctor?.role ?? "No Role"),
                             style: TextStyle(
                               fontSize: 14.h,
                               color: Colors.blueGrey,

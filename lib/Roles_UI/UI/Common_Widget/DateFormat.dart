@@ -37,7 +37,7 @@ Color getSeverityColor(String severity) {
     case '2':
       return Colors.green.shade800; // Dark green for mild
     case '3':
-      return Colors.yellow; // High
+      return Colors.yellow.shade500; // High
     case '4':
       return Colors.orange; // Severe
     case '5':

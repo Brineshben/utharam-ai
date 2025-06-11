@@ -196,7 +196,7 @@ class _DoctorListSeniorState extends State<DoctorListSenior> {
                             ),
                           ),
                           subtitle: Text(
-                            doctor?.role ?? "No Role",
+                            formatString(doctor?.role ?? "No Role"),
                             style: TextStyle(
                               fontSize: 14.h,
                               color: Colors.blueGrey,
@@ -258,4 +258,11 @@ class _DoctorListSeniorState extends State<DoctorListSenior> {
       ),
     );
   }
+}
+String formatString(String input) {
+  return input
+      .split('_')
+      .map((word) =>
+  word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '')
+      .join(' ');
 }

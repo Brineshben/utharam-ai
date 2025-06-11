@@ -558,9 +558,13 @@ class CustomCircularProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     Color getSeverityColor() {
       if (percent >= 5) {
-        return Colors.red.shade500;
-      } else if (percent >= 3) {
+        return Colors.red;
+      } else if (percent >= 4) {
         return Colors.orange;
+      }else if (percent >= 3) {
+        return Colors.yellow.shade500;
+      }else if (percent >= 2) {
+        return Colors.green.shade800;
       } else {
         return Colors.green;
       }

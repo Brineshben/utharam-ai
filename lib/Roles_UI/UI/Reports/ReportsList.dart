@@ -22,6 +22,7 @@ class ReportsList extends StatefulWidget {
 }
 
 class _ReportsListState extends State<ReportsList> {
+  TextEditingController controllers = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -67,7 +68,7 @@ class _ReportsListState extends State<ReportsList> {
               height: 20.h,
             ),
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
               child: Container(
                 height: 50.h,
                 decoration: const BoxDecoration(
@@ -85,6 +86,7 @@ class _ReportsListState extends State<ReportsList> {
                   validator: (val) => val!.isEmpty ? 'Enter the Topic' : null,
                   cursorColor: Colors.grey,
                   keyboardType: TextInputType.text,
+                  controller: controllers,
                   decoration: InputDecoration(
                       hintStyle: const TextStyle(color: Colors.grey),
                       hintText: "Search Patients",
@@ -189,17 +191,22 @@ class _ReportsListState extends State<ReportsList> {
 
                                 },
                               ),
-                              IconButton(
-                                icon: Icon(Icons.arrow_forward_ios,
-                                    size: 15, color: Colors.blueGrey),
-                                onPressed: () {
+                              SizedBox(width: 20,),
+                              GestureDetector(
+
+                                child: Icon(Icons.arrow_forward_ios,
+                                    size: 17, color: Colors.blueGrey),
+                                onTap: (){
+
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
                                       return ReportsDetails(token:widget.token, id: report?.patientDetails?.id ?? 0, name: report?.patientDetails?.name ?? "",);
                                     },
                                   ));
+
                                 },
                               ),
+
                             ],
                           ),
                         );

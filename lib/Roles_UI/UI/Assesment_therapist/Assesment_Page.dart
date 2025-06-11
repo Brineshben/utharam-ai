@@ -54,7 +54,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
             Padding(
               padding: const EdgeInsets.only(top: 50, left: 20),
               child: Text(
-                "PATIENT ASSESMENT LIST",
+                "PATIENT ASSESSMENT LIST",
                 style: GoogleFonts.shanti(
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.w900,

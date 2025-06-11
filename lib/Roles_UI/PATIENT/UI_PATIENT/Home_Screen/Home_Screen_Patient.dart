@@ -185,7 +185,7 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                                         Get.snackbar('Failed', 'No AI report available',
                                           snackPosition: SnackPosition.BOTTOM,
                                           margin: const EdgeInsets.only(
-                                              bottom: 10,
+                                              bottom: 70,
                                               left: 8,
                                               right: 8),);
 

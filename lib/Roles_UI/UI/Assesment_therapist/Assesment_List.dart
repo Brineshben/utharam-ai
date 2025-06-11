@@ -93,7 +93,7 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
             // Header Text
 
             SizedBox(
-              height: 20.h,
+              height: 10.h,
             ),
             // Doctor List View
             Expanded(
@@ -109,7 +109,7 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
                   if (controller.patientAssesmentListDataList.isEmpty) {
                     return Center(
                       child: const Text(
-                        "No  Details Found",
+                        "No Details Found",
                         style: TextStyle(
                             color: Colors.red,
                             fontStyle: FontStyle.italic),
