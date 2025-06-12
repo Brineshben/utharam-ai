@@ -356,6 +356,10 @@ class PatientsList extends StatelessWidget {
               (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
                   ? controller.assignedDoctorPatientList[index]
                   ?.patientDiagnosis?.first.aiSummaryFile
+                  : "jdjw";  final date =
+              (controller.assignedDoctorPatientList[index]?.patientDiagnosis?.isNotEmpty ?? false)
+                  ? controller.assignedDoctorPatientList[index]
+                  ?.assignedAt
                   : "jdjw";
 
               return GestureDetector(
@@ -464,6 +468,24 @@ class PatientsList extends StatelessWidget {
                                         ],
                                       ),
                                     ),
+                                    // SingleChildScrollView(
+                                    //   scrollDirection: Axis.horizontal,
+                                    //   child: Row(
+                                    //     children: [
+                                    //       Text(
+                                    //         controller
+                                    //             .assignedDoctorPatientList[index]
+                                    //             ?.assignedAt ??
+                                    //             "DD-MM-YYYY",
+                                    //         style: GoogleFonts.nunito(
+                                    //           color: Colors.blueGrey,
+                                    //           fontWeight: FontWeight.w600,
+                                    //           fontSize: 13.h,
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               ),

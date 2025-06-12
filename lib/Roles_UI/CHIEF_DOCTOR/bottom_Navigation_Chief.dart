@@ -9,6 +9,7 @@ import '../../Controller/AddTalktoHumanController.dart';
 import '../../Controller/Doctor_List_Controller.dart';
 import '../../Controller/JuniorDashoard_Controller.dart';
 import '../../Controller/PatientAppointmentDetailsController.dart';
+import '../../Controller/PatientListController.dart';
 import '../../Controller/Quotes_Controller.dart';
 import '../../Controller/RejectedController.dart';
 import '../../Controller/SheduleController.dart';
@@ -50,6 +51,7 @@ class _PageIndexNavigationChiefState extends State<PageIndexNavigationChief> wit
 
     Get.find<DoctorListController>().doctorListData(widget.token);
     Get.find<RejectedController>().rejectedDataz(widget.token);
+    Get.find<PatientListController>().PatientListData();
 
     _screens = [
       HomeScreenChief(role:widget.role, name: widget.name, token: widget.token, doctorId: widget.doctorId,),

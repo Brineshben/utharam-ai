@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:patient/utils/color_util.dart';
 
+import '../../../main.dart';
+import '../../JUNIOR_DOCTOR/appoinment/PatientListr.dart';
 import 'RejectedPatientList.dart';
 import 'addTalktoHuman.dart';
 
@@ -49,23 +51,10 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
           padding: EdgeInsets.all(16),
           child: Column(
             children: [
+
               Padding(
-                padding: EdgeInsets.only(top: 50.h, left: 5.w, right: 10.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "SETTINGS ",
-                      style: GoogleFonts.shanti(
-                        color: Colors.blueGrey,
-                        fontWeight: FontWeight.w900,
-                        fontSize: 20.h,
-                      ),
-                    ),
-                  ],
-                ),
+                padding: EdgeInsets.only(top: 50.h, left: 5.w, right: 10.w),                child: buildProfileCard(widget.name, widget.role),
               ),
-              buildProfileCard(widget.name, widget.role),
               // SizedBox(height: 5),
               // Wrap(
 
@@ -135,25 +124,79 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
               //     // ]),
               //   ],
               // ),
+              Padding(
+                padding: EdgeInsets.only(top: 10.h, left: 5.w, right: 10.w,bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "SETTINGS ",
+                      style: GoogleFonts.shanti(
+                        color: Colors.blueGrey,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 20.h,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 5),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return AddTalkToHuman(token: widget.token,);
-                  },));
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return AddTalkToHuman(
+                        token: widget.token,
+                      );
+                    },
+                  ));
                 },
                 child: NameCard(
                   name: "ADD TALK TO HUMAN",
                 ),
-              ), SizedBox(height: 5),
+              ),
+              SizedBox(height: 5),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return RejectedPatientList(token: widget.token,);
-                  },));
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return RejectedPatientList(
+                        token: widget.token,
+                      );
+                    },
+                  ));
                 },
                 child: NameCard(
                   name: "REJECTED PATIENTS",
+                ),
+              ),
+
+              SizedBox(height: 5),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return PatientList(
+                        token: widget.token,
+                      );
+                    },
+                  ));
+                },
+                child: NameCard(
+                  name: "MAKE NEW APPOINTMENT ",
+                ),
+              ),
+              SizedBox(height: 5),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return MyApp();
+                    },
+                  ));
+                },
+                child: NameCard(
+                  name: "MY APPOINTMENTS",
                 ),
               )
 
@@ -179,6 +222,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
     final String role,
   ) {
     return Card(
+
       color: Colors.white,
       margin: EdgeInsets.symmetric(vertical: 5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -327,25 +371,31 @@ class NameCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(1),
-      elevation: 1,
+      elevation: 0.1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween
-            ,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 name,
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold,color:Colors.blueGrey,),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey,
+                ),
               ),
-              Icon(Icons.arrow_forward_ios,color:Colors.blueGrey,)
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.blueGrey,
+                size: 15,
+              )
             ],
           ),
         ),

@@ -3,18 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:patient/Controller/Slot_Controller.dart';
+import '../../Controller/AddTalktoHumanController.dart';
 import '../../Controller/Doctor_List_Controller.dart';
 import '../../Controller/JuniorDashoard_Controller.dart';
+import '../../Controller/PatientListController.dart';
 import '../../Controller/Patient_queue_Controller.dart';
 import '../../Controller/Quotes_Controller.dart';
+import '../../Controller/RejectedController.dart';
 import '../../Controller/SheduleController.dart';
 import '../../utils/color_util.dart';
+import '../CHIEF_DOCTOR/Settings/settings.dart';
 import '../UI/Assesment_therapist/Assesment_Page.dart';
 import '../UI/Shedule_Page/Upcoming_List.dart';
 import '../UI/Shedule_Page/shedule.dart';
 import 'Junior_doctorView/Doctor_List.dart';
 import 'Junior_doctorView/Home_Junior.dart';
 import 'package:get/get.dart';
+
+import 'appoinment/PatientListr.dart';
 
 class PageIndexNavigationJunior extends StatefulWidget {
   final String role;
@@ -48,6 +54,7 @@ class _PageIndexNavigationJuniorState extends State<PageIndexNavigationJunior> {
     Get.find<ScheduleController>().scheduleDataz(widget.token);
     Get.find<QuotesController>().QuotesData(widget.token);
     Get.find<JuniorDashboardController>().juniorData(widget.token);
+    Get.find<PatientListController>().PatientListData();
 
     _screens = [
       HomeScreenJunior(
@@ -60,6 +67,8 @@ class _PageIndexNavigationJuniorState extends State<PageIndexNavigationJunior> {
       AssesmentPage(
         token: widget.token,
       ),
+      ProfileSettingsPage(name: widget.name, role:widget.role, token:widget.token,),
+
     ];
   }
 
@@ -79,6 +88,15 @@ class _PageIndexNavigationJuniorState extends State<PageIndexNavigationJunior> {
         break;
       case 2:
         Get.find<DoctorListController>().doctorListData(widget.token);
+        break;
+        case 3:
+        Get.find<PatientListController>().PatientListData();
+        break;
+        case 4:
+          Get.find<RejectedController>().rejectedDataz(widget.token);
+          Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
+
+          Get.find<PatientListController>().PatientListData();
         break;
     }
   }
@@ -182,7 +200,21 @@ class _PageIndexNavigationJuniorState extends State<PageIndexNavigationJunior> {
                       ),
                     ),
                     label: 'Assessments',
-                  ),
+                  ),   BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          "assets/images/settings.svg",
+          width: 25.w,
+          height: 25.h,
+          color: Colors.grey,
+          colorFilter: ColorFilter.mode(
+            _selectedIndex == 4
+                ? Colorutils.userdetailcolor
+                : Colors.grey,
+            BlendMode.srcIn,
+          ),
+        ),
+        label: 'Settings',
+      ),
                 ],
               ),
             ),

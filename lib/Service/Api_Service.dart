@@ -202,6 +202,23 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
+  ///Patient LIST
+  static Future<Map<String, dynamic>> patientList() async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.patientList}";
+    print("patientList---$url");
+
+    try {
+      var request = http.Request('GET', Uri.parse(url));
+      // request.headers.addAll({'Authorization': "Bearer $token"});
+      http.StreamedResponse response = await request.send();
+      print('patientList Response------->${response}');
+
+      var respString = await response.stream.bytesToString();
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
 
   ///Consult DOCTOR LIST
   static Future<Map<String, dynamic>> consultDoctorList({

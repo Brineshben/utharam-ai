@@ -220,25 +220,23 @@ class _DoctorListState extends State<DoctorList> {
 
                                 },
                               ),
-                              SizedBox(width: 10,),
-                              IconButton(
-                                icon: Icon(Icons.arrow_forward_ios, size: 20.w, color: Colors.blueGrey),
-                                onPressed: () {
-                                  print(doctor?.id ?? '');
-                                  print(doctor?.name ?? '');
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CreateSlotScreen(
-                                        drId: doctor?.id ?? 0,
-                                        drName: doctor?.name ?? '',
-                                        role: doctor?.role ?? '',
-                                        token: widget.token,
-                                      ),
+                              SizedBox(width: 15,),
+                              GestureDetector(child: Icon(Icons.arrow_forward_ios, size: 20.w, color: Colors.blueGrey),onTap: (){
+                                print(doctor?.id ?? '');
+                                print(doctor?.name ?? '');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+
+                                    builder: (context) => CreateSlotScreen(
+                                      drId: doctor?.id ?? 0,
+                                      drName: doctor?.name ?? '',
+                                      role: doctor?.role ?? '',
+                                      token: widget.token,
                                     ),
-                                  );
-                                },
-                              ),
+                                  ),
+                                );
+                              },),
                             ],
                           ),
 

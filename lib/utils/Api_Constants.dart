@@ -19,6 +19,7 @@ class ApiConstants {
   static String registerPatient = "/accounts/register/";
   static String patientQueue = "/assign_doctor/new/patience/list/";
   static String doctorList = "/doctors/list/doctors/";
+  static String patientList = "/assign_doctor/doctor/assign/list/";
   static String consultDoctorList = "/doctors/list/consult/doctors/";
   static String addDoctorToPatient = "/assign_doctor/assign-doctor/";
   static String addSlot = "/booking/list/all/slots/";
