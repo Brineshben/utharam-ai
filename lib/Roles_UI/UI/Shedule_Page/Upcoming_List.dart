@@ -270,6 +270,7 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
                                   ),
                                   children: [
                                     Container(
+
                                        width:double.infinity,
                                       decoration: BoxDecoration(
                                         color: Colorutils.userdetailcolor
