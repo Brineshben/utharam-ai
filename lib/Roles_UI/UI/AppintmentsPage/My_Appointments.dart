@@ -272,7 +272,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "ASSIGNED DOCTOR : ${patientData?.patientDetails?.name?.toUpperCase() ?? "No Name"}",
+                                  "ASSIGNED DOCTOR : ${patientData?.doctorDetails?.name?.toUpperCase() ?? "No Name"}",
                                   style: TextStyle(
                                     fontSize: 12.h,
                                     color: Colors.blueGrey,

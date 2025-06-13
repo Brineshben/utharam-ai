@@ -158,7 +158,7 @@ class _PageIndexNavigationTherapistState
         doctorId: widget.doctorId,
       ),
       PatientExpandableCardList(
-        token: widget.token,
+        token: widget.token, role: widget.role,
       ),
       AssesmentPage(
         token: widget.token,

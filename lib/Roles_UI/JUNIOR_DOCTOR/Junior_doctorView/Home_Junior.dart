@@ -11,6 +11,7 @@ import '../../../Controller/Patient_queue_Controller.dart';
 import '../../../Controller/Quotes_Controller.dart';
 import '../../CHIEF_DOCTOR/Chiefdoctor_View/DashChief.dart';
 import '../../UI/Common_Widget/appbar.dart';
+import '../../UI/DoctorListSenior/doctorListSenior.dart';
 import '../../UI/HomePage/home_widgets/DashList.dart';
 import '../../UI/HomePage/home_widgets/overallView.dart';
 import 'package:get/get.dart';
@@ -262,7 +263,7 @@ class _HomeScreenJuniorState extends State<HomeScreenJunior> {
                     isWelcome: true,
                     bellicon: true,
                     notificationcount: true,
-                    name: '${widget.name} (${widget.role})',
+                    name: '${widget.name} (${ formatString(widget.role)})',
                     image: 'assets/images/profile2.jpg',
                   ),
                   Padding(
@@ -272,7 +273,7 @@ class _HomeScreenJuniorState extends State<HomeScreenJunior> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${widget.role.toUpperCase()} DASHBOARD",
+                          "${formatString(widget.role).toUpperCase()} DASHBOARD",
                           style: GoogleFonts.shanti(
                             color: Colors.blueGrey,
                             fontWeight: FontWeight.w900,

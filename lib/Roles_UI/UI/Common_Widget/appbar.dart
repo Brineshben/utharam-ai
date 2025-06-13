@@ -125,7 +125,7 @@ class UserDetails extends StatelessWidget {
                         Get.snackbar('Failed', 'Feature is under Maintenance',
                             snackPosition: SnackPosition.BOTTOM,
                           margin: const EdgeInsets.only(
-                              bottom: 10,
+                              bottom: 70,
                               left: 8,
                               right: 8),);
                       },

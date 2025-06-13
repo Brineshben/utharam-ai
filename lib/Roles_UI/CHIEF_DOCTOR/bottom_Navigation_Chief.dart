@@ -55,7 +55,7 @@ class _PageIndexNavigationChiefState extends State<PageIndexNavigationChief> wit
 
     _screens = [
       HomeScreenChief(role:widget.role, name: widget.name, token: widget.token, doctorId: widget.doctorId,),
-      PatientExpandableCardList(token: widget.token,),
+      PatientExpandableCardList(token: widget.token, role: widget.role,),
       DoctorList(token: widget.token),
 
       ProfileSettingsPage(name: widget.name, role:widget.role, token:widget.token,),

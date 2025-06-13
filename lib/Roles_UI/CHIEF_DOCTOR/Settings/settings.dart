@@ -7,6 +7,7 @@ import 'package:patient/utils/color_util.dart';
 import '../../../main.dart';
 import '../../JUNIOR_DOCTOR/appoinment/PatientListr.dart';
 import '../../UI/AppintmentsPage/My_Appointments.dart';
+import '../../UI/DoctorListSenior/doctorListSenior.dart';
 import 'RejectedPatientList.dart';
 import 'addTalktoHuman.dart';
 
@@ -54,7 +55,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
             children: [
 
               Padding(
-                padding: EdgeInsets.only(top: 50.h, left: 5.w, right: 10.w),                child: buildProfileCard(widget.name, widget.role),
+                padding: EdgeInsets.only(top: 50.h, left: 5.w, right: 10.w),                child: buildProfileCard(widget.name, formatString(widget.role)),
               ),
               // SizedBox(height: 5),
               // Wrap(

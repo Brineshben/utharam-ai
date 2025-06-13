@@ -8,12 +8,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../Controller/SheduleController.dart';
 import '../../../utils/color_util.dart';
+import '../AppintmentsPage/My_Appointments.dart';
 import '../Common_Widget/DateFormat.dart';
 
 class PatientExpandableCardList extends StatefulWidget {
-  final String token;
+  final String token;  final String role;
 
-  const PatientExpandableCardList({super.key, required this.token});
+  const PatientExpandableCardList({super.key, required this.token, required this.role});
   @override
   State<PatientExpandableCardList> createState() => _PatientExpandableCardListState();
 }
@@ -345,6 +346,36 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
           },
         ),
       ),
+      floatingActionButton: (widget.role == "senior_psychologist" ||widget.role == "psychiatrist")? GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return MyAppointments(token: widget.token);
+              },
+            ),
+          );
+        },
+        child: Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          color: Colorutils.userdetailcolor,
+          child: Container(
+            height: 50.h,
+            width: 120.w,
+            alignment: Alignment.center,
+            child: Text(
+              "MY SCHEDULE",
+              style: TextStyle(color: Colors.white, fontSize: 15.h),
+            ),
+          ),
+        ),
+      ):SizedBox(),
+
+
     );
   }
 }

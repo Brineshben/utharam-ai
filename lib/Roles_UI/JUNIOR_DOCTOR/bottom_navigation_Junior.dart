@@ -62,7 +62,7 @@ class _PageIndexNavigationJuniorState extends State<PageIndexNavigationJunior> {
         role: widget.role,
         token: widget.token, doctorID: widget.doctorId,
       ),
-      PatientExpandableCardList(token:widget.token,),
+      PatientExpandableCardList(token:widget.token, role: widget.role,),
       DoctorList(token: widget.token),
       AssesmentPage(
         token: widget.token,

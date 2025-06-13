@@ -17,6 +17,7 @@ import '../../../UI/Common_Widget/Appointment_card.dart';
 import '../../../UI/Common_Widget/DateFormat.dart';
 import '../../../UI/Common_Widget/appbar.dart';
 import '../../../UI/Common_Widget/pdfview.dart';
+import '../../../UI/DoctorListSenior/doctorListSenior.dart';
 import '../../../UI/HomePage/home_widgets/DashList.dart';
 import '../../../UI/HomePage/home_widgets/overallView.dart';
 import '../../../UI/HomePage/home_widgets/quiz_List.dart';
@@ -88,7 +89,7 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: 25.h, bottom: 25.h, left: 10.w, right: 10.w),
+                      top: 25.h, bottom: 25.h, left: 15.w, right: 10.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -117,7 +118,7 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                   );
                 }),
                 Padding(
-                  padding: EdgeInsets.only(top: 15.h, left: 10.w, right: 10.w),
+                  padding: EdgeInsets.only(top: 15.h, left: 15.w, right: 10.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -239,12 +240,33 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
                     if (name == "No Name") {
                       return const SizedBox(); // Return nothing if no valid name
                     } else {
-                      return AppointmentCard2(
-                        name: name,
-                        date: date,
-                        role: role,
-                        fromDate: fromDate,
-                        toDate: toDate,
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 5.h, bottom: 1.h, left: 15.w, right: 10.w),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Appointment Details",
+                                  style: GoogleFonts.shanti(
+                                    color: Colors.blueGrey,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 20.h,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          AppointmentCard2(
+                            name: name,
+                            date: date,
+                            role:formatString(role) ,
+                            fromDate: fromDate,
+                            toDate: toDate,
+                          ),
+                        ],
                       );
                     }
                   },
@@ -252,7 +274,7 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
 
                 Padding(
                   padding: EdgeInsets.only(
-                      top: 5.h, bottom: 1.h, left: 10.w, right: 10.w),
+                      top: 5.h, bottom: 1.h, left: 15.w, right: 10.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

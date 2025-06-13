@@ -25,7 +25,7 @@ class AppointmentCard2 extends StatelessWidget {
         ),
       ),
       elevation: 2,
-      margin: const EdgeInsets.all(12),
+      margin: const EdgeInsets.all(16),
 
       child: Container(
         padding: const EdgeInsets.all(16),
