@@ -6,6 +6,7 @@ import 'package:patient/utils/color_util.dart';
 
 import '../../../main.dart';
 import '../../JUNIOR_DOCTOR/appoinment/PatientListr.dart';
+import '../../UI/AppintmentsPage/My_Appointments.dart';
 import 'RejectedPatientList.dart';
 import 'addTalktoHuman.dart';
 
@@ -191,7 +192,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return MyApp();
+                      return MyAppointments(token: widget.token,);
                     },
                   ));
                 },
