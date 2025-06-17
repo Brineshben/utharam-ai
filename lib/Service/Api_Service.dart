@@ -388,6 +388,40 @@ class ApiServices {
     }
   }
 
+
+  ///addSecondAssesment
+  static Future<Map<String, dynamic>> addvoxbay({
+    required String didNo,
+    required String empCode,
+    required String extNo,
+    required int staff,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.addVoxbay}";
+    print(url);
+    Map apiBody = {
+      "did_no": didNo,
+      "emp_code": empCode,
+      "ext_no": extNo,
+      "staff": staff,
+    };
+    try {
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+
+      request.headers.addAll(
+        {'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+      print('addSecondAssesment-->${response.headers}');
+      var respString = await response.stream.bytesToString();
+      print('addSecondAssesment response api--------->${respString}');
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
+
   ///JuniorDashboardCount
   static Future<Map<String, dynamic>> juniorDashboard({
     required String token,

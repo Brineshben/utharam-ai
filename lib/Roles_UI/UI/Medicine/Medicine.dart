@@ -129,9 +129,7 @@ class _MedicineState extends State<Medicine> {
                                         ),
                                         onTap: () {
 
-                                          Get.find<AddMedicineController>().addMedicineData.value.remove(
-                                            MedicinesList(),
-                                          );
+                                          Get.find<AddMedicineController>().addMedicineData.value.removeAt(index);
                                           Get.find<AddMedicineController>().addMedicineData.refresh();
                                         },
                                       )
@@ -705,6 +703,7 @@ class _MedicineState extends State<Medicine> {
 
           Get.find<AddMedicineController>().medicineControllers.add(
             {
+              ""
               "Strength": TextEditingController(),
               "Dosage": TextEditingController(),
               "UOM": TextEditingController(),

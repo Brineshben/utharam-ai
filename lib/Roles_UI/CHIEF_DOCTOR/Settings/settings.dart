@@ -187,6 +187,20 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 child: NameCard(
                   name: "MAKE NEW APPOINTMENT ",
                 ),
+              ), SizedBox(height: 5),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return PatientList(
+                        token: widget.token,
+                      );
+                    },
+                  ));
+                },
+                child: NameCard(
+                  name: "ADD PROMPT ",
+                ),
               ),
               SizedBox(height: 5),
               GestureDetector(

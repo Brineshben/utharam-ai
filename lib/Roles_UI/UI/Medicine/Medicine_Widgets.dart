@@ -15,49 +15,207 @@ import '../../../Model/Medicine_model/Frequency_Model.dart';
 import '../../../Model/Medicine_model/Medicine_List_Model.dart';
 import '../../../utils/color_util.dart';
 
+// Widget buildDropdownSearchField({
+//   required String hintText,
+//   required List<String> items,
+//   // required TextEditingController controller,
+//   required bool validation,
+//   required int index,
+//   required String type,
+// }) {
+//   String? getSelectedItem() {
+//     switch (type) {
+//       case 'medicine':
+//         return Get.find<AddMedicineController>()
+//                 .addMedicineData
+//                 .value
+//                 .isNotEmpty
+//             ? Get.find<AddMedicineController>()
+//                 .addMedicineData
+//                 .value[index]
+//                 .medicine
+//                 ?.name
+//             : null;
+//       case 'brand':
+//         return Get.find<AddMedicineController>()
+//                 .addMedicineData
+//                 .value
+//                 .isNotEmpty
+//             ? Get.find<AddMedicineController>()
+//                 .addMedicineData
+//                 .value[index]
+//                 .brand
+//                 ?.name
+//             : null;
+//       case 'frequency':
+//         return Get.find<AddMedicineController>()
+//                 .addMedicineData
+//                 .value
+//                 .isNotEmpty
+//             ? Get.find<AddMedicineController>()
+//                 .addMedicineData
+//                 .value[index]
+//                 .frequency
+//                 ?.name
+//             : null;
+//       default:
+//         return null;
+//     }
+//   }
+//
+//   return Padding(
+//     padding: const EdgeInsets.all(4),
+//     child: SizedBox(
+//       height: 60.h, // Reduced from 50 to 40
+//       width: double.infinity,
+//       child: DropdownSearch<String>(
+//         items: items,
+//         selectedItem: getSelectedItem(),
+//         onChanged: (value) {
+//           if (type == 'medicine') {
+//             List<MedicineData?> medicine = Get.find<MedicineController>()
+//                 .medicineList
+//                 .value
+//                 .where((element) => element?.name == value)
+//                 .toList();
+//             if (medicine.isNotEmpty) {
+//               Get.find<AddMedicineController>()
+//                   .addMedicineData
+//                   .value[index]
+//                   .medicine = medicine.first;
+//               Get.find<AddMedicineController>().addMedicineData.refresh();
+//             }
+//           }
+//           if (type == 'brand') {
+//             List<BrandData?> brand = Get.find<BrandController>()
+//                 .brandList
+//                 .value
+//                 .where((element) => element?.name == value)
+//                 .toList();
+//             if (brand.isNotEmpty) {
+//               Get.find<AddMedicineController>()
+//                   .addMedicineData
+//                   .value[index]
+//                   .brand = brand.first;
+//               Get.find<AddMedicineController>().addMedicineData.refresh();
+//             }
+//           }
+//           if (type == 'frequency') {
+//             List<FrequencyData?> frequency = Get.find<FrequencyController>()
+//                 .frequencyList
+//                 .value
+//                 .where((element) => element?.name == value)
+//                 .toList();
+//             if (frequency.isNotEmpty) {
+//               Get.find<AddMedicineController>()
+//                   .addMedicineData
+//                   .value[index]
+//                   .frequency = frequency.first;
+//               Get.find<AddMedicineController>().addMedicineData.refresh();
+//             }
+//           }
+//         },
+//         dropdownDecoratorProps: DropDownDecoratorProps(
+//           dropdownSearchDecoration: InputDecoration(
+//             hintText: hintText,
+//             labelText: hintText,
+//             labelStyle: TextStyle(
+//               fontSize: 13, // Slightly smaller font
+//               fontWeight: FontWeight.bold,
+//               color: Colors.blueGrey,
+//             ),
+//             contentPadding:
+//                 const EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
+//             // Reduced padding
+//             focusedBorder: OutlineInputBorder(
+//               borderRadius: BorderRadius.circular(8),
+//               // Slightly smaller border radius
+//               borderSide:
+//                   BorderSide(color: Colorutils.userdetailcolor, width: 1),
+//             ),
+//             enabledBorder: OutlineInputBorder(
+//               borderRadius: BorderRadius.circular(8),
+//               borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+//             ),
+//             border: OutlineInputBorder(
+//               borderRadius: BorderRadius.circular(8),
+//               borderSide: BorderSide(color: Colorutils.userdetailcolor),
+//             ),
+//           ),
+//         ),
+//         popupProps: PopupProps.menu(
+//           showSearchBox: true,
+//           itemBuilder: (context, item, isSelected) => ListTile(
+//             title: Text(item),
+//           ),
+//           constraints: BoxConstraints(
+//             maxHeight: 250,
+//           ),
+//           searchFieldProps: TextFieldProps(
+//             decoration: InputDecoration(
+//               hintStyle: const TextStyle(color: Colors.grey),
+//               hintText: "Search $hintText",
+//               prefixIcon: Padding(
+//                 padding: const EdgeInsets.all(5.0),
+//                 child: SizedBox(
+//                   height: 20, // Smaller icon
+//                   width: 20,
+//                   child: SvgPicture.asset(
+//                     "assets/images/MagnifyingGlass.svg",
+//                     color: Colorutils.userdetailcolor,
+//                   ),
+//                 ),
+//               ),
+//               contentPadding:
+//                   const EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
+//               // Reduced padding
+//               border: const OutlineInputBorder(
+//                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
+//               ),
+//               enabledBorder: OutlineInputBorder(
+//                 borderSide: BorderSide(color: Colorutils.userdetailcolor),
+//                 borderRadius: const BorderRadius.all(Radius.circular(20)),
+//               ),
+//               focusedBorder: const OutlineInputBorder(
+//                 borderSide:
+//                     BorderSide(color: Colorutils.userdetailcolor, width: 1.0),
+//                 borderRadius: BorderRadius.all(Radius.circular(20)),
+//               ),
+//               fillColor: Colors.white,
+//               filled: true,
+//             ),
+//           ),
+//         ),
+//         validator: validation
+//             ? (val) => val == null || val.trim().isEmpty
+//                 ? 'Please select $hintText'
+//                 : null
+//             : null,
+//       ),
+//     ),
+//   );
+// }
 Widget buildDropdownSearchField({
   required String hintText,
   required List<String> items,
-  // required TextEditingController controller,
   required bool validation,
   required int index,
   required String type,
 }) {
+  final controller = Get.find<AddMedicineController>();
+
   String? getSelectedItem() {
+    if (controller.addMedicineData.isEmpty) return null;
+
+    final data = controller.addMedicineData[index];
+
     switch (type) {
       case 'medicine':
-        return Get.find<AddMedicineController>()
-                .addMedicineData
-                .value
-                .isNotEmpty
-            ? Get.find<AddMedicineController>()
-                .addMedicineData
-                .value[index]
-                .medicine
-                ?.name
-            : null;
+        return data.medicine?.name;
       case 'brand':
-        return Get.find<AddMedicineController>()
-                .addMedicineData
-                .value
-                .isNotEmpty
-            ? Get.find<AddMedicineController>()
-                .addMedicineData
-                .value[index]
-                .brand
-                ?.name
-            : null;
+        return data.brand?.name;
       case 'frequency':
-        return Get.find<AddMedicineController>()
-                .addMedicineData
-                .value
-                .isNotEmpty
-            ? Get.find<AddMedicineController>()
-                .addMedicineData
-                .value[index]
-                .frequency
-                ?.name
-            : null;
+        return data.frequency?.name;
       default:
         return null;
     }
@@ -66,72 +224,53 @@ Widget buildDropdownSearchField({
   return Padding(
     padding: const EdgeInsets.all(4),
     child: SizedBox(
-      height: 60.h, // Reduced from 50 to 40
+      height: 60.h,
       width: double.infinity,
       child: DropdownSearch<String>(
         items: items,
         selectedItem: getSelectedItem(),
         onChanged: (value) {
-          if (type == 'medicine') {
-            List<MedicineData?> medicine = Get.find<MedicineController>()
-                .medicineList
-                .value
-                .where((element) => element?.name == value)
-                .toList();
-            if (medicine.isNotEmpty) {
-              Get.find<AddMedicineController>()
-                  .addMedicineData
-                  .value[index]
-                  .medicine = medicine.first;
-              Get.find<AddMedicineController>().addMedicineData.refresh();
-            }
+          if (value == null) return;
+
+          switch (type) {
+            case 'medicine':
+              final selected = Get.find<MedicineController>()
+                  .medicineList
+                  .firstWhere((e) => e?.name == value, orElse: () => null);
+              controller.addMedicineData[index].medicine = selected;
+              break;
+
+            case 'brand':
+              final selected = Get.find<BrandController>()
+                  .brandList
+                  .firstWhere((e) => e?.name == value, orElse: () => null);
+              controller.addMedicineData[index].brand = selected;
+              break;
+
+            case 'frequency':
+              final selected = Get.find<FrequencyController>()
+                  .frequencyList
+                  .firstWhere((e) => e?.name == value, orElse: () => null);
+              controller.addMedicineData[index].frequency = selected;
+              break;
           }
-          if (type == 'brand') {
-            List<BrandData?> brand = Get.find<BrandController>()
-                .brandList
-                .value
-                .where((element) => element?.name == value)
-                .toList();
-            if (brand.isNotEmpty) {
-              Get.find<AddMedicineController>()
-                  .addMedicineData
-                  .value[index]
-                  .brand = brand.first;
-              Get.find<AddMedicineController>().addMedicineData.refresh();
-            }
-          }
-          if (type == 'frequency') {
-            List<FrequencyData?> frequency = Get.find<FrequencyController>()
-                .frequencyList
-                .value
-                .where((element) => element?.name == value)
-                .toList();
-            if (frequency.isNotEmpty) {
-              Get.find<AddMedicineController>()
-                  .addMedicineData
-                  .value[index]
-                  .frequency = frequency.first;
-              Get.find<AddMedicineController>().addMedicineData.refresh();
-            }
-          }
+
+          controller.addMedicineData.refresh();
         },
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
             hintText: hintText,
             labelText: hintText,
             labelStyle: TextStyle(
-              fontSize: 13, // Slightly smaller font
+              fontSize: 13,
               fontWeight: FontWeight.bold,
               color: Colors.blueGrey,
             ),
             contentPadding:
-                const EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
-            // Reduced padding
+            const EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              // Slightly smaller border radius
-              borderSide:
-                  BorderSide(color: Colorutils.userdetailcolor, width: 1),
+              borderSide: BorderSide(color: Colorutils.userdetailcolor, width: 1),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -148,17 +287,14 @@ Widget buildDropdownSearchField({
           itemBuilder: (context, item, isSelected) => ListTile(
             title: Text(item),
           ),
-          constraints: BoxConstraints(
-            maxHeight: 250,
-          ),
+          constraints: BoxConstraints(maxHeight: 250),
           searchFieldProps: TextFieldProps(
             decoration: InputDecoration(
-              hintStyle: const TextStyle(color: Colors.grey),
               hintText: "Search $hintText",
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: SizedBox(
-                  height: 20, // Smaller icon
+                  height: 20,
                   width: 20,
                   child: SvgPicture.asset(
                     "assets/images/MagnifyingGlass.svg",
@@ -167,8 +303,7 @@ Widget buildDropdownSearchField({
                 ),
               ),
               contentPadding:
-                  const EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
-              // Reduced padding
+              const EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 8),
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
               ),
@@ -177,8 +312,7 @@ Widget buildDropdownSearchField({
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
               ),
               focusedBorder: const OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Colorutils.userdetailcolor, width: 1.0),
+                borderSide: BorderSide(color: Colorutils.userdetailcolor, width: 1.0),
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
               fillColor: Colors.white,
@@ -188,8 +322,8 @@ Widget buildDropdownSearchField({
         ),
         validator: validation
             ? (val) => val == null || val.trim().isEmpty
-                ? 'Please select $hintText'
-                : null
+            ? 'Please select $hintText'
+            : null
             : null,
       ),
     ),

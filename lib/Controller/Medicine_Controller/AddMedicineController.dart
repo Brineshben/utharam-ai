@@ -40,10 +40,10 @@ class AddMedicineController extends GetxController {
           isActive: true,
         )).toList(),
       );
-      print("---medicine addMedicineModel-------${addMedicineModel.toJson()}");
+      print("---medicine addMedicineModel-------${addMedicineModel.medicines?.first.frequency}");
 
       Map<String, dynamic> resp = await ApiServices.addMedicineList(token: token, addData: addMedicineModel);
-      print("---medicine resp-------$resp");
+      print("wfdedwefwef2fr$resp");
       if (resp['message'] != 'Medicines retrieve error.') {
         ProductAppPopUps.submit22Back(
           title: "SUCCESS",

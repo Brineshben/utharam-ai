@@ -55,6 +55,7 @@ class ApiConstants {
   static String addAddon = "/doctor_observations/preliminary-addons/create/";
   static String patientDetails = "/accounts/user/detail/";
   static String addSecondAssesment = "/accounts/second-assessment-api/";
+  static String addVoxbay = "/voxbay/api/voxbay/create/";
   static String enableChat = "/accounts/enable_chat_api/";
   static String disableChat = "/accounts/disable_chat_api/";
   static String reportPatientList = "/senior_function/assigned/patient/list/";

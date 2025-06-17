@@ -21,6 +21,11 @@ class AddTalkToHuman extends StatefulWidget {
 }
 
 class _AddTalkToHumanState extends State<AddTalkToHuman> {
+  @override
+  void initState() {
+    Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
+    super.initState();
+  }
   final AddTalkToHumanController controller = Get.put(AddTalkToHumanController());
 
   Future<void> makePhoneCall(String number) async {
@@ -62,7 +67,15 @@ class _AddTalkToHumanState extends State<AddTalkToHuman> {
             ),
             Expanded(
               child: GetX<AddTalkToHumanController>(
+
                 builder: (controller) {
+                  if (controller.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Colorutils.userdetailcolor,
+                      ),
+                    );
+                  }
                   if (controller.callHuman1List.isEmpty) {
                     return Center(
                       child: Text(
@@ -83,112 +96,42 @@ class _AddTalkToHumanState extends State<AddTalkToHuman> {
                         return Column(
                           children: [
                             ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 30.r,
-                                child: CircleAvatar(
-                                  radius: 25.r,
-                                  backgroundColor: Colors.white,
-                                  child: ClipOval(
-                                    child: Image.asset(
-                                      "assets/images/profile2.jpg",
-                                      fit: BoxFit.cover,
-                                      width: 54.r,
-                                      height: 54.r,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              leading:  CircleAvatar(
+                        backgroundColor: Colors.white,
+                          child: ClipOval(
+                            child: Image.asset(
+                              "assets/images/doctorlogo.png",
+                              fit: BoxFit.cover,
+                              width: 50.w,
+                              height: 50.h,
+                            ),
+                          ),
+                        ),
                               title: Text(
                                 callHuman?.name ?? "",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Text(callHuman?.role ?? ""),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.arrow_forward_ios, size: 20.w, color: Colors.blueGrey),
-                                    onPressed: (){
 
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                        return VoksBayAdd();
-                                      },));
-                                    },
-                                  )                              // Switch(
-                                  //   value: callHuman?.isCallAvailable ?? false,
-                                  //   onChanged: (value) async{
-                                  //
-                                  //     if(callHuman?.isCallAvailable == true){
-                                  //       print("beneferfgrefgr");
-                                  //       context.loaderOverlay.show();
-                                  //
-                                  //       Map<String, dynamic> resp =
-                                  //       await ApiServices.addTalkToHumanList(
-                                  //           token: widget.token, doctorId: callHuman?.id  ?? 0 , status:false);
-                                  //       context.loaderOverlay.hide();
-                                  //
-                                  //       if (resp['status'] == "ok") {
-                                  //         Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
-                                  //
-                                  //
-                                  //         ProductAppPopUps.submit(
-                                  //           title: "Success",
-                                  //           message: "Talk to human deactivated",
-                                  //           actionName: "Close",
-                                  //           iconData: Icons.done,
-                                  //           iconColor: Colors.green,
-                                  //         );
-                                  //       } else {
-                                  //         ProductAppPopUps.submit(
-                                  //           title: "Error",
-                                  //           message:  "Something went wrong 1st",
-                                  //           actionName: "Close",
-                                  //           iconData: Icons.error_outline_outlined,
-                                  //           iconColor: Colors.red,
-                                  //         );
-                                  //       }
-                                  //     }else{
-                                  //       Map<String, dynamic> resp =
-                                  //       await ApiServices.addTalkToHumanList(
-                                  //           token: widget.token, doctorId: callHuman?.id  ?? 0 , status:true);
-                                  //       context.loaderOverlay.hide();
-                                  //
-                                  //       if (resp['status'] == "ok") {
-                                  //
-                                  //         Get.find<AddTalkToHumanController>().callHuman1Dataz(widget.token);
-                                  //
-                                  //         ProductAppPopUps.submit(
-                                  //           title: "Success",
-                                  //           message: "Talk to human activated",
-                                  //           actionName: "Close",
-                                  //           iconData: Icons.done,
-                                  //           iconColor: Colors.green,
-                                  //         );
-                                  //       } else {
-                                  //         ProductAppPopUps.submit(
-                                  //           title: "Error",
-                                  //           message:  "Something went wrong 2nd",
-                                  //           actionName: "Close",
-                                  //           iconData: Icons.error_outline_outlined,
-                                  //           iconColor: Colors.red,
-                                  //         );
-                                  //       }
-                                  //
-                                  //     }
-                                  //   },
-                                  //   activeColor: Colorutils.userdetailcolor.withOpacity(0.1),
-                                  //   activeTrackColor: Colorutils.userdetailcolor,
-                                  //   inactiveThumbColor:  Colorutils.userdetailcolor.withOpacity(0.1),
-                                  //   inactiveTrackColor: Colors.grey.shade400,
-                                  // ),
-                                ],
-                              ),
-                              onTap: () async{
+                              trailing: GestureDetector(
 
-                                                         },
+                                  child: Icon(Icons.arrow_forward_ios, size: 20.w, color: Colors.blueGrey),onTap: (){
+                                final extNo = (callHuman?.voxbayCalls?.isNotEmpty ?? false)
+                                    ? callHuman?.voxbayCalls?.first.extNo
+                                    : '0';     final empcode = (callHuman?.voxbayCalls?.isNotEmpty ?? false)
+                                    ? callHuman?.voxbayCalls?.first.empCode
+                                    : '0';
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return VoksBayAdd(phonenumber: callHuman?.mobileNumber ??"0" , empcode: empcode.toString(), extnumber: extNo.toString(), staff:  callHuman?.id ??0, token: widget.token,);
+                                },));
+                              },),
+
+
+
+
+
+
                             ),
-                            Divider(thickness: 0.3, indent: 10, endIndent: 10),
                           ],
                         );
                       },

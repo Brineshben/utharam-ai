@@ -34,10 +34,10 @@ class AddTalkToHumanController extends GetxController {
       isLoading.value = false;
     }
   }
-  void updateChatStatus(int index, bool value) {
-    callHuman1List[index]?.chatEnabled = value;
-    callHuman1List.refresh();
-  }
+  // void updateChatStatus(int index, bool value) {
+  //   callHuman1List[index]?.chatEnabled = value;
+  //   callHuman1List.refresh();
+  // }
 // void SearchDoctorList( String data){
 //   doctorList.value = doctorListCopy.value.where((element) => (element?.name.toString().toLowerCase().contains(data.toLowerCase()) ?? false),).toList();
 //

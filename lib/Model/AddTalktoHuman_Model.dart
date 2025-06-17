@@ -30,80 +30,72 @@ class AddtalktohumanModel {
 class Data {
   int? id;
   String? name;
-  String? username;
   String? email;
-  String? mobileNumber;
-  Null? medicalReport;
-  Null? medicalReportUrl;
   String? role;
-  int? age;
-  String? gender;
-  String? occupation;
-  String? education;
-  String? address;
-  Null? patientId;
-  String? verified;
-  bool? chatEnabled;
-  bool? isCallAvailable;
+  String? mobileNumber;
+  List<VoxbayCalls>? voxbayCalls;
 
   Data(
       {this.id,
-      this.name,
-      this.username,
-      this.email,
-      this.mobileNumber,
-      this.medicalReport,
-      this.medicalReportUrl,
-      this.role,
-      this.age,
-      this.gender,
-      this.occupation,
-      this.education,
-      this.address,
-      this.patientId,
-      this.verified,
-      this.chatEnabled,
-      this.isCallAvailable});
+        this.name,
+        this.email,
+        this.role,
+        this.mobileNumber,
+        this.voxbayCalls});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    username = json['username'];
     email = json['email'];
-    mobileNumber = json['mobile_number'];
-    medicalReport = json['medical_report'];
-    medicalReportUrl = json['medical_report_url'];
     role = json['role'];
-    age = json['age'];
-    gender = json['gender'];
-    occupation = json['occupation'];
-    education = json['education'];
-    address = json['address'];
-    patientId = json['patient_id'];
-    verified = json['verified'];
-    chatEnabled = json['chat_enabled'];
-    isCallAvailable = json['is_call_available'];
+    mobileNumber = json['mobile_number'];
+    if (json['voxbay_calls'] != null) {
+      voxbayCalls = <VoxbayCalls>[];
+      json['voxbay_calls'].forEach((v) {
+        voxbayCalls!.add(new VoxbayCalls.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
-    data['username'] = this.username;
     data['email'] = this.email;
-    data['mobile_number'] = this.mobileNumber;
-    data['medical_report'] = this.medicalReport;
-    data['medical_report_url'] = this.medicalReportUrl;
     data['role'] = this.role;
-    data['age'] = this.age;
-    data['gender'] = this.gender;
-    data['occupation'] = this.occupation;
-    data['education'] = this.education;
-    data['address'] = this.address;
-    data['patient_id'] = this.patientId;
-    data['verified'] = this.verified;
-    data['chat_enabled'] = this.chatEnabled;
-    data['is_call_available'] = this.isCallAvailable;
+    data['mobile_number'] = this.mobileNumber;
+    if (this.voxbayCalls != null) {
+      data['voxbay_calls'] = this.voxbayCalls!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class VoxbayCalls {
+  String? didNo;
+  String? empCode;
+  String? extNo;
+  String? createdAt;
+  bool? isActive;
+
+  VoxbayCalls(
+      {this.didNo, this.empCode, this.extNo, this.createdAt, this.isActive});
+
+  VoxbayCalls.fromJson(Map<String, dynamic> json) {
+    didNo = json['did_no'];
+    empCode = json['emp_code'];
+    extNo = json['ext_no'];
+    createdAt = json['created_at'];
+    isActive = json['is_active'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['did_no'] = this.didNo;
+    data['emp_code'] = this.empCode;
+    data['ext_no'] = this.extNo;
+    data['created_at'] = this.createdAt;
+    data['is_active'] = this.isActive;
     return data;
   }
 }
