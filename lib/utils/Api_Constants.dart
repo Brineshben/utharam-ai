@@ -42,6 +42,7 @@ class ApiConstants {
   static String checkOtp = "/accounts/check_otp/";
   static String sddMedicineList = "/medicine_assign/add-medicines/";
   static String particularMedicineList = "/medicine_assign/patient/medicine/list/";
+  static String particularDoctorMedicineList = "/medicine_assign/doctor/patient/medicine/";
   static String createAssignment = "/thoughts/thoughts/create/";
   static String editAssignment = "/thoughts/thoughts/update/";
   static String patientAssignmentList = "/thoughts/patient-thoughts/list/";
@@ -66,4 +67,5 @@ class ApiConstants {
   static String forgotPassword = "/forgott_password/forgot/password/";
   static String checkOtpForgot = "/forgott_password/verify/otp/";
   static String resetPassword = "/forgott_password/new/password/";
+  static String reAssign = "/assign_doctor/assign/doctor/update/";
 }

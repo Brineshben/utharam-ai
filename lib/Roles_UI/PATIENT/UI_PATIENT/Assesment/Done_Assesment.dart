@@ -14,12 +14,13 @@ import '../../../UI/Common_Widget/popups.dart';
 class DoneAssesment extends StatefulWidget {
   final String token;
   final int thoughtID;
+  final int patientID;
   final String name;
   final String dataSubmited;
   final String patientId;
   final String questionText;
   final String phone;
-  const DoneAssesment({super.key, required this.name, required this.patientId,required this.questionText, required this.token, required this.phone, required this.thoughtID, required this.dataSubmited,});
+  const DoneAssesment({super.key, required this.name, required this.patientId,required this.questionText, required this.token, required this.phone, required this.thoughtID, required this.dataSubmited, required this.patientID,});
 
   @override
   State<DoneAssesment> createState() => _DoneAssesmentState();
@@ -258,7 +259,6 @@ class _DoneAssesmentState extends State<DoneAssesment> {
               onTap: () async {
                 context.loaderOverlay.show();
                 Map<String,dynamic> resp = await ApiServices.Editassignment( token: widget.token, thoughtsID:widget.thoughtID, response: replyController.text);
-                context.loaderOverlay.hide();
                 if (resp['status'] == "Ok") {
                   // Navigator.push(
                   //   context,
@@ -268,7 +268,8 @@ class _DoneAssesmentState extends State<DoneAssesment> {
                   //     ),
                   //   ),
                   // );
-                  await Get.find<PatientAssignmentController>().patientAssesmentListDataz(widget.token,widget.thoughtID);
+                  await Get.find<PatientAssignmentController>().patientAssesmentListDataz(widget.token,widget.patientID);
+                  context.loaderOverlay.hide();
 
                   ProductAppPopUps.submit2Back(
                     title: "Success",

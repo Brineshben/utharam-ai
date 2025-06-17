@@ -256,7 +256,7 @@ class EnquirylistPageState extends State<EnquirylistPage> {
                               children: [
                                 SizedBox(height: 5,),
                                 (showButtons == false && patientEnquired?.hasSecondAssessment ==false) ?
-                                GestureDetector(child: buildTag("Generate AI Report", Colorutils.userdetailcolor),onTap: () async{
+                                GestureDetector(child: buildTag("Import AI Report", Colorutils.userdetailcolor),onTap: () async{
 
 
 
@@ -274,7 +274,7 @@ class EnquirylistPageState extends State<EnquirylistPage> {
 
                                     ProductAppPopUps.submit(
                                       title: "Success",
-                                      message: "AI Report Generated Successfully",
+                                      message: "AI Report Imported Successfully",
                                       actionName: "Close",
                                       iconData: Icons.done,
                                       iconColor: Colors.green,
@@ -480,7 +480,7 @@ Widget buildTag(String text, Color bgColor) {
       style: GoogleFonts.nunito(
         color: Colors.white,
         fontWeight: FontWeight.w600,
-        fontSize: 14.h,
+        fontSize: 12.h,
       ),
     ),
   );

@@ -27,6 +27,8 @@ class _MyAssesmentListPageState extends State<MyAssesmentListPage> {
   @override
   void initState() {
     super.initState();
+    print("widget.thoughtID${widget.id}  ");
+
     Get.find<PatientAssignmentController>().patientAssesmentListDataz(widget.token,widget.id);
   }
 
@@ -67,7 +69,17 @@ class _MyAssesmentListPageState extends State<MyAssesmentListPage> {
             Expanded(
               child: GetX<PatientAssignmentController>(
                 builder: (PatientAssignmentController controller) {
+
+                  if (controller.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Colorutils.userdetailcolor,
+                      ),
+                    );
+                  }
+
                   if (controller.patientAssesmentListDataList.isEmpty) {
+
                     return Padding(
                         padding:
                         const EdgeInsets.only(top: 40),
@@ -194,7 +206,7 @@ class _MyAssesmentListPageState extends State<MyAssesmentListPage> {
                                             questionText:patient?.questionText ?? "",
                                             token: widget.token,
                                             phone: patient?.patient?.mobileNumber ?? "0",
-                                            thoughtID: patient?.id ?? 0, dataSubmited: patient?.responseText ?? "",);
+                                            thoughtID: patient?.id ?? 0, dataSubmited: patient?.responseText ?? "", patientID: widget.id,);
                                         },));
                                       },),
                                     ],

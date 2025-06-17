@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 import '../../../../Controller/AssignedDoctorPatients_Controller.dart';
+import '../../../../Controller/DoctorParticularPatientMedicineController.dart';
 import '../../../../Controller/Medicine_Controller/Brand_Controller.dart';
 import '../../../../Controller/Medicine_Controller/FrequencyController.dart';
 import '../../../../Controller/Medicine_Controller/Medicine_Controller.dart';
@@ -65,6 +66,11 @@ class DoctorsPatientDetails extends StatefulWidget {
 }
 
 class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
+  @override
+  void initState() {
+    Get.find<DoctorParticularPatientMedicineController>().DoctorParticularPatientMedicineDataz(widget.token,widget.id);
+    super.initState();
+  }
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _observationController = TextEditingController();
 
@@ -222,6 +228,63 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                           filled: true),
                       maxLines: 5,
                     ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 15.h, bottom: 5.h, left: 20.w, right: 10.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "SUGGESTED MEDICINE LIST",
+                          style: GoogleFonts.shanti(
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18.h,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  GetX<DoctorParticularPatientMedicineController>(
+                    builder: (DoctorParticularPatientMedicineController controller) {
+                      if (controller.DoctorParticularPatientMedicineList.isEmpty) {
+                        return Padding(
+                            padding:
+                            const EdgeInsets.only(top: 20),
+                            child: Center(
+                              child: const Text(
+                                "No Medicine Assigned Yet",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontStyle: FontStyle.italic),
+                              ),
+                            ));
+                      } else {
+                        return  ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: controller.DoctorParticularPatientMedicineList[0]?.medicines?.length,
+                          itemBuilder: (context, index) {
+                            final medicine = controller.DoctorParticularPatientMedicineList;
+
+                            return Padding(
+                              padding:
+                              EdgeInsets.only(top: 1.h, left: 10.w, right: 8.w),
+                              child: MedicineCard(
+                                brandName: medicine.first?.medicines?[index].medicine ?? "--",
+                                frequency: medicine.first?.medicines?[index].frequency ?? "--",
+                                dosage:medicine.first?.medicines?[index].dosage ?? "--",
+                                date: formatDate(medicine.first?.date ?? "--"),
+                              ),
+                            );
+
+                          },
+                        );
+
+
+                      }
+                    },
                   ),
                   // Padding(
                   //   padding:

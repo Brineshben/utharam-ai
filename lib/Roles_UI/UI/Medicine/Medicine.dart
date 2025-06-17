@@ -10,6 +10,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:patient/Controller/Medicine_Controller/AddMedicineController.dart';
 import 'package:patient/Model/Medicine_model/AddMedicineModel.dart';
 import '../../../../utils/color_util.dart';
+import '../../../Controller/DoctorParticularPatientMedicineController.dart';
 import '../../../Controller/Medicine_Controller/Brand_Controller.dart';
 import '../../../Controller/Medicine_Controller/FrequencyController.dart';
 import '../../../Controller/Medicine_Controller/Medicine_Controller.dart';
@@ -589,6 +590,7 @@ class _MedicineState extends State<Medicine> {
                     widget.patientToken,
                     widget.patientId,
                   );
+                  await  Get.find<DoctorParticularPatientMedicineController>().DoctorParticularPatientMedicineDataz(widget.patientToken,widget.patientId);
 
                   setState(() {
                     spinner = false;

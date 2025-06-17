@@ -12,6 +12,7 @@ import '../../../Controller/PatientListController.dart';
 import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
 import '../../UI/DoctorListSenior/doctorListSenior.dart';
 import '../Junior_doctorView/EnquiryList_Page.dart';
+import 'Re-Assign.dart';
 import 'appointmentPage.dart';
 
 class PatientList extends StatefulWidget {
@@ -158,12 +159,20 @@ class _PatientListState extends State<PatientList> {
             Expanded(
               child: GetX<PatientListController>(
                 builder: (PatientListController controller) {
+                  if (controller.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Colorutils.userdetailcolor,
+                      ),
+                    );
+                  }
                   if (controller.PatientList.isEmpty) {
                     return Padding(
                         padding: const EdgeInsets.only(top: 40),
                         child: Center(
                           child: const Text(
                             "No Patient Data Found.",
+
                             style: TextStyle(
                                 color: Colors.red, fontStyle: FontStyle.italic),
                           ),
@@ -179,79 +188,15 @@ class _PatientListState extends State<PatientList> {
                       itemBuilder: (context, index) {
                         final patientData = controller.PatientList[index];
                         return GestureDetector(
-                          onTap: () {
-                            final patientSummary = (patientData
-                                ?.patientDiagnosis?.isNotEmpty ??
-                                false)
-                                ? patientData
-                                ?.patientDiagnosis
-                                ?.first
-                                .aiReport
-                                ?.patientReport
-                                ?.patientSummary
-                                : 'No diagnosis summary available';
-                            final severity = (patientData
-                                ?.patientDiagnosis?.isNotEmpty ??
-                                false)
-                                ? (patientData!
-                                .patientDiagnosis!
-                                .first
-                                .aiReport
-                                ?.therapistReport
-                                ?.severity ??
-                                "")
-                                : '---';
-
-                            final url = (patientData
-                                ?.patientDiagnosis?.isNotEmpty ??
-                                false)
-                                ? patientData
-                                ?.patientDiagnosis?.last.aiSummaryFile
-                                : 'No Ai Summary File Generated yet';
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AppointmentPage(
-                                  name: patientData?.patient?.name ?? " ",
-                                  age: (patientData?.patient?.age
-                                      ?.toString()) ??
-                                      "0",
-                                  gender:
-                                  patientData?.patient?.gender ?? " ",
-                                  email:
-                                  patientData?.patient?.email ?? " ",
-                                  phone: patientData
-                                      ?.patient?.mobileNumber ??
-                                      " ",
-                                  disease:
-                                  patientData?.patient?.chatEnabled ??
-                                      false,
-                                  severity: severity ??
-                                      "No severity info available",
-                                  diagnosissummary: patientSummary ??
-                                      "No diagnosis summary available",
-                                  patientId:
-                                  patientData?.patient?.patientId ??
-                                      " ",
-                                  token: widget.token,
-                                  id: patientData?.patient?.id ?? 0,
-                                  url: url ?? "No File Generated yet ",
-                                  doctorName:
-                                  patientData?.doctor?.name ?? " ",
-                                  doctorId: patientData?.doctor?.id ?? 0,
-                                ),
-                              ),
-                            );
-                          },
                           child: ListTile(
                             leading: ClipOval(
-                          child: Image.asset(
-                          "assets/images/profileimage.jpg",
-                            fit: BoxFit.cover,
-                            width: 30,
-                            height: 30,
-                          ),
-                          ),
+                              child: Image.asset(
+                                "assets/images/profileimage.jpg",
+                                fit: BoxFit.cover,
+                                width: 30,
+                                height: 30,
+                              ),
+                            ),
                             title: Text(
                               "${patientData?.patient?.name?.toUpperCase() ?? "No Name"}",
                               style: TextStyle(
@@ -271,9 +216,120 @@ class _PatientListState extends State<PatientList> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 5,),
-                                buildTag("MAKE APPOINTMENT", Colors.blue),
-                                SizedBox(height: 15,),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      child: buildTag(
+                                          "MAKE APPOINTMENT", Colors.blue),
+                                      onTap: () {
+                                        final patientSummary = (patientData
+                                                    ?.patientDiagnosis
+                                                    ?.isNotEmpty ??
+                                                false)
+                                            ? patientData
+                                                ?.patientDiagnosis
+                                                ?.first
+                                                .aiReport
+                                                ?.patientReport
+                                                ?.patientSummary
+                                            : 'No diagnosis summary available';
+                                        final severity = (patientData
+                                                    ?.patientDiagnosis
+                                                    ?.isNotEmpty ??
+                                                false)
+                                            ? (patientData!
+                                                    .patientDiagnosis!
+                                                    .first
+                                                    .aiReport
+                                                    ?.therapistReport
+                                                    ?.severity ??
+                                                "")
+                                            : '---';
+                                        final url = (patientData
+                                                    ?.patientDiagnosis
+                                                    ?.isNotEmpty ??
+                                                false)
+                                            ? patientData?.patientDiagnosis
+                                                ?.last.aiSummaryFile
+                                            : 'No Ai Summary File Generated yet';
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AppointmentPage(
+                                              name:
+                                                  patientData?.patient?.name ??
+                                                      " ",
+                                              age: (patientData?.patient?.age
+                                                      ?.toString()) ??
+                                                  "0",
+                                              gender: patientData
+                                                      ?.patient?.gender ??
+                                                  " ",
+                                              email:
+                                                  patientData?.patient?.email ??
+                                                      " ",
+                                              phone: patientData
+                                                      ?.patient?.mobileNumber ??
+                                                  " ",
+                                              disease: patientData
+                                                      ?.patient?.chatEnabled ??
+                                                  false,
+                                              severity: severity ??
+                                                  "No severity info available",
+                                              diagnosissummary: patientSummary ??
+                                                  "No diagnosis summary available",
+                                              patientId: patientData
+                                                      ?.patient?.patientId ??
+                                                  " ",
+                                              token: widget.token,
+                                              id: patientData?.patient?.id ?? 0,
+                                              url: url ??
+                                                  "No File Generated yet ",
+                                              doctorName:
+                                                  patientData?.doctor?.name ??
+                                                      " ",
+                                              doctorId:
+                                                  patientData?.doctor?.id ?? 0,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    GestureDetector(
+                                      child: buildTag(
+                                          "Re-Assign Doctor", Colors.green),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return Reassign(
+                                              token: widget.token,
+                                              doctorName:
+                                                  patientData?.doctor?.name ??
+                                                      "",
+                                              patientId:
+                                                  patientData?.patient?.id ?? 0,
+                                              assignmentId:
+                                                  patientData?.id ?? 0,
+                                              doctorId:
+                                                  patientData?.doctor?.id ?? 0,
+                                            );
+                                          },
+                                        ));
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
                               ],
                             ),
                             // trailing: Row(

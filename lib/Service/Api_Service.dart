@@ -929,6 +929,29 @@ class ApiServices {
       throw Exception("Service Error consultDoctorList");
     }
   }
+  /// Doctor Medicine List
+  static Future<Map<String, dynamic>> ParticularDoctorMedicineList({
+    required String token,
+    required int userId
+  }) async {
+    String url =
+        "${ApiConstants.baseURL}${ApiConstants.particularDoctorMedicineList}$userId/";
+    print("Doctor Medicine List---$url");
+
+    try {
+      var request = http.Request('GET', Uri.parse(url));
+      request.headers.addAll({'Authorization': "Bearer $token"});
+      http.StreamedResponse response = await request.send();
+      print('consultDoctorList------>${response}');
+
+      var respString = await response.stream.bytesToString();
+      print('consultDoctorList------>${json.decode(respString)}');
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error consultDoctorList");
+    }
+  }
 
   ///Patient AssesmentList Controller
   static Future<Map<String, dynamic>> patientAssesmentList({
@@ -1088,6 +1111,38 @@ class ApiServices {
       print("Apibody: $apiBody");
 
       var request = http.Request('POST', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+
+      request.headers.addAll(
+        {'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+
+      var respString = await response.stream.bytesToString();
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
+
+   ///re-assign
+  static Future<Map<String, dynamic>> reAssign({
+    required int patientId,
+    required int assignmentId,
+    required int doctorId,
+
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.reAssign}$patientId/$assignmentId/";
+    print("reAssign: $url");
+
+    Map apiBody = {
+      "doctor": doctorId,
+    };
+
+    try {
+
+      var request = http.Request('PUT', Uri.parse(url));
       request.body = (json.encode(apiBody));
 
       request.headers.addAll(
