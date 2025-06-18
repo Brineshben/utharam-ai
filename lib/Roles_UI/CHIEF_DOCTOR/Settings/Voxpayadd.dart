@@ -114,7 +114,7 @@ class _VoksBayAddState extends State<VoksBayAdd> {
               onTap: () async {
                 if (_formKey.currentState!.validate()) {
                   context.loaderOverlay.show();
-
+print(" phonenumber.text${ phonenumber.text}empcode.text${ empcode.text} extnumber.text${extnumber.text}int.tryParse(staff.text)${int.tryParse(staff.text)}");
                   Map<String, dynamic> resp = await ApiServices.addvoxbay(
                     didNo: phonenumber.text,
                     empCode: empcode.text,
@@ -145,13 +145,7 @@ class _VoksBayAddState extends State<VoksBayAdd> {
                     );
                   }
                 } else {
-                  ProductAppPopUps.submit(
-                    title: "Error",
-                    message: "Something went wrong",
-                    actionName: "Close",
-                    iconData: Icons.error_outline_outlined,
-                    iconColor: Colors.red,
-                  );
+
                 }
      },
               child: Container(

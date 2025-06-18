@@ -154,6 +154,13 @@ class _DoctorListState extends State<DoctorList> {
               child: GetX<DoctorListController>(
                 builder: (DoctorListController controller) {
 
+                  if (controller.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Colorutils.userdetailcolor,
+                      ),
+                    );
+                  }
                   if (controller.doctorList.isEmpty) {
                     return Padding(
                         padding: const EdgeInsets.only(top: 40),

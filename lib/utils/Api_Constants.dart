@@ -19,6 +19,7 @@ class ApiConstants {
   static String registerPatient = "/accounts/register/";
   static String patientQueue = "/assign_doctor/new/patience/list/";
   static String doctorList = "/doctors/list/doctors/";
+  static String doctorallList = "/doctors/list/all/doctors/";
   static String patientList = "/assign_doctor/doctor/assign/list/";
   static String SlotList = "/appointment/appointment/list/";
   static String consultDoctorList = "/doctors/list/consult/doctors/";
@@ -43,6 +44,7 @@ class ApiConstants {
   static String sddMedicineList = "/medicine_assign/add-medicines/";
   static String particularMedicineList = "/medicine_assign/patient/medicine/list/";
   static String particularDoctorMedicineList = "/medicine_assign/doctor/patient/medicine/";
+  static String deActivateDoctor = "/accounts/deactivate-user/";
   static String createAssignment = "/thoughts/thoughts/create/";
   static String editAssignment = "/thoughts/thoughts/update/";
   static String patientAssignmentList = "/thoughts/patient-thoughts/list/";

@@ -33,6 +33,7 @@ class Data {
   String? email;
   String? role;
   String? mobileNumber;
+  bool? isCallAvailable;
   List<VoxbayCalls>? voxbayCalls;
 
   Data(
@@ -41,6 +42,7 @@ class Data {
         this.email,
         this.role,
         this.mobileNumber,
+        this.isCallAvailable,
         this.voxbayCalls});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -49,6 +51,7 @@ class Data {
     email = json['email'];
     role = json['role'];
     mobileNumber = json['mobile_number'];
+    isCallAvailable = json['is_call_available'];
     if (json['voxbay_calls'] != null) {
       voxbayCalls = <VoxbayCalls>[];
       json['voxbay_calls'].forEach((v) {
@@ -64,6 +67,7 @@ class Data {
     data['email'] = this.email;
     data['role'] = this.role;
     data['mobile_number'] = this.mobileNumber;
+    data['is_call_available'] = this.isCallAvailable;
     if (this.voxbayCalls != null) {
       data['voxbay_calls'] = this.voxbayCalls!.map((v) => v.toJson()).toList();
     }

@@ -201,6 +201,24 @@ class ApiServices {
     } catch (e) {
       throw Exception("Service Error Login Api");
     }
+  }  ///DOCTOR All LIST
+  static Future<Map<String, dynamic>> doctorallList({
+    required String token,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.doctorallList}";
+    print("Doctor List---$url");
+
+    try {
+      var request = http.Request('GET', Uri.parse(url));
+      request.headers.addAll({'Authorization': "Bearer $token"});
+      http.StreamedResponse response = await request.send();
+      print('Patient Queue Response------->${response}');
+
+      var respString = await response.stream.bytesToString();
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
   }
 
 
@@ -950,6 +968,30 @@ class ApiServices {
       return json.decode(respString);
     } catch (e) {
       throw Exception("Service Error consultDoctorList");
+    }
+  }
+
+  /// deactivate doctor
+  static Future<Map<String, dynamic>> deActivateDoctor({
+    required String token,
+    required int userId
+  }) async {
+    String url =
+        "${ApiConstants.baseURL}${ApiConstants.deActivateDoctor}$userId/";
+    print("deactivate doctor---$url");
+
+    try {
+      var request = http.Request('POST', Uri.parse(url));
+      request.headers.addAll({'Authorization': "Bearer $token"});
+      http.StreamedResponse response = await request.send();
+      print('deactivate doctorList------>${response}');
+
+      var respString = await response.stream.bytesToString();
+      print('deactivate doctor---->${json.decode(respString)}');
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error deactivate doctor");
     }
   }
 

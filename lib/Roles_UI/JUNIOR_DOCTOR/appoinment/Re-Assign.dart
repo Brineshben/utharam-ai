@@ -252,6 +252,7 @@ class _ReassignState extends State<Reassign> {
                   ),
                 ),
               ),
+
               SizedBox(height: 30.h),
 
               // Doctor InCharge Label

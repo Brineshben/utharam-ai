@@ -10,6 +10,7 @@ import '../../UI/AppintmentsPage/My_Appointments.dart';
 import '../../UI/DoctorListSenior/doctorListSenior.dart';
 import 'RejectedPatientList.dart';
 import 'addTalktoHuman.dart';
+import 'doctorstatus.dart';
 
 class ProfileSettingsPage extends StatefulWidget {
   final String name;
@@ -192,14 +193,14 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return PatientList(
+                      return DoctorStatusList(
                         token: widget.token,
                       );
                     },
                   ));
                 },
                 child: NameCard(
-                  name: "ADD PROMPT ",
+                  name: "DOCTOR STATUS",
                 ),
               ),
               SizedBox(height: 5),
@@ -212,7 +213,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   ));
                 },
                 child: NameCard(
-                  name: "MY APPOINTMENTS",
+                  name: "ALL APPOINTMENTS",
                 ),
               )
 

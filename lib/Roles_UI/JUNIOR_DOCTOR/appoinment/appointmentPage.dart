@@ -519,9 +519,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
                           ),
                         ),
                         onTap: () {
-                          print("wsjhdwefhgyewugyeugy${widget.id}");
-                          Get.find<ConsultDoctorListController>()
-                              .ConsultdoctorListData(widget.token);
+                          // print("wsjhdwefhgyewugyeugy${widget.id}");
+                          // Get.find<ConsultDoctorListController>()
+                          //     .ConsultdoctorListData(widget.token);
 
                         },
                       ),
@@ -814,9 +814,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
 
                           if (resp['status'] == "ok") {
-                            await Get.find<DoctorToPatientController>()
-                                .doctorToPatientData(
-                                widget.token, widget.doctorId, widget.id);
+                            // await Get.find<DoctorToPatientController>()
+                            //     .doctorToPatientData(
+                            //     widget.token, widget.doctorId, widget.id);
                             await Get.find<PatientQueueController>()
                                 .patientData(widget.token);
                             await Get.find<JuniorDashboardController>()

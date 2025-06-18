@@ -41,10 +41,11 @@ class Users {
   String? occupation;
   String? education;
   String? address;
-  int? patientId;
+  String? patientId;
   String? verified;
   bool? chatEnabled;
   bool? isCallAvailable;
+  bool? status;
 
   Users(
       {this.id,
@@ -63,7 +64,8 @@ class Users {
         this.patientId,
         this.verified,
         this.chatEnabled,
-        this.isCallAvailable});
+        this.isCallAvailable,
+        this.status});
 
   Users.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -83,6 +85,7 @@ class Users {
     verified = json['verified'];
     chatEnabled = json['chat_enabled'];
     isCallAvailable = json['is_call_available'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -104,6 +107,7 @@ class Users {
     data['verified'] = this.verified;
     data['chat_enabled'] = this.chatEnabled;
     data['is_call_available'] = this.isCallAvailable;
+    data['status'] = this.status;
     return data;
   }
 }

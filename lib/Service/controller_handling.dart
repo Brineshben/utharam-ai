@@ -9,6 +9,7 @@ import '../Controller/Consult_Doctor_Controller.dart';
 import '../Controller/DoctorParticularPatientMedicineController.dart';
 import '../Controller/DoctorToPatientController.dart';
 import '../Controller/Doctor_List_Controller.dart';
+import '../Controller/DoctorallListController.dart';
 import '../Controller/EnquiredListController.dart';
 import '../Controller/GenerateReport_Controller.dart';
 import '../Controller/JuniorDashoard_Controller.dart';
@@ -63,6 +64,7 @@ class HandleControllers {
     Get.put(PatientListController());
     Get.put(SlotListController());
     Get.put(DoctorParticularPatientMedicineController());
+    Get.put(DoctorAllListController());
   }
 
   static deleteAllGetControllers() async {
@@ -96,5 +98,6 @@ class HandleControllers {
     await Get.delete<PatientListController>();
     await Get.delete<SlotListController>();
     await Get.delete<DoctorParticularPatientMedicineController>();
+    await Get.delete<DoctorAllListController>();
   }
 }
