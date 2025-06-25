@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../../../../utils/Constants.dart';
 import '../../../../utils/color_util.dart';
@@ -236,115 +239,119 @@ class _HomeScreenChiefState extends State<HomeScreenChief> {
       );
     }
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: systemUiOverlayStyleDark,
-      child: PopScope(
-        canPop: false,
-        child: Scaffold(
-          backgroundColor: Colors.white,
-            drawer: _buildDoctorDrawer(context),
-          body: Container(
-            decoration: BoxDecoration(
-              // gradient: LinearGradient(
-              //   colors: [Colors.green, Colors.white], // Define your colors
-              //   begin: Alignment.topLeft,
-              //   end: Alignment.bottomRight,
-              // ),
-            ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  UserDetails(
-                    isWelcome: true,
-                    bellicon: true,
-                    notificationcount: true,
-                    name: '${widget.name} (${widget.role})',
-                    image: 'assets/images/profile2.jpg',
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 25.h, bottom: 25.h, left: 10.w, right: 10.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "${widget.role.toUpperCase()} DASHBOARD",
-                          style: GoogleFonts.shanti(
-                            color: Colors.blueGrey,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 20.h,
-                          ),
-                        ),
-                      ],
+    return UpgradeAlert(
+
+      dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: systemUiOverlayStyleDark,
+        child: PopScope(
+          canPop: false,
+          child: Scaffold(
+            backgroundColor: Colors.white,
+              drawer: _buildDoctorDrawer(context),
+            body: Container(
+              decoration: BoxDecoration(
+                // gradient: LinearGradient(
+                //   colors: [Colors.green, Colors.white], // Define your colors
+                //   begin: Alignment.topLeft,
+                //   end: Alignment.bottomRight,
+                // ),
+              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    UserDetails(
+                      isWelcome: true,
+                      bellicon: true,
+                      notificationcount: true,
+                      name: '${widget.name} (${widget.role})',
+                      image: 'assets/images/profile2.jpg',
                     ),
-                  ),
-                  // GestureDetector(
-                  //   onTap: (){
-                  //     openWhatsAppChat(
-                  //       phoneNumber: '7010871411',
-                  //       message: 'Hello from Flutter!',
-                  //     );                  },
-                  //   child: ThoughtOfTheDayWidget(
-                  //     text:
-                  //     "Wherever the art of medicine is loved, there is also a love of humanity.",
-                  //     svgPath: "assets/images/Group.svg",
-                  //     onReadMore: () {
-                  //       print("Read More Clicked!");
-                  //     },
-                  //   ),
-                  // ),
-                  Obx(() {
-                    final controller = Get.find<QuotesController>();
-                    return ThoughtOfTheDayWidget(
-                      text: controller.quotesData.value?.message?.quote ??
-                          "Wherever the art of medicine is loved, there is also a love of humanity.",
-                      svgPath: "assets/images/Group.svg",
-                      onReadMore: () {
-                        print("Read More Clicked!");
-                      }, author: "-${controller.quotesData.value?.message?.author ?? "Brinesh ben"}",
-                    );
-                  }),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 15.h, left: 15.w, right: 10.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Summary",
-                          style: GoogleFonts.shanti(
-                            color: Colors.blueGrey,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 20.h,
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: 25.h, bottom: 25.h, left: 10.w, right: 10.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "${widget.role.toUpperCase()} DASHBOARD",
+                            style: GoogleFonts.shanti(
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20.h,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child:Dashchief( token: widget.token, emergency: true, DoctorID: widget.doctorId),
-                  ),
+                    // GestureDetector(
+                    //   onTap: (){
+                    //     openWhatsAppChat(
+                    //       phoneNumber: '7010871411',
+                    //       message: 'Hello from Flutter!',
+                    //     );                  },
+                    //   child: ThoughtOfTheDayWidget(
+                    //     text:
+                    //     "Wherever the art of medicine is loved, there is also a love of humanity.",
+                    //     svgPath: "assets/images/Group.svg",
+                    //     onReadMore: () {
+                    //       print("Read More Clicked!");
+                    //     },
+                    //   ),
+                    // ),
+                    Obx(() {
+                      final controller = Get.find<QuotesController>();
+                      return ThoughtOfTheDayWidget(
+                        text: controller.quotesData.value?.message?.quote ??
+                            "Wherever the art of medicine is loved, there is also a love of humanity.",
+                        svgPath: "assets/images/Group.svg",
+                        onReadMore: () {
+                          print("Read More Clicked!");
+                        }, author: "-${controller.quotesData.value?.message?.author ?? "Brinesh ben"}",
+                      );
+                    }),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: 15.h, left: 15.w, right: 10.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Summary",
+                            style: GoogleFonts.shanti(
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20.h,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child:Dashchief( token: widget.token, emergency: true, DoctorID: widget.doctorId),
+                    ),
 
 
-                ],
+                  ],
+                ),
               ),
             ),
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: () {
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => ChatScreenDoctor()));
+            //   },
+            //   backgroundColor: Colors.white,
+            //   child: SvgPicture.asset(
+            //     'assets/images/chat_outline.svg', // Replace with your SVG path
+            //     width: 30, // Adjust size as needed
+            //     height: 30,
+            //   ),
+            // ),
           ),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {
-          //     Navigator.push(context,
-          //         MaterialPageRoute(builder: (context) => ChatScreenDoctor()));
-          //   },
-          //   backgroundColor: Colors.white,
-          //   child: SvgPicture.asset(
-          //     'assets/images/chat_outline.svg', // Replace with your SVG path
-          //     width: 30, // Adjust size as needed
-          //     height: 30,
-          //   ),
-          // ),
         ),
       ),
     );

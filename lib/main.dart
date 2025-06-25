@@ -68,14 +68,7 @@ class MyApp extends StatelessWidget {
                 secondary: Colorutils.userdetailcolor,
               ),
             ),
-            home: UpgradeAlert(
-              dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
-                upgrader: Upgrader(
-                  debugDisplayAlways: true,
-                  debugLogging: true,
-                ),
-                child: SplashScreen(),
-            ),
+            home: SplashScreen(),
           ),
         ),
       )

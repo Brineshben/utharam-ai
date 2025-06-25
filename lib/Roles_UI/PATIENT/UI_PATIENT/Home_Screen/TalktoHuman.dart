@@ -131,7 +131,7 @@ class TalkToHuman extends StatelessWidget {
                                 } else {
                                   ProductAppPopUps.submit(
                                     title: "Error",
-                                    message:  "Something went wrong 1st",
+                                    message:  "Something went wrong ",
                                     actionName: "Close",
                                     iconData: Icons.error_outline_outlined,
                                     iconColor: Colors.red,
@@ -148,7 +148,6 @@ class TalkToHuman extends StatelessWidget {
                             ),
                           ],
                         );
-                        ;
                       },
                     ),
                   );

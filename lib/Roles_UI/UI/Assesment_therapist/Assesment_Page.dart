@@ -158,14 +158,14 @@ class _AssesmentPageState extends State<AssesmentPage> {
                                 patient?.patientName ?? "No Name",
                                 style: TextStyle(
                                   color: Colors.blueGrey,
-                                  fontSize: 15.h,
+                                  fontSize: 14.h,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               subtitle: Text(
                                 patient?.patientId ?? "No Name",
                                 style: TextStyle(
-                                  fontSize: 14.h,
+                                  fontSize: 13.h,
                                   color: Colors.blueGrey,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -208,13 +208,13 @@ Widget _buildTag(String text, Color bgColor) {
       borderRadius: BorderRadius.circular(8),
       color: bgColor,
     ),
-    padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 9.w),
+    padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 5.w),
     child: Text(
       text,
       style: GoogleFonts.nunito(
         color: Colors.white,
         fontWeight: FontWeight.w600,
-        fontSize: 14.h,
+        fontSize: 13.h,
       ),
     ),
   );

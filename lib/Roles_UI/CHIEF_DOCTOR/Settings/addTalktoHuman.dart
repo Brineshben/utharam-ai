@@ -102,8 +102,8 @@ class _AddTalkToHumanState extends State<AddTalkToHuman> {
                                 ),
                               ),
                             ),
-                            title: Text(callHuman?.name ?? "", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12)),
-                            subtitle: Text(callHuman?.role ?? "",style: TextStyle(fontSize: 10),),
+                            title: Text("Dr. ${callHuman?.name ?? ""}", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
+                            subtitle: Text(callHuman?.role ?? "",style: TextStyle(fontSize: 14),),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [(callHuman?.voxbayCalls?.isNotEmpty ?? false)?

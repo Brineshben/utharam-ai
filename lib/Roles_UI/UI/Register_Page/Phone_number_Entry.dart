@@ -329,8 +329,8 @@ class _PhoneNumberEntryPageState extends State<PhoneNumberEntryPage> {
                             // allows only digits (0-9)
                           ],
                           validator: (value) {
-                            if (value == null || value.trim().length < 10) {
-                              return 'Enter at least 10 digits';
+                            if (value == null || value.trim().length < 9) {
+                              return 'Enter at least 9 digits';
                             }
                             return null;
                           },

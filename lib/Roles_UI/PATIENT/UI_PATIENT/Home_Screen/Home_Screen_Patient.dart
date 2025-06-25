@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:upgrader/upgrader.dart';
 
 import '../../../../Controller/Assignement_Controller/PatientAssesMentLIst_Controller.dart';
 import '../../../../Controller/PatientAppointmentDetailsController.dart';
@@ -63,300 +66,304 @@ class _HomeScreenPatientState extends State<HomeScreenPatient> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: systemUiOverlayStyleDark,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
-          decoration: BoxDecoration(
-              // gradient: LinearGradient(
-              //   colors: [Colors.green, Colors.white], // Define your colors
-              //   begin: Alignment.topLeft,
-              //   end: Alignment.bottomRight,
-              // ),
-              ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                UserDetails(
-                  isWelcome: true,
-                  bellicon: true,
-                  notificationcount: true,
-                  name: widget.name,
-                  image: 'assets/images/profile2.jpg',
+    return UpgradeAlert(
+
+      dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: systemUiOverlayStyleDark,
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Container(
+            decoration: BoxDecoration(
+                // gradient: LinearGradient(
+                //   colors: [Colors.green, Colors.white], // Define your colors
+                //   begin: Alignment.topLeft,
+                //   end: Alignment.bottomRight,
+                // ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: 25.h, bottom: 25.h, left: 15.w, right: 10.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "${widget.role.toUpperCase()} DASHBOARD",
-                        style: GoogleFonts.shanti(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 20.h,
-                        ),
-                      ),
-                    ],
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  UserDetails(
+                    isWelcome: true,
+                    bellicon: true,
+                    notificationcount: true,
+                    name: widget.name,
+                    image: 'assets/images/profile2.jpg',
                   ),
-                ),
-                Obx(() {
-                  final controller = Get.find<QuotesController>();
-                  return ThoughtOfTheDayWidget(
-                    text: controller.quotesData.value?.message?.quote ??
-                        "Wherever the art of medicine is loved, there is also a love of humanity.",
-                    svgPath: "assets/images/Group.svg",
-                    onReadMore: () {
-                      print("Read More Clicked!");
-                    },
-                    author:
-                        "-${controller.quotesData.value?.message?.author ?? "Brinesh ben"}",
-                  );
-                }),
-                Padding(
-                  padding: EdgeInsets.only(top: 15.h, left: 15.w, right: 10.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Your Enquiry",
-                        style: GoogleFonts.shanti(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 20.h,
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 25.h, bottom: 25.h, left: 15.w, right: 10.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${widget.role.toUpperCase()} DASHBOARD",
+                          style: GoogleFonts.shanti(
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20.h,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Card(
-
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        color: Colorutils.userdetailcolor,
-                        width: 0.3,
-                      ),
-                    ),
-                    elevation: 2,
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: GetX<PatientdetailsController>(
-                        builder: (controller) {
-                          final diagnosisList = controller
-                              .PatientDetailsData.value?.user?.diagnosis;
-
-                          final hasDiagnosis = diagnosisList?.isNotEmpty ?? false;
-                          final firstDiagnosis =
-                              hasDiagnosis ? diagnosisList!.last : null;
-
-                          final urlReport = firstDiagnosis?.aiPatientSummaryFile ?? "";
-                          final isApproved = firstDiagnosis?.isApproved ?? false;
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildTitle('NAME: ', widget.name),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  _buildTitle('USER ID: ', widget.patientId),
-                                  GestureDetector(
-                                    onTap: () {
-                                      if (urlReport.isNotEmpty) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                FullScreenPdfViewer(
-                                                  pdfUrl: urlReport,
-                                                ),
-                                          ),
-                                        );
-                                      } else {
-                                        Get.snackbar('Failed', 'No AI report available',
-                                          snackPosition: SnackPosition.BOTTOM,
-                                          margin: const EdgeInsets.only(
-                                              bottom: 70,
-                                              left: 8,
-                                              right: 8),);
-
-                                      }
-                                    },
-                                    child: _buildTag("View AI Report",
-                                        Colorutils.userdetailcolor),
-                                  ),
-                                ],
-                              ),
-                              _buildTitle('DATE: ', widget.date),
-                              const SizedBox(height: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-
-                                  const SizedBox(height: 10),
-                                  _buildTag(
-                                    hasDiagnosis
-                                        ? (isApproved
-                                            ? "Your enquiry has been approved by our therapist. Please make a call to proceed."
-                                            :"Your enquiry is being reviewed by our therapist. Please wait.")
-                                        : "NO DIAGNOSIS",
-                                    hasDiagnosis
-                                        ? (isApproved ? Colors.green : Colors.red)
-                                        : Colors.grey,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      ),
+                      ],
                     ),
                   ),
-                ),
-                SizedBox(),
-                GetX<Patientappointmentdetailscontroller>(
-                  builder: (Patientappointmentdetailscontroller controller) {
-                    if (controller.patientAppointmentListList.isEmpty) {
-                      return const SizedBox(); // Return an empty widget when no data
-                    }
+                  Obx(() {
+                    final controller = Get.find<QuotesController>();
+                    return ThoughtOfTheDayWidget(
+                      text: controller.quotesData.value?.message?.quote ??
+                          "Wherever the art of medicine is loved, there is also a love of humanity.",
+                      svgPath: "assets/images/Group.svg",
+                      onReadMore: () {
+                        print("Read More Clicked!");
+                      },
+                      author:
+                          "-${controller.quotesData.value?.message?.author ?? "Brinesh ben"}",
+                    );
+                  }),
+                  Padding(
+                    padding: EdgeInsets.only(top: 15.h, left: 15.w, right: 10.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Your Enquiry",
+                          style: GoogleFonts.shanti(
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20.h,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Card(
 
-                    final lastAppointment = controller.patientAppointmentListList.last;
-                    final name = lastAppointment?.doctorDetails?.name ?? 'No Name';
-                    final date = lastAppointment?.slotDetails?.date ?? 'No Date';
-                    final role = lastAppointment?.doctorDetails?.role?? 'No Role';
-                    final fromDate = lastAppointment?.slotDetails?.fromTime ?? 'No From Time';
-                    final toDate = lastAppointment?.slotDetails?.toTime ?? 'No To Time';
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: BorderSide(
+                          color: Colorutils.userdetailcolor,
+                          width: 0.3,
+                        ),
+                      ),
+                      elevation: 2,
+                      margin:
+                          const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: GetX<PatientdetailsController>(
+                          builder: (controller) {
+                            final diagnosisList = controller
+                                .PatientDetailsData.value?.user?.diagnosis;
 
-                    if (name == "No Name") {
-                      return const SizedBox(); // Return nothing if no valid name
-                    } else {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: 5.h, bottom: 1.h, left: 15.w, right: 10.w),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            final hasDiagnosis = diagnosisList?.isNotEmpty ?? false;
+                            final firstDiagnosis =
+                                hasDiagnosis ? diagnosisList!.last : null;
+
+                            final urlReport = firstDiagnosis?.aiPatientSummaryFile ?? "";
+                            final isApproved = firstDiagnosis?.isApproved ?? false;
+
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Appointment Details",
-                                  style: GoogleFonts.shanti(
-                                    color: Colors.blueGrey,
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 20.h,
-                                  ),
+                                _buildTitle('NAME: ', widget.name),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    _buildTitle('USER ID: ', widget.patientId),
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (urlReport.isNotEmpty) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FullScreenPdfViewer(
+                                                    pdfUrl: urlReport,
+                                                  ),
+                                            ),
+                                          );
+                                        } else {
+                                          Get.snackbar('Failed', 'No AI report available',
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            margin: const EdgeInsets.only(
+                                                bottom: 70,
+                                                left: 8,
+                                                right: 8),);
+
+                                        }
+                                      },
+                                      child: _buildTag("View AI Report",
+                                          Colorutils.userdetailcolor),
+                                    ),
+                                  ],
+                                ),
+                                _buildTitle('DATE: ', widget.date),
+                                const SizedBox(height: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+
+                                    const SizedBox(height: 10),
+                                    _buildTag(
+                                      hasDiagnosis
+                                          ? (isApproved
+                                              ? "Your enquiry has been approved by our therapist. Please make a call to proceed."
+                                              :"Your enquiry is being reviewed by our therapist. Please wait.")
+                                          : "NO DIAGNOSIS",
+                                      hasDiagnosis
+                                          ? (isApproved ? Colors.green : Colors.red)
+                                          : Colors.grey,
+                                    ),
+                                  ],
                                 ),
                               ],
-                            ),
-                          ),
-                          AppointmentCard2(
-                            name: name,
-                            date: date,
-                            role:formatString(role) ,
-                            fromDate: fromDate,
-                            toDate: toDate,
-                          ),
-                        ],
-                      );
-                    }
-                  },
-                ),
-
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: 5.h, bottom: 1.h, left: 15.w, right: 10.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Recent Activity",
-                        style: GoogleFonts.shanti(
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 20.h,
+                            );
+                          },
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    alignment: Alignment.topCenter,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(26),
-                      color: Colorutils.userdetailcolor.withOpacity(0.1),
-                      border: Border.all(
-                        color: Colorutils.userdetailcolor,
-                        width: 1.w,
-                      ),
                     ),
-                    width: double.infinity,
-                    height: 250.h,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GetX<PatientAssignmentController>(
-                          builder: (PatientAssignmentController controller) {
-                        if (controller
-                            .patientAssesmentListDataList.isNotEmpty) {
-                          return ListView.builder(
-                            padding: EdgeInsets.symmetric(horizontal: 5.w),
-                            shrinkWrap: true,
-                            // physics: NeverScrollableScrollPhysics(),
-                            itemCount: controller
-                                .patientAssesmentListDataList.length,
-                            itemBuilder: (context, index) {
-                              final patient = controller
-                                  .patientAssesmentListDataList[index];
-                              return Column(
+                  ),
+                  SizedBox(),
+                  GetX<Patientappointmentdetailscontroller>(
+                    builder: (Patientappointmentdetailscontroller controller) {
+                      if (controller.patientAppointmentListList.isEmpty) {
+                        return const SizedBox(); // Return an empty widget when no data
+                      }
+
+                      final lastAppointment = controller.patientAppointmentListList.last;
+                      final name = lastAppointment?.doctorDetails?.name ?? 'No Name';
+                      final date = lastAppointment?.slotDetails?.date ?? 'No Date';
+                      final role = lastAppointment?.doctorDetails?.role?? 'No Role';
+                      final fromDate = lastAppointment?.slotDetails?.fromTime ?? 'No From Time';
+                      final toDate = lastAppointment?.slotDetails?.toTime ?? 'No To Time';
+
+                      if (name == "No Name") {
+                        return const SizedBox(); // Return nothing if no valid name
+                      } else {
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: 5.h, bottom: 1.h, left: 15.w, right: 10.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  RecentActivityTile(
-                                    title: patient?.questionText
-                                            ?.toUpperCase() ??
-                                        "No Recent Activity",
-                                    subtitle: formatDate(
-                                        patient?.createdAt ?? "  "),
-                                  ),
-                                  Divider(
-                                    thickness: 0.5,
-                                    color: Colors.grey.withOpacity(0.3),
-                                    endIndent: 10.0,
-                                    indent: 10.0,
+                                  Text(
+                                    "Appointment Details",
+                                    style: GoogleFonts.shanti(
+                                      color: Colors.blueGrey,
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 20.h,
+                                    ),
                                   ),
                                 ],
-                              );
-                            },
-                          );
-                        } else {
-                          return Center(
-                            child: const Text(
-                              "No Recent Activity found",
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontStyle: FontStyle.italic),
+                              ),
                             ),
-                          );
-                        }
-                      }),
+                            AppointmentCard2(
+                              name: name,
+                              date: date,
+                              role:formatString(role) ,
+                              fromDate: fromDate,
+                              toDate: toDate,
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 5.h, bottom: 1.h, left: 15.w, right: 10.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Recent Activity",
+                          style: GoogleFonts.shanti(
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20.h,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                SizedBox(height: 15,)
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      alignment: Alignment.topCenter,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(26),
+                        color: Colorutils.userdetailcolor.withOpacity(0.1),
+                        border: Border.all(
+                          color: Colorutils.userdetailcolor,
+                          width: 1.w,
+                        ),
+                      ),
+                      width: double.infinity,
+                      height: 250.h,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GetX<PatientAssignmentController>(
+                            builder: (PatientAssignmentController controller) {
+                          if (controller
+                              .patientAssesmentListDataList.isNotEmpty) {
+                            return ListView.builder(
+                              padding: EdgeInsets.symmetric(horizontal: 5.w),
+                              shrinkWrap: true,
+                              // physics: NeverScrollableScrollPhysics(),
+                              itemCount: controller
+                                  .patientAssesmentListDataList.length,
+                              itemBuilder: (context, index) {
+                                final patient = controller
+                                    .patientAssesmentListDataList[index];
+                                return Column(
+                                  children: [
+                                    RecentActivityTile(
+                                      title: patient?.questionText
+                                              ?.toUpperCase() ??
+                                          "No Recent Activity",
+                                      subtitle: formatDate(
+                                          patient?.createdAt ?? "  "),
+                                    ),
+                                    Divider(
+                                      thickness: 0.5,
+                                      color: Colors.grey.withOpacity(0.3),
+                                      endIndent: 10.0,
+                                      indent: 10.0,
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            return Center(
+                              child: const Text(
+                                "No Recent Activity found",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontStyle: FontStyle.italic),
+                              ),
+                            );
+                          }
+                        }),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15,)
+                ],
+              ),
             ),
           ),
-        ),
 
+        ),
       ),
     );
   }

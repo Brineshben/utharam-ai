@@ -46,13 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return UpgradeAlert(
-
       dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
 
-      upgrader: Upgrader(
-        debugDisplayAlways: true,
-        debugLogging: true,
-      ),
+      // upgrader: Upgrader(
+      //   debugDisplayAlways: true,
+      //   debugLogging: true,
+      // ),
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: systemUiOverlayStyleDark,
         child: PopScope(
