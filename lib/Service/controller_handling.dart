@@ -21,6 +21,7 @@ import '../Controller/Medicine_Controller/Medicine_Controller.dart';
 import '../Controller/Medicine_Controller/Particular_medicineList_Controller.dart';
 import '../Controller/MultipleReportController.dart';
 import '../Controller/PatientAppointmentDetailsController.dart';
+import '../Controller/PatientAssesmentListController.dart';
 import '../Controller/PatientListController.dart';
 import '../Controller/Patient_queue_Controller.dart';
 import '../Controller/Quotes_Controller.dart';
@@ -67,6 +68,7 @@ class HandleControllers {
     Get.put(DoctorParticularPatientMedicineController());
     Get.put(DoctorAllListController());
     Get.put(ComplaintListController());
+    Get.put(PatientAssesmentListController());
   }
 
   static deleteAllGetControllers() async {
@@ -102,5 +104,6 @@ class HandleControllers {
     await Get.delete<DoctorParticularPatientMedicineController>();
     await Get.delete<DoctorAllListController>();
     await Get.delete<ComplaintListController>();
+    await Get.delete<PatientAssesmentListController>();
   }
 }

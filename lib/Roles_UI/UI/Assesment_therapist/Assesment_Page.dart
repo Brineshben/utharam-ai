@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:patient/utils/color_util.dart';
 
 import '../../../Controller/Doctor_List_Controller.dart';
+import '../../../Controller/PatientAssesmentListController.dart';
 import '../../../Controller/SheduleController.dart';
 import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
 import 'Add_Assesment.dart';
@@ -29,7 +30,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
   @override
   void initState() {
     super.initState();
-    Get.find<ScheduleController>().scheduleDataz(widget.token);
+    Get.find<PatientAssesmentListController>().scheduleDataz(widget.token);
   }
 
   @override
@@ -79,7 +80,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
                     FilteringTextInputFormatter.deny(RegExp(r'\s')), // 👈 Disallows all whitespace
                   ],
                   onChanged: (value) {
-                    Get.find<ScheduleController>().sehduleList(value);
+                    Get.find<PatientAssesmentListController>().sehduleList(value);
                   },
                   validator: (val) => val!.isEmpty ? 'Enter the Topic' : null,
                   cursorColor: Colors.grey,
@@ -120,8 +121,16 @@ class _AssesmentPageState extends State<AssesmentPage> {
                 ),
               ),
             ),            Expanded(
-              child: GetX<ScheduleController>(
-                builder: (ScheduleController controller) {
+              child: GetX<PatientAssesmentListController>(
+                builder: (PatientAssesmentListController controller) {
+
+                  if (controller.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: Colorutils.userdetailcolor,
+                      ),
+                    );
+                  }
                   if (controller.scheduleList.isEmpty) {
                     return Center(
                       child: const Text(
