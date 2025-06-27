@@ -9,23 +9,21 @@ import '../../JUNIOR_DOCTOR/appoinment/PatientListr.dart';
 import '../../PATIENT/UI_PATIENT/RegisterComplaints/AddComplaints.dart';
 import '../../UI/AppintmentsPage/My_Appointments.dart';
 import '../../UI/DoctorListSenior/doctorListSenior.dart';
-import 'RejectedPatientList.dart';
-import 'addTalktoHuman.dart';
-import 'doctorstatus.dart';
 
-class ProfileSettingsPage extends StatefulWidget {
+
+class ProfilePatientsSettingsPage extends StatefulWidget {
   final String name;
   final String role;
   final String token;
 
-  const ProfileSettingsPage(
+  const ProfilePatientsSettingsPage(
       {super.key, required this.name, required this.role, required this.token});
 
   @override
-  _ProfileSettingsPageState createState() => _ProfileSettingsPageState();
+  _ProfilePatientsSettingsPageState createState() => _ProfilePatientsSettingsPageState();
 }
 
-class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
+class _ProfilePatientsSettingsPageState extends State<ProfilePatientsSettingsPage> {
   bool availability = true;
   bool email = false;
   bool sms = false;
@@ -144,79 +142,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   ],
                 ),
               ),
-              SizedBox(height: 5),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return AddTalkToHuman(
-                        token: widget.token,
-                      );
-                    },
-                  ));
-                },
-                child: NameCard(
-                  name: "ADD TALK TO HUMAN",
-                ),
-              ),
-              SizedBox(height: 5),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return RejectedPatientList(
-                        token: widget.token,
-                      );
-                    },
-                  ));
-                },
-                child: NameCard(
-                  name: "REJECTED PATIENTS",
-                ),
-              ),
-
-              SizedBox(height: 5),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return PatientList(
-                        token: widget.token,
-                      );
-                    },
-                  ));
-                },
-                child: NameCard(
-                  name: "MAKE NEW APPOINTMENT ",
-                ),
-              ), SizedBox(height: 5),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return DoctorStatusList(
-                        token: widget.token,
-                      );
-                    },
-                  ));
-                },
-                child: NameCard(
-                  name: "DOCTOR STATUS",
-                ),
-              ),
-              SizedBox(height: 5),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return MyAppointments(token: widget.token,);
-                    },
-                  ));
-                },
-                child: NameCard(
-                  name: "ALL APPOINTMENTS",
-                ),
-              ) ,SizedBox(height: 5),
+             SizedBox(height: 5),
               GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
@@ -248,9 +174,9 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   }
 
   Widget buildProfileCard(
-    final String name,
-    final String role,
-  ) {
+      final String name,
+      final String role,
+      ) {
     return Card(
 
       color: Colors.white,
@@ -269,12 +195,12 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                   children: [
                     CircleAvatar(
                       backgroundColor: Colors.white,
-                      child: ClipOval(
+                      child:  ClipOval(
                         child: Image.asset(
-                          "assets/images/doctorlogo.png",
+                          "assets/images/profileimage.jpg",
                           fit: BoxFit.cover,
-                          width: 50.w,
-                          height: 50.h,
+                          width: 40,
+                          height: 40,
                         ),
                       ),
                     ),
@@ -384,9 +310,9 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
         ),
         Expanded(
             child: Text(
-          label,
-          style: TextStyle(color: Colors.blueGrey),
-        )),
+              label,
+              style: TextStyle(color: Colors.blueGrey),
+            )),
       ],
     );
   }

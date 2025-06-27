@@ -21,6 +21,7 @@ import 'Home_Screen/Home_Screen_Patient.dart';
 import 'Home_Screen/TalktoHuman.dart';
 import 'Medicine/MedicineListJunior.dart';
 import 'Secondchat.dart';
+import 'SettingsPatient.dart';
 
 class PageIndexNavigationPatient extends StatefulWidget {
   final String role;
@@ -69,7 +70,9 @@ class _PageIndexNavigationPatientState extends State<PageIndexNavigationPatient>
       ),
       TalkToHuman(),
       MyAssesmentListPage(token: widget.tokenPatient, id: widget.userid),
-      Medicinelistjunior(token: widget.tokenPatient)
+      Medicinelistjunior(token: widget.tokenPatient),
+      ProfilePatientsSettingsPage(name: widget.name, role:widget.role, token:widget.tokenPatient,),
+
     ];
   }
 
@@ -96,6 +99,10 @@ class _PageIndexNavigationPatientState extends State<PageIndexNavigationPatient>
 
         break;
       case 3:
+        Get.find<ParticularMedicinelistController>()
+            .particularMedicineListDataz(widget.tokenPatient);
+
+        break;  case 4:
         Get.find<ParticularMedicinelistController>()
             .particularMedicineListDataz(widget.tokenPatient);
 
@@ -262,7 +269,7 @@ class _PageIndexNavigationPatientState extends State<PageIndexNavigationPatient>
                     ),
                     BottomNavigationBarItem(
                       icon: SvgPicture.asset(
-                        "assets/images/memo-pad.svg",
+                        "assets/images/first-aid-kit.svg",
                         width: 25.w,
                         height: 25.h,
                         color: Colors.grey,
@@ -274,7 +281,22 @@ class _PageIndexNavigationPatientState extends State<PageIndexNavigationPatient>
                         ),
                       ),
                       label: 'Medicine',
-                    )
+                    ),
+                    BottomNavigationBarItem(
+                      icon: SvgPicture.asset(
+                        "assets/images/settings.svg",
+                        width: 25.w,
+                        height: 25.h,
+                        color: Colors.grey,
+                        colorFilter: ColorFilter.mode(
+                          _selectedIndex == 4
+                              ? Colorutils.userdetailcolor
+                              : Colors.grey,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                      label: 'Settings',
+                    ),
                   ],
                 ),
               ),

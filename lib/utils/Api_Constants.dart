@@ -49,6 +49,8 @@ class ApiConstants {
   static String editAssignment = "/thoughts/thoughts/update/";
   static String patientAssignmentList = "/thoughts/patient-thoughts/list/";
   static String diagnosisAdd = "/accounts/approve_ai_diagnosis_summary/";
+  static String complaintList = "/complaint/view_complaints/";
+  static String complaintCreate = "/complaint/create_complaints/";
   static String enquiredList = "/accounts/unverified-users/";
   static String approveEnquiredList = "/accounts/approve-user/";
   static String rejectEnquiredList = "/accounts/approve-user/";

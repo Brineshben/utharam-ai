@@ -81,12 +81,17 @@ class _SecondAssesmentState extends State<SecondAssesment> {
                           ),
                         ),
                         SizedBox(width: 10.w),
-                        Text(
-                          "${widget.name.toUpperCase()} Second Assessment",
-                          style: GoogleFonts.shanti(
-                            color: Colors.blueGrey,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 16.h,
+                        SingleChildScrollView(
+                          child: Container(
+                          width: 300.w,
+                            child: Text(
+                              "${widget.name.toUpperCase()} Second Assessment",
+                              style: GoogleFonts.shanti(
+                                color: Colors.blueGrey,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16.h,
+                              ),
+                            ),
                           ),
                         ),
                       ],

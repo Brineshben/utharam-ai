@@ -1045,6 +1045,57 @@ class ApiServices {
       throw Exception("Service Error patientAssignmentList");
     }
   }
+  ///PComplaintList
+  static Future<Map<String, dynamic>> complaintList({
+    required String token,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.complaintList}";
+    print("complaintList---$url");
+    // Map apiBody = {
+    //   "diagnosis_id": id,
+    // };
+    try {
+      var request = http.Request('GET', Uri.parse(url));
+      // request.body = (json.encode(apiBody));
+
+      request.headers.addAll(
+        {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+      print('complaintList-->${response.statusCode}');
+
+      var respString = await response.stream.bytesToString();
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error complaintList");
+    }
+  }
+  ///PComplaintCreate
+  static Future<Map<String, dynamic>> complaintCreate({
+    required String token,
+    required String text,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.complaintCreate}";
+    print("complaintCreate---$url");
+    Map apiBody = {
+      "complaints": text,
+    };
+    try {
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+
+      request.headers.addAll(
+        {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+      print('complaintList-->${response.statusCode}');
+
+      var respString = await response.stream.bytesToString();
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error complaintList");
+    }
+  }
 
   ///Add assignmentCreate
   static Future<Map<String, dynamic>> assignmentCreate(

@@ -87,12 +87,10 @@ class TalkToHuman extends StatelessWidget {
                                     backgroundColor: Colors.white,
                                     child: ClipOval(
                                       child: Image.asset(
-                                        "assets/images/profile2.jpg",
+                                        "assets/images/doctorlogo.png",
                                         fit: BoxFit.cover,
-                                        // Ensures the image is properly scaled and centered
-                                        width: 54.r,
-                                        // Double the inner radius to cover full area
-                                        height: 54.r,
+                                        width: 50.w,
+                                        height: 50.h,
                                       ),
                                     ),
                                   ),

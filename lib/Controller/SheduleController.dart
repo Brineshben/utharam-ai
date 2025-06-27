@@ -29,7 +29,7 @@ class ScheduleController extends GetxController {
 
         scheduleList.sort((a, b) =>
             (b?.assignedAt ?? '').compareTo(a?.assignedAt ?? ''));
-
+        // scheduleList.forEach((element) => element.id(),)
         print("  scheduleList.value--${scheduleList.value.first?.patient}");
         scheduleListCopy.value = scheduleList.value;
         isLoading.value = true;
