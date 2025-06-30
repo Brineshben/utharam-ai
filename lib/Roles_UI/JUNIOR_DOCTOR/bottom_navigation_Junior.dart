@@ -169,7 +169,7 @@ class _PageIndexNavigationJuniorState extends State<PageIndexNavigationJunior> {
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: 'PatientList',
+                    label: 'Observation',
                   ),
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(

@@ -139,7 +139,7 @@ class _PageIndexNavigationChiefState extends State<PageIndexNavigationChief> wit
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: 'PatientList',
+                    label: 'Observation',
                   ),
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(

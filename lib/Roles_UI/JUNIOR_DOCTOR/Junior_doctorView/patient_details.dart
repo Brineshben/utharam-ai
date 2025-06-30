@@ -814,9 +814,9 @@ class _PatientDetailsState extends State<PatientDetails> {
 
 
                           if (resp['status'] == "ok") {
-                            await Get.find<DoctorToPatientController>()
-                                .doctorToPatientData(
-                                    widget.token, data?.id ?? 0, widget.id);
+                            // await Get.find<DoctorToPatientController>()
+                            //     .doctorToPatientData(
+                            //         widget.token, data?.id ?? 0, widget.id);
                             await Get.find<PatientQueueController>()
                                 .patientData(widget.token);
                             await Get.find<JuniorDashboardController>()

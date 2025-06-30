@@ -107,6 +107,7 @@ import '../../../../Controller/ReportPatientController.dart';
 import '../../../../Controller/SeniorDashboardController.dart';
 import '../../../../Controller/SheduleController.dart';
 import '../../../PATIENT/UI_PATIENT/Chat_Patient/Chat_PAtient.dart';
+import '../../../PATIENT/UI_PATIENT/SettingsPatient.dart';
 import '../../AppintmentsPage/Appointments.dart';
 
 import '../../Assesment_therapist/Assesment_Page.dart';
@@ -166,8 +167,8 @@ class _PageIndexNavigationTherapistState
       ReportsList(
         token: widget.token,
       ),
-      DoctorListSenior(token:  widget.token, doctorId: widget.doctorId,)
-      // ChatListPage()
+      DoctorListSenior(token:  widget.token, doctorId: widget.doctorId,),
+      ProfilePatientsSettingsPage(name: widget.name, role:widget.role, token:widget.token,),
     ];
   }
   void _handleTabTap(int index) {
@@ -263,7 +264,7 @@ class _PageIndexNavigationTherapistState
                         BlendMode.srcIn,
                       ),
                     ),
-                    label: 'Schedule',
+                    label: 'Observation',
                   ),
                   BottomNavigationBarItem(
                     icon: SvgPicture.asset(
@@ -309,6 +310,20 @@ class _PageIndexNavigationTherapistState
                       ),
                     ),
                     label: 'DoctorList',
+                  ), BottomNavigationBarItem(
+                    icon: SvgPicture.asset(
+                      "assets/images/settings.svg",
+                      width: 25.w,
+                      height: 25.h,
+                      color: Colors.grey,
+                      colorFilter: ColorFilter.mode(
+                        _selectedIndex == 5
+                            ? Colorutils.userdetailcolor
+                            : Colors.grey,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    label: 'Settings',
                   ),
                 ],
               ),

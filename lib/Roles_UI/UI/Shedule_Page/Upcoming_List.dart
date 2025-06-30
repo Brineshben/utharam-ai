@@ -361,7 +361,7 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
         child: Card(
           elevation: 4,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(15),
           ),
           color: Colorutils.userdetailcolor,
           child: Container(
@@ -370,7 +370,7 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
             alignment: Alignment.center,
             child: Text(
               "MY SCHEDULE",
-              style: TextStyle(color: Colors.white, fontSize: 15.h),
+              style: TextStyle(color: Colors.white, fontSize: 13.h),
             ),
           ),
         ),
