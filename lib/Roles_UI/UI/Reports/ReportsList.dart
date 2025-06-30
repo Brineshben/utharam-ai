@@ -157,7 +157,7 @@ class _ReportsListState extends State<ReportsList> {
                             ),
                           ),
                           title: Text(
-                            report?.patientDetails?.name?.toUpperCase() ?? "No Name",
+                            report?.patient?.name?.toUpperCase() ?? "No Name",
                             style: TextStyle(
                               color: Colors.blueGrey,
                               fontSize: 15.h,
@@ -165,7 +165,7 @@ class _ReportsListState extends State<ReportsList> {
                             ),
                           ),
                           subtitle: Text(
-                            report?.patientDetails?.mobileNumber ?? "No Role",
+                            report?.patient?.mobileNumber ?? "No Role",
                             style: TextStyle(
                               fontSize: 14.h,
                               color: Colors.blueGrey,
@@ -187,7 +187,7 @@ class _ReportsListState extends State<ReportsList> {
                                 onTap: (){
                                   // makePhoneCall( callHuman?.callId ?? 0);
                                   //
-                                  openWhatsAppChat( phoneNumber:report?.patientDetails?.mobileNumber ?? "");
+                                  openWhatsAppChat( phoneNumber:report?.patient?.mobileNumber ?? "");
 
                                 },
                               ),
@@ -200,7 +200,7 @@ class _ReportsListState extends State<ReportsList> {
 
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
-                                      return ReportsDetails(token:widget.token, id: report?.patientDetails?.id ?? 0, name: report?.patientDetails?.name ?? "",);
+                                      return ReportsDetails(token:widget.token, id: report?.patient?.id ?? 0, name: report?.patient?.name ?? "",);
                                     },
                                   ));
 

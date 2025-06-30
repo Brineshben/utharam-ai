@@ -24,7 +24,7 @@ class ReportPatientController extends GetxController {
       print("------doctorlist3--------$resp");
       if (resp['status'] == 'ok') {
         reportData.value = ReportsPatientModel.fromJson(resp);
-        // print("patient list${doctorData.value?.users}");
+        print("------doctorlisdvwefgvst3--------$resp");
         reportList.value = reportData.value?.data ?? [];
         reportListCopy.value = reportList.value;
         isLoading.value = true;
@@ -33,6 +33,7 @@ class ReportPatientController extends GetxController {
       }
     } catch (e) {
       isLoaded.value = false;
+      print("------doctorlistdcwed3--------$e");
 
       ///popup
     } finally {
@@ -40,7 +41,7 @@ class ReportPatientController extends GetxController {
     }
   }
   void searchReportPatientList( String data){
-    reportList.value = reportListCopy.value.where((element) => (element?.patientDetails?.name.toString().toLowerCase().contains(data.toLowerCase()) ?? false),).toList();
+    reportList.value = reportListCopy.value.where((element) => (element?.patient?.name.toString().toLowerCase().contains(data.toLowerCase()) ?? false),).toList();
 
   }
 }
