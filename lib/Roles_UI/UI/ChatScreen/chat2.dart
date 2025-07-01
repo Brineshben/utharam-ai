@@ -763,7 +763,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildCustomInputField() {
     return Padding(
-      padding: const EdgeInsets.only(left: 8,right: 8,bottom: 12),
+      padding: const EdgeInsets.only(left: 8,right: 8,bottom: 15),
       child: Showcase(
         key: _textEnterKey,
         description: 'You can enter the text and send using this button',

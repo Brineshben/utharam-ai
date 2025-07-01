@@ -81,120 +81,97 @@ class _PageIndexNavigationChiefState extends State<PageIndexNavigationChief> wit
         index: _selectedIndex,
         children: _screens,
       ),
-      bottomNavigationBar: SizedBox(
-        height: 67.h,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 1,
-                color: Colors.grey.shade200, // or any color you'd like
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colorutils.userdetailcolor,
+        unselectedItemColor: Colors.grey,
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/images/house-bottom.svg",
+              width: 25.w,
+              height: 25.h,
+              color: Colors.grey,
+              colorFilter: ColorFilter.mode(
+                _selectedIndex == 0
+                    ? Colorutils.userdetailcolor
+                    : Colors.grey,
+                BlendMode.srcIn,
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: BottomNavigationBar(
-                backgroundColor: Colors.white,
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: Colorutils.userdetailcolor,
-                unselectedItemColor: Colors.grey,
-                currentIndex: _selectedIndex,
-                onTap: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
-                items: [
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                      "assets/images/house-bottom.svg",
-                      width: 25.w,
-                      height: 25.h,
-                      color: Colors.grey,
-                      colorFilter: ColorFilter.mode(
-                        _selectedIndex == 0
-                            ? Colorutils.userdetailcolor
-                            : Colors.grey,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    label: 'Home',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                      "assets/images/patient.svg",
-                      width: 25.w,
-                      height: 25.h,
-                      color: Colors.grey,
-                      colorFilter: ColorFilter.mode(
-                        _selectedIndex == 1
-                            ? Colorutils.userdetailcolor
-                            : Colors.grey,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    label: 'Observation',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                      "assets/images/stethoscope.svg",
-                      width: 28.w,
-                      height: 28.h,
-                      color: Colors.grey,
-                      colorFilter: ColorFilter.mode(
-                        _selectedIndex == 2
-                            ? Colorutils.userdetailcolor
-                            : Colors.grey,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    label: 'Doctor List',
-                  ),
-
-                  // BottomNavigationBarItem(
-                  //   icon: SvgPicture.asset(
-                  //     "assets/images/chat_outline.svg",
-                  //     width: 25.w,
-                  //     height: 25.h,
-                  //     color: Colors.grey,
-                  //     colorFilter: ColorFilter.mode(
-                  //       _selectedIndex == 3
-                  //           ? Colorutils.userdetailcolor
-                  //           : Colors.grey,
-                  //       BlendMode.srcIn,
-                  //     ),
-                  //   ),
-                  //   label: 'Tele Communication',
-                  // ),
-                  BottomNavigationBarItem(
-                    icon: SvgPicture.asset(
-                      "assets/images/settings.svg",
-                      width: 25.w,
-                      height: 25.h,
-                      color: Colors.grey,
-                      colorFilter: ColorFilter.mode(
-                        _selectedIndex == 3
-                            ? Colorutils.userdetailcolor
-                            : Colors.grey,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    label: 'Settings',
-                  ),
-                ],
-
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/images/patient.svg",
+              width: 25.w,
+              height: 25.h,
+              color: Colors.grey,
+              colorFilter: ColorFilter.mode(
+                _selectedIndex == 1
+                    ? Colorutils.userdetailcolor
+                    : Colors.grey,
+                BlendMode.srcIn,
               ),
             ),
+            label: 'Observation',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/images/stethoscope.svg",
+              width: 28.w,
+              height: 28.h,
+              color: Colors.grey,
+              colorFilter: ColorFilter.mode(
+                _selectedIndex == 2
+                    ? Colorutils.userdetailcolor
+                    : Colors.grey,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: 'Doctor List',
+          ),
 
-          ],
-        ),
-      ),
+          // BottomNavigationBarItem(
+          //   icon: SvgPicture.asset(
+          //     "assets/images/chat_outline.svg",
+          //     width: 25.w,
+          //     height: 25.h,
+          //     color: Colors.grey,
+          //     colorFilter: ColorFilter.mode(
+          //       _selectedIndex == 3
+          //           ? Colorutils.userdetailcolor
+          //           : Colors.grey,
+          //       BlendMode.srcIn,
+          //     ),
+          //   ),
+          //   label: 'Tele Communication',
+          // ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              "assets/images/settings.svg",
+              width: 25.w,
+              height: 25.h,
+              color: Colors.grey,
+              colorFilter: ColorFilter.mode(
+                _selectedIndex == 3
+                    ? Colorutils.userdetailcolor
+                    : Colors.grey,
+                BlendMode.srcIn,
+              ),
+            ),
+            label: 'Settings',
+          ),
+        ],
+
+      )
 
 
       // floatingActionButton: GestureDetector(

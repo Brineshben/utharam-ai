@@ -177,175 +177,109 @@ class _PageIndexNavigationPatientState extends State<PageIndexNavigationPatient>
             }
           },
         ),
-        bottomNavigationBar: SizedBox(
-          height: 67.h,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  height: 1,
-                  color: Colors.grey.shade200, // or any color you'd like
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: BottomNavigationBar(
-                  backgroundColor: Colors.white,
-                  type: BottomNavigationBarType.fixed,
-                  selectedItemColor: Colorutils.userdetailcolor,
-                  unselectedItemColor: Colors.grey,
-                  currentIndex: _selectedIndex,
-                  onTap: _handleTabTap,
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colorutils.userdetailcolor,
+          unselectedItemColor: Colors.grey,
+          currentIndex: _selectedIndex,
+          onTap: _handleTabTap,
 
-                  // onTap: (index) {
-                  //   setState(() {
-                  //     _selectedIndex = index;
-                  //   });
-                  // },
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        "assets/images/house-bottom.svg",
-                        width: 25.w,
-                        height: 25.h,
-                        color: Colors.grey,
-                        colorFilter: ColorFilter.mode(
-                          _selectedIndex == 0
-                              ? Colorutils.userdetailcolor
-                              : Colors.grey,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      label: 'Home',
-                    ),
-                    // BottomNavigationBarItem(
-                    //   icon: SvgPicture.asset(
-                    //     "",
-                    //     width: 25.w,
-                    //     height: 25.h,
-                    //     colorFilter: ColorFilter.mode(
-                    //       _selectedIndex == 1
-                    //           ? Colorutils.userdetailcolor
-                    //           : Colors.grey,
-                    //       BlendMode.srcIn,
-                    //     ),
-                    //   ),
-                    //   label: 'Metromind Ai',
-                    // ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        "assets/images/phone-call.svg",
-                        width: 25.w,
-                        height: 25.h,
-                        colorFilter: ColorFilter.mode(
-                          _selectedIndex == 1
-                              ? Colorutils.userdetailcolor
-                              : Colors.grey,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      label: 'Talk to Human',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        "assets/images/memo-pad.svg",
-                        width: 25.w,
-                        height: 25.h,
-                        color: Colors.grey,
-                        colorFilter: ColorFilter.mode(
-                          _selectedIndex == 2
-                              ? Colorutils.userdetailcolor
-                              : Colors.grey,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      label: 'Assessments',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        "assets/images/first-aid-kit.svg",
-                        width: 25.w,
-                        height: 25.h,
-                        color: Colors.grey,
-                        colorFilter: ColorFilter.mode(
-                          _selectedIndex == 3
-                              ? Colorutils.userdetailcolor
-                              : Colors.grey,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      label: 'Medicine',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset(
-                        "assets/images/settings.svg",
-                        width: 25.w,
-                        height: 25.h,
-                        color: Colors.grey,
-                        colorFilter: ColorFilter.mode(
-                          _selectedIndex == 4
-                              ? Colorutils.userdetailcolor
-                              : Colors.grey,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      label: 'Settings',
-                    ),
-                  ],
+          // onTap: (index) {
+          //   setState(() {
+          //     _selectedIndex = index;
+          //   });
+          // },
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/images/house-bottom.svg",
+                width: 25.w,
+                height: 25.h,
+                color: Colors.grey,
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 0
+                      ? Colorutils.userdetailcolor
+                      : Colors.grey,
+                  BlendMode.srcIn,
                 ),
               ),
-              // Positioned(
-              //   top: -25.h,
-              //   left: 0,
-              //   right: 0,
-              //   child: ScaleTransition(
-              //     scale: _scaleAnimation,
-              //     child: Center(
-              //       child: GestureDetector(
-              //         onTap: () {
-              //           setState(() {
-              //             _selectedIndex = 1;
-              //           });
-              //         },
-              //         child: CircleAvatar(
-              //           radius: 31.r,
-              //           backgroundColor: Colorutils.userdetailcolor,
-              //
-              //           child: CircleAvatar(
-              //             radius: 30.r,
-              //             backgroundColor: _selectedIndex == 1
-              //                 ? Colors.white
-              //                 : Colorutils.userdetailcolor,
-              //
-              //             child: CircleAvatar(
-              //               backgroundColor: Colorutils.userdetailcolor,
-              //               radius: 28.r,
-              //               child:SvgPicture.asset(
-              //                 "assets/images/AI.svg",
-              //                 width: 30.w,
-              //                 height: 30.h,
-              //                 colorFilter: ColorFilter.mode(
-              //                   _selectedIndex == 1
-              //                       ? Colors.white
-              //                       : Colors.white,
-              //                   BlendMode.srcIn,
-              //                 ),
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-            ],
-          ),
+              label: 'Home',
+            ),
+            // BottomNavigationBarItem(
+            //   icon: SvgPicture.asset(
+            //     "",
+            //     width: 25.w,
+            //     height: 25.h,
+            //     colorFilter: ColorFilter.mode(
+            //       _selectedIndex == 1
+            //           ? Colorutils.userdetailcolor
+            //           : Colors.grey,
+            //       BlendMode.srcIn,
+            //     ),
+            //   ),
+            //   label: 'Metromind Ai',
+            // ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/images/phone-call.svg",
+                width: 25.w,
+                height: 25.h,
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 1
+                      ? Colorutils.userdetailcolor
+                      : Colors.grey,
+                  BlendMode.srcIn,
+                ),
+              ),
+              label: 'Talk to Human',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/images/memo-pad.svg",
+                width: 25.w,
+                height: 25.h,
+                color: Colors.grey,
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 2
+                      ? Colorutils.userdetailcolor
+                      : Colors.grey,
+                  BlendMode.srcIn,
+                ),
+              ),
+              label: 'Assessments',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/images/first-aid-kit.svg",
+                width: 25.w,
+                height: 25.h,
+                color: Colors.grey,
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 3
+                      ? Colorutils.userdetailcolor
+                      : Colors.grey,
+                  BlendMode.srcIn,
+                ),
+              ),
+              label: 'Medicine',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                "assets/images/settings.svg",
+                width: 25.w,
+                height: 25.h,
+                color: Colors.grey,
+                colorFilter: ColorFilter.mode(
+                  _selectedIndex == 4
+                      ? Colorutils.userdetailcolor
+                      : Colors.grey,
+                  BlendMode.srcIn,
+                ),
+              ),
+              label: 'Settings',
+            ),
+          ],
         ),
       ),
     );

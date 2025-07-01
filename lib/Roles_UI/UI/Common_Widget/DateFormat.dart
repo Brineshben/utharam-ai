@@ -8,7 +8,7 @@ String formatDate(String? isoDateString) {
 
   try {
     DateTime dateTime = DateTime.parse(isoDateString).toLocal(); // Convert to local time if needed
-    final formattedDate = DateFormat("dd-MM-yyyy [hh:mm a]").format(dateTime);
+    final formattedDate = DateFormat("dd-MM-yyyy").format(dateTime);
     return formattedDate;
   } catch (e) {
     return "";

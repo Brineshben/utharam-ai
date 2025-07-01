@@ -347,30 +347,33 @@ class _PatientExpandableCardListState extends State<PatientExpandableCardList> {
           },
         ),
       ),
-      floatingActionButton: (widget.role == "senior_psychologist" ||widget.role == "psychiatrist")? GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return MyAppointments(token: widget.token);
-              },
+      floatingActionButton: (widget.role == "senior_psychologist" ||widget.role == "psychiatrist")? Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return MyAppointments(token: widget.token);
+                },
+              ),
+            );
+          },
+          child: Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
-          );
-        },
-        child: Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          color: Colorutils.userdetailcolor,
-          child: Container(
-            height: 50.h,
-            width: 120.w,
-            alignment: Alignment.center,
-            child: Text(
-              "MY SCHEDULE",
-              style: TextStyle(color: Colors.white, fontSize: 13.h),
+            color: Colorutils.userdetailcolor,
+            child: Container(
+              height: 50.h,
+              width: 120.w,
+              alignment: Alignment.center,
+              child: Text(
+                "MY SCHEDULE",
+                style: TextStyle(color: Colors.white, fontSize: 13.h),
+              ),
             ),
           ),
         ),

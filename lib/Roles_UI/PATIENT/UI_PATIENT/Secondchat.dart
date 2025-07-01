@@ -882,7 +882,7 @@ class _ChatScreen2State extends State<ChatScreen2> {
 
   Widget _buildCustomInputField() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left: 8,right: 8,bottom: 12),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
         decoration: BoxDecoration(

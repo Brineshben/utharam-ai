@@ -285,7 +285,11 @@ class ThoughtOfTheDayWidget extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.all(30),
             decoration: BoxDecoration(
-              color: Colors.amber[100],
+              gradient: LinearGradient(
+                colors: [Colors.blue.shade50,Colorutils.userdetailcolor.withOpacity(0.3)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
               borderRadius: BorderRadius.circular(30),
             ),
             child: Column(
