@@ -12,6 +12,7 @@ import 'package:upgrader/upgrader.dart';
 
 import '../../../Controller/Login_Controller.dart';
 import '../../../Model/Login_Model.dart';
+import '../../../Service/Api_Service.dart';
 import '../../../Service/SharedPreference.dart';
 import '../../../utils/Api_Constants.dart';
 import '../../../utils/Constants.dart';
@@ -44,22 +45,22 @@ class _SplashState extends State<Splash> {
     LoginModel? loginApi = await SharedPrefs().getLoginData();
     if (loginApi != null) {
       await Get.find<UserAuthController>().getUserLoginSaved(loginApi);
-
-      String role
-
-
-      =
+      final resp = await ApiServices.refreshToken(
+        token:
+            Get.find<UserAuthController>().loginData.value?.data?.refreshToken ??
+                "",
+      );
+      String role =
           Get.find<UserAuthController>().loginData.value?.data?.role ?? "";
       String name =
           Get.find<UserAuthController>().loginData.value?.data?.name ?? "";
-      String token =
-          Get.find<UserAuthController>().loginData.value?.data?.accessToken ??
-              "";
+      String token = resp['access'];
 
       int doctorId =
           Get.find<UserAuthController>().loginData.value?.data?.userId ?? 0;
       bool firsttime =
-          Get.find<UserAuthController>().loginData.value?.data?.firstTime ?? false;
+          Get.find<UserAuthController>().loginData.value?.data?.firstTime ??
+              false;
 
       String formattedDate = Get.find<UserAuthController>()
                   .loginData
@@ -202,9 +203,11 @@ class _SplashState extends State<Splash> {
                             // ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return PhoneNumberEntryPage();
-                                },));
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return PhoneNumberEntryPage();
+                                  },
+                                ));
                                 // Navigator.push(context, MaterialPageRoute(
                                 //   builder: (context) {
                                 //     return Register(phoneNumbers: "hshsh");

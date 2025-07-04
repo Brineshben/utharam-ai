@@ -14,6 +14,7 @@ class ApiConstants {
  static String version ="1.0.1";
   ///URLS
   static String login = "/accounts/login/";
+  static String refreshToken = "/accounts/api/metro/mind/access/token/refresh/";
   static String voxBay = "/voxbay/click-to-call/";
   static String chat = "/accounts/psychiatrist_chat/";
   static String registerPatient = "/accounts/register/";
@@ -53,7 +54,7 @@ class ApiConstants {
   static String complaintCreate = "/complaint/create_complaints/";
   static String enquiredList = "/accounts/unverified-users/";
   static String approveEnquiredList = "/accounts/approve-user/";
-  static String rejectEnquiredList = "/accounts/approve-user/";
+  static String rejectEnquiredList = "/accounts/reject-user/";
   static String talkToHuman2 = "/accounts/available-doctors-patient/";
   static String talkToHuman = "/accounts/available-doctors/";
   static String generateReport = "/accounts/generate_pdf/";

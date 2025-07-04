@@ -1352,6 +1352,36 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
+  ///Refresh Token
+  static Future<Map<String, dynamic>> refreshToken({
+    required String token,
+  }) async {
+    String url =
+        "${ApiConstants.baseURL}${ApiConstants.refreshToken}";
+    print("refresh token--$url");
+    Map apiBody = {
+      "refresh": token,
+    };
+
+    try {
+      var request = http.Request('POST', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+      request.headers.addAll(
+        {'Content-Type': 'application/json'},
+      );
+
+      http.StreamedResponse response = await request.send();
+      print('refresh token---->${response.statusCode}');
+
+      var respString = await response.stream.bytesToString();
+      print('refresh token---->$respString');
+
+      return json.decode(respString);
+
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
 
   ///Talk to human List
   static Future<Map<String, dynamic>> talkToHuman({

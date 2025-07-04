@@ -275,14 +275,12 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                                 brandName: medicine.first?.medicines?[index].medicine ?? "--",
                                 frequency: medicine.first?.medicines?[index].frequency ?? "--",
                                 dosage:medicine.first?.medicines?[index].dosage ?? "--",
-                                date: formatDate(medicine.first?.date ?? "--"),
+                                date: formatDate2(medicine.first?.date ?? "--"),
                               ),
                             );
 
                           },
                         );
-
-
                       }
                     },
                   ),
