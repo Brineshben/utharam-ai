@@ -63,7 +63,7 @@ class _VoksBayAddState extends State<VoksBayAdd> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "ADD TALK TO HUMAN",
+                    "VOXBAY ADD",
                     style: GoogleFonts.shanti(
                       color: Colors.blueGrey,
                       fontWeight: FontWeight.w900,

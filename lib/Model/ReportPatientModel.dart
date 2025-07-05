@@ -18,8 +18,8 @@ class ReportsPatientModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['status'] = this.status;
-    data['message'] = this.message;
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -60,18 +60,14 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['id'] = this.id;
-    if (this.doctor != null) {
-      data['doctor'] = this.doctor!.toJson();
-    }
-    if (this.patient != null) {
-      data['patient'] = this.patient!.toJson();
-    }
-    data['assigned_at'] = this.assignedAt;
-    data['status'] = this.status;
-    if (this.patientDiagnosis != null) {
+    data['id'] = id;
+    if (doctor != null) data['doctor'] = doctor!.toJson();
+    if (patient != null) data['patient'] = patient!.toJson();
+    data['assigned_at'] = assignedAt;
+    data['status'] = status;
+    if (patientDiagnosis != null) {
       data['patient_diagnosis'] =
-          this.patientDiagnosis!.map((v) => v.toJson()).toList();
+          patientDiagnosis!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -86,7 +82,7 @@ class Doctor {
   String? medicalReport;
   String? medicalReportUrl;
   String? role;
-  String? age;
+  int? age;
   String? gender;
   String? occupation;
   String? education;
@@ -141,24 +137,24 @@ class Doctor {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['mobile_number'] = this.mobileNumber;
-    data['medical_report'] = this.medicalReport;
-    data['medical_report_url'] = this.medicalReportUrl;
-    data['role'] = this.role;
-    data['age'] = this.age;
-    data['gender'] = this.gender;
-    data['occupation'] = this.occupation;
-    data['education'] = this.education;
-    data['address'] = this.address;
-    data['patient_id'] = this.patientId;
-    data['verified'] = this.verified;
-    data['chat_enabled'] = this.chatEnabled;
-    data['is_call_available'] = this.isCallAvailable;
-    data['status'] = this.status;
+    data['id'] = id;
+    data['name'] = name;
+    data['username'] = username;
+    data['email'] = email;
+    data['mobile_number'] = mobileNumber;
+    data['medical_report'] = medicalReport;
+    data['medical_report_url'] = medicalReportUrl;
+    data['role'] = role;
+    data['age'] = age;
+    data['gender'] = gender;
+    data['occupation'] = occupation;
+    data['education'] = education;
+    data['address'] = address;
+    data['patient_id'] = patientId;
+    data['verified'] = verified;
+    data['chat_enabled'] = chatEnabled;
+    data['is_call_available'] = isCallAvailable;
+    data['status'] = status;
     return data;
   }
 }
@@ -227,24 +223,24 @@ class Patient {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['mobile_number'] = this.mobileNumber;
-    data['medical_report'] = this.medicalReport;
-    data['medical_report_url'] = this.medicalReportUrl;
-    data['role'] = this.role;
-    data['age'] = this.age;
-    data['gender'] = this.gender;
-    data['occupation'] = this.occupation;
-    data['education'] = this.education;
-    data['address'] = this.address;
-    data['patient_id'] = this.patientId;
-    data['verified'] = this.verified;
-    data['chat_enabled'] = this.chatEnabled;
-    data['is_call_available'] = this.isCallAvailable;
-    data['status'] = this.status;
+    data['id'] = id;
+    data['name'] = name;
+    data['username'] = username;
+    data['email'] = email;
+    data['mobile_number'] = mobileNumber;
+    data['medical_report'] = medicalReport;
+    data['medical_report_url'] = medicalReportUrl;
+    data['role'] = role;
+    data['age'] = age;
+    data['gender'] = gender;
+    data['occupation'] = occupation;
+    data['education'] = education;
+    data['address'] = address;
+    data['patient_id'] = patientId;
+    data['verified'] = verified;
+    data['chat_enabled'] = chatEnabled;
+    data['is_call_available'] = isCallAvailable;
+    data['status'] = status;
     return data;
   }
 }
@@ -256,7 +252,7 @@ class PatientDiagnosis {
   String? userName;
   String? userRole;
   String? chatSessionId;
-  List<String>? chatHistory; // FIXED to handle List<String>
+  String? chatHistory; // Fixed: String type
   String? createdAt;
   AiReport? aiReport;
   bool? isPreliminary;
@@ -290,15 +286,15 @@ class PatientDiagnosis {
     userRole = json['user_role'];
     chatSessionId = json['chat_session_id'];
 
-    // ✅ Safely parse list of strings
-    if (json['chat_history'] != null && json['chat_history'] is List) {
-      chatHistory = List<String>.from(json['chat_history'].map((e) => e.toString()));
-    }
+    // ✅ Fixed: If chat_history is a list, join it to a string
+    var history = json['chat_history'];
+    chatHistory = history is List
+        ? history.join('\n')
+        : history?.toString();
 
     createdAt = json['created_at'];
-    aiReport = json['ai_report'] != null
-        ? AiReport.fromJson(json['ai_report'])
-        : null;
+    aiReport =
+    json['ai_report'] != null ? AiReport.fromJson(json['ai_report']) : null;
     isPreliminary = json['is_preliminary'];
     aiSummaryFile = json['ai_summary_file'];
     isApproved = json['is_approved'];
@@ -314,16 +310,9 @@ class PatientDiagnosis {
     data['user_name'] = userName;
     data['user_role'] = userRole;
     data['chat_session_id'] = chatSessionId;
-
-    // ✅ Save as list
-    if (chatHistory != null) {
-      data['chat_history'] = chatHistory;
-    }
-
+    data['chat_history'] = chatHistory; // ✅ remains a string
     data['created_at'] = createdAt;
-    if (aiReport != null) {
-      data['ai_report'] = aiReport!.toJson();
-    }
+    if (aiReport != null) data['ai_report'] = aiReport!.toJson();
     data['is_preliminary'] = isPreliminary;
     data['ai_summary_file'] = aiSummaryFile;
     data['is_approved'] = isApproved;
@@ -336,9 +325,8 @@ class PatientDiagnosis {
 class AiReport {
   PatientReport? patientReport;
   TherapistReport? therapistReport;
-  String? sessionId;
 
-  AiReport({this.patientReport, this.therapistReport, this.sessionId});
+  AiReport({this.patientReport, this.therapistReport});
 
   AiReport.fromJson(Map<String, dynamic> json) {
     patientReport = json['patient_report'] != null
@@ -347,18 +335,12 @@ class AiReport {
     therapistReport = json['therapist_report'] != null
         ? TherapistReport.fromJson(json['therapist_report'])
         : null;
-    sessionId = json['session_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    if (this.patientReport != null) {
-      data['patient_report'] = this.patientReport!.toJson();
-    }
-    if (this.therapistReport != null) {
-      data['therapist_report'] = this.therapistReport!.toJson();
-    }
-    data['session_id'] = this.sessionId;
+    if (patientReport != null) data['patient_report'] = patientReport!.toJson();
+    if (therapistReport != null) data['therapist_report'] = therapistReport!.toJson();
     return data;
   }
 }
@@ -388,11 +370,11 @@ class PatientReport {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['patient_summary'] = this.patientSummary;
-    data['physical_symptoms'] = this.physicalSymptoms;
-    data['cognitive_symptoms'] = this.cognitiveSymptoms;
-    data['emotional_symptoms'] = this.emotionalSymptoms;
-    data['behavioral_symptoms'] = this.behavioralSymptoms;
+    data['patient_summary'] = patientSummary;
+    data['physical_symptoms'] = physicalSymptoms;
+    data['cognitive_symptoms'] = cognitiveSymptoms;
+    data['emotional_symptoms'] = emotionalSymptoms;
+    data['behavioral_symptoms'] = behavioralSymptoms;
     return data;
   }
 }
@@ -446,19 +428,19 @@ class TherapistReport {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['severity'] = this.severity;
-    data['substance_use'] = this.substanceUse;
-    data['family_history'] = this.familyHistory;
-    data['medical_history'] = this.medicalHistory;
-    data['suicidality_risk'] = this.suicidalityRisk;
-    data['disease_diagnosed'] = this.diseaseDiagnosed;
-    data['psychiatric_history'] = this.psychiatricHistory;
-    data['supporting_rag_line'] = this.supportingRagLine;
-    data['presenting_complaints'] = this.presentingComplaints;
-    data['data_sufficiency_check'] = this.dataSufficiencyCheck;
-    data['mood_cognition_thought'] = this.moodCognitionThought;
-    data['patient_goals_expectations'] = this.patientGoalsExpectations;
-    data['suicidality_severity_score'] = this.suicidalitySeverityScore;
+    data['severity'] = severity;
+    data['substance_use'] = substanceUse;
+    data['family_history'] = familyHistory;
+    data['medical_history'] = medicalHistory;
+    data['suicidality_risk'] = suicidalityRisk;
+    data['disease_diagnosed'] = diseaseDiagnosed;
+    data['psychiatric_history'] = psychiatricHistory;
+    data['supporting_rag_line'] = supportingRagLine;
+    data['presenting_complaints'] = presentingComplaints;
+    data['data_sufficiency_check'] = dataSufficiencyCheck;
+    data['mood_cognition_thought'] = moodCognitionThought;
+    data['patient_goals_expectations'] = patientGoalsExpectations;
+    data['suicidality_severity_score'] = suicidalitySeverityScore;
     return data;
   }
 }

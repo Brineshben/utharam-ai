@@ -84,7 +84,7 @@ class _AddComplaintsState extends State<AddComplaints> {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Text(
-                                "ADD COMPLINT",
+                                "ADD COMPLAINT",
                                 style: GoogleFonts.shanti(
                                   color: Colors.blueGrey,
                                   fontWeight: FontWeight.w900,
