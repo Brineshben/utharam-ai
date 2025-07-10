@@ -11,7 +11,7 @@ class ApiConstants {
   static String baseURL = "https://metromind-web-backend-euh0gkdwg9deaudd.uaenorth-01.azurewebsites.net";
   // static String baseURL = "http://192.168.1.29:8000";
 
- static String version ="1.0.1";
+ static String version ="1.0.2";
   ///URLS
   static String login = "/accounts/login/";
   static String refreshToken = "/accounts/api/metro/mind/access/token/refresh/";
