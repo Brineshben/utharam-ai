@@ -327,7 +327,7 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
           ),
         ),
         bottomNavigationBar: Container(
-          height: 70.h,
+          height: 85.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(15),

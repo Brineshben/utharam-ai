@@ -74,47 +74,90 @@ class SharedPrefs {
   }
 }
 
+//
+// class SharedPrefrence {
+//   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+//
+//   Future<void> setSessionId(String sessionId) async {
+//     final prefs = await _prefs;
+//     await prefs.setString('chat_session_id', sessionId);
+//   }
+//
+//   Future<String?> getSessionId() async {
+//     final prefs = await _prefs;
+//     return prefs.getString('chat_session_id');
+//   }
+//
+//   Future<void> clearSessionId() async {
+//     final prefs = await _prefs;
+//     await prefs.remove('chat_session_id');
+//   }
+//
+// // Existing methods like removeLoginData() stay here
+// }
+//
+//
+//
+// class SharedPrefrence2 {
+//   final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
+//
+//   Future<void> setSessionId2(String sessionId) async {
+//     final prefs = await _prefs2;
+//     await prefs.setString('chat_session_id', sessionId);
+//   }
+//
+//   Future<String?> getSessionId2() async {
+//     final prefs = await _prefs2;
+//     return prefs.getString('chat_session_id');
+//   }
+//
+//   Future<void> clearSessionId2() async {
+//     final prefs = await _prefs2;
+//     await prefs.remove('chat_session_id');
+//   }
+//
+// // Existing methods like removeLoginData() stay here
+// }
+
 
 class SharedPrefrence {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
+  static const String _sessionKey = 'chat_session_id_user'; // Unique key
+
   Future<void> setSessionId(String sessionId) async {
     final prefs = await _prefs;
-    await prefs.setString('chat_session_id', sessionId);
+    await prefs.setString(_sessionKey, sessionId);
   }
 
   Future<String?> getSessionId() async {
     final prefs = await _prefs;
-    return prefs.getString('chat_session_id');
+    return prefs.getString(_sessionKey);
   }
 
   Future<void> clearSessionId() async {
     final prefs = await _prefs;
-    await prefs.remove('chat_session_id');
+    await prefs.remove(_sessionKey);
   }
-
-// Existing methods like removeLoginData() stay here
 }
-
-
 
 class SharedPrefrence2 {
   final Future<SharedPreferences> _prefs2 = SharedPreferences.getInstance();
 
+  static const String _sessionKey2 = 'chat_session_id_admin'; // Unique key
+
   Future<void> setSessionId2(String sessionId) async {
     final prefs = await _prefs2;
-    await prefs.setString('chat_session_id', sessionId);
+    await prefs.setString(_sessionKey2, sessionId);
   }
 
   Future<String?> getSessionId2() async {
     final prefs = await _prefs2;
-    return prefs.getString('chat_session_id');
+    return prefs.getString(_sessionKey2);
   }
 
   Future<void> clearSessionId2() async {
     final prefs = await _prefs2;
-    await prefs.remove('chat_session_id');
+    await prefs.remove(_sessionKey2);
   }
-
-// Existing methods like removeLoginData() stay here
 }

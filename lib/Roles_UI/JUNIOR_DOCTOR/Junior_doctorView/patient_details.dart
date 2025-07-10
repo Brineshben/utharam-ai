@@ -767,7 +767,7 @@ class _PatientDetailsState extends State<PatientDetails> {
           ),
         ),
         bottomNavigationBar: Container(
-          height: 70.h,
+          height: 85.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(15),
@@ -794,86 +794,82 @@ class _PatientDetailsState extends State<PatientDetails> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  child: Center(
-                    child: GestureDetector(
-                      onTap: () async {
-                        if (selectedIndex != null) {
-                          context.loaderOverlay.show();
+                  onTap: () async {
+                    if (selectedIndex != null) {
+                      context.loaderOverlay.show();
 
-                          Map<String, dynamic> resp =
-                              await ApiServices.addAppointment(
-                                  token: widget.token,
-                                  doctor: data?.id ?? 0,
-                                  date: fromDate,
-                                  patient: widget.id,
-                                  slot: Get.find<SlottopateientController>()
-                                          .slotToPatientList
-                                          .value[selectedIndex!]
-                                          ?.id ??
-                                      0);
+                      Map<String, dynamic> resp =
+                          await ApiServices.addAppointment(
+                              token: widget.token,
+                              doctor: data?.id ?? 0,
+                              date: fromDate,
+                              patient: widget.id,
+                              slot: Get.find<SlottopateientController>()
+                                      .slotToPatientList
+                                      .value[selectedIndex!]
+                                      ?.id ??
+                                  0);
 
 
-                          if (resp['status'] == "ok") {
-                            // await Get.find<DoctorToPatientController>()
-                            //     .doctorToPatientData(
-                            //         widget.token, data?.id ?? 0, widget.id);
-                            await Get.find<PatientQueueController>()
-                                .patientData(widget.token);
-                            await Get.find<JuniorDashboardController>()
-                                .juniorData(widget.token);
-                            context.loaderOverlay.hide();
-                            ProductAppPopUps.submit22Back(
-                              title: "Success",
-                              message: resp['message'],
-                              actionName: "Close",
-                              iconData: Icons.done,
-                              iconColor: Colors.green,
-                            );
-                          } else {
-                            context.loaderOverlay.hide();
-                            ProductAppPopUps.submit(
-                              title: "Error",
-                              message: resp['message'],
-                              actionName: "Close",
-                              iconData: Icons.error_outline_outlined,
-                              iconColor: Colors.red,
-                            );
-                          }
-                        } else {
-                          context.loaderOverlay.hide();
-                          ProductAppPopUps.submit(
-                            title: "Error",
-                            message: "Please Select the Doctor Slot to proceed",
-                            actionName: "Close",
-                            iconData: Icons.error_outline_outlined,
-                            iconColor: Colors.red,
-                          );
-                        }
-                      },
-                      child: Container(
-                        width: 250.w,
-                        height: 45.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.r),
-                          border: Border.all(
-                            color: Colorutils.userdetailcolor,
-                            width: 0.8,
+                      if (resp['status'] == "ok") {
+                        // await Get.find<DoctorToPatientController>()
+                        //     .doctorToPatientData(
+                        //         widget.token, data?.id ?? 0, widget.id);
+                        await Get.find<PatientQueueController>()
+                            .patientData(widget.token);
+                        await Get.find<JuniorDashboardController>()
+                            .juniorData(widget.token);
+                        context.loaderOverlay.hide();
+                        ProductAppPopUps.submit22Back(
+                          title: "Success",
+                          message: resp['message'],
+                          actionName: "Close",
+                          iconData: Icons.done,
+                          iconColor: Colors.green,
+                        );
+                      } else {
+                        context.loaderOverlay.hide();
+                        ProductAppPopUps.submit(
+                          title: "Error",
+                          message: resp['message'],
+                          actionName: "Close",
+                          iconData: Icons.error_outline_outlined,
+                          iconColor: Colors.red,
+                        );
+                      }
+                    } else {
+                      context.loaderOverlay.hide();
+                      ProductAppPopUps.submit(
+                        title: "Error",
+                        message: "Please Select the Doctor Slot to proceed",
+                        actionName: "Close",
+                        iconData: Icons.error_outline_outlined,
+                        iconColor: Colors.red,
+                      );
+                    }
+                  },
+                  child: Container(
+                    width: 250.w,
+                    height: 45.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.r),
+                      border: Border.all(
+                        color: Colorutils.userdetailcolor,
+                        width: 0.8,
+                      ),
+                    ),
+                    // width: 250.w,
+                    child: Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Make Appointment',
+                            style: GoogleFonts.inter(
+                              fontSize: 16.h,
+                            ),
                           ),
-                        ),
-                        // width: 250.w,
-                        child: Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Make Appointment',
-                                style: GoogleFonts.inter(
-                                  fontSize: 16.h,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        ],
                       ),
                     ),
                   ),

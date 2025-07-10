@@ -428,6 +428,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../Model/ChatModel.dart';
 import '../../../Service/SharedPreference.dart';
 import '../../../utils/Constants.dart';
 import '../../../utils/color_util.dart';
@@ -468,10 +469,50 @@ class _ChatScreen2State extends State<ChatScreen2> {
   final String _apiUrl =
       "https://metromind-web-backend-euh0gkdwg9deaudd.uaenorth-01.azurewebsites.net/accounts/preliminary-chat/";
 
-  String? sessionId;
+  String? sessionId2;
+  Future<void> _loadChatHistory() async {
+    final url = "https://metromind-web-backend-euh0gkdwg9deaudd.uaenorth-01.azurewebsites.net/accounts/diagnosis/chat-history/${widget.userid}/";
 
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${widget.tokenPatient}',
+        },
+      );
+      print("RESPONSE STATUS: ${response.statusCode}");
+      print("RESPONSE BODY: ${utf8.decode(response.bodyBytes)}");
+      if (response.statusCode == 200) {
+        final data = ChatHistoryModel.fromJson(jsonDecode(response.body));
+
+        if (data.message != null) {
+          final historyMessages = data.message!.map((msg) {
+
+            return types.TextMessage(
+              id: const Uuid().v4(),
+              author: msg.role == "user" ? _user : _otherUser,
+              text: msg.content?.toString().replaceAll(RegExp(r'[^\x00-\x7F]'), '') ?? "",
+
+              createdAt: DateTime.now().millisecondsSinceEpoch,
+            );
+          }).toList();
+
+          setState(() {
+            _messages.insertAll(0, historyMessages.reversed); // oldest first
+          });
+        }
+      } else {
+        print("Failed to load chat history: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error loading chat history: $e");
+    }
+  }
   @override
   void initState() {
+    _loadChatHistory();
+
     _loadSessionId2();
     super.initState();
   }
@@ -578,7 +619,7 @@ class _ChatScreen2State extends State<ChatScreen2> {
   // }
 
   void _loadSessionId2() async {
-    sessionId = await SharedPrefrence2().getSessionId2();
+    sessionId2 = await SharedPrefrence2().getSessionId2();
   }
 
   void _sendMessage(types.PartialText message,
@@ -610,8 +651,8 @@ class _ChatScreen2State extends State<ChatScreen2> {
 
     Map<String, dynamic> requestBody = {'message': message.text};
 
-    if (sessionId != null && sessionId!.isNotEmpty) {
-      requestBody['session_id'] = sessionId;
+    if (sessionId2 != null && sessionId2!.isNotEmpty) {
+      requestBody['session_id'] = sessionId2;
       requestBody['switch_press'] = switchPress;
     }
 
@@ -627,10 +668,10 @@ class _ChatScreen2State extends State<ChatScreen2> {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(utf8.decode(response.bodyBytes));
-        sessionId = responseData['session_id'];
+        sessionId2 = responseData['session_id'];
 
         // Save session ID
-        await SharedPrefrence2().setSessionId2(sessionId!);
+        await SharedPrefrence2().setSessionId2(sessionId2!);
 
         setState(() {
           _messages.removeWhere((msg) => msg.id == 'typing');
@@ -670,219 +711,224 @@ class _ChatScreen2State extends State<ChatScreen2> {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: systemUiOverlayStyleDark,
-      child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 130.h,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border:
-                    Border.all(width: 0.2, color: Colorutils.userdetailcolor),
-                gradient: LinearGradient(
-                  colors: [Colors.blue.shade50, Colors.white],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.blue.withOpacity(0.3),
-                    blurRadius: 0.1,
-                    spreadRadius: 0.1,
-                    offset: Offset(0, 1),
+    return WillPopScope(
+      onWillPop: () {
+        return ProductAppPopUps.chatStopDialog(context: context);
+      },
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: systemUiOverlayStyleDark,
+        child: Scaffold(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 130.h,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border:
+                      Border.all(width: 0.2, color: Colorutils.userdetailcolor),
+                  gradient: LinearGradient(
+                    colors: [Colors.blue.shade50, Colors.white],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
                   ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(width: 12.w),
-                        SizedBox(width: 12.w),
-                        GestureDetector(
-                          onTap: () async {
-                            await SharedPrefrence2().clearSessionId2();                          },
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: AssetImage(
-                              'assets/images/Utaram3d_Logo.png',
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'MetroMind AI',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18.h,
-                                  color: Colors.black.withOpacity(0.9),
-                                ),
-                              ),
-                              Text(
-                                'online',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.h,
-                                  color: Colorutils.userdetailcolor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        GestureDetector(
-                          onTap: () {
-                            // Navigator.pushReplacement(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => PageIndexNavigationPatient(
-                            //       tokenPatient: Get.find<UserAuthController>()
-                            //           .loginData
-                            //           .value
-                            //           ?.data
-                            //           ?.accessToken ??
-                            //           "",
-                            //       role: widget.role,
-                            //       name: widget.name,
-                            //       date: widget.date,
-                            //       patientId: widget.patientId, userid: widget.userid,
-                            //     ),
-                            //   ),
-                            // );
-                            FocusScope.of(context).unfocus();
-
-                            _sendMessage(
-                              types.PartialText(
-                                  text: "Generate utharamAI report"),
-                              switchPress: true,
-                            );
-                          },
-                          child: Card(
-                            color: Colors.white,
-                            elevation: 4,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  40), // circular for round shape
-                            ),
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                              ),
-                              child: Lottie.asset(
-                                "assets/images/genAI (1).json",
-                                fit: BoxFit.fitHeight,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 18.w),
-                      ],
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blue.withOpacity(0.3),
+                      blurRadius: 0.1,
+                      spreadRadius: 0.1,
+                      offset: Offset(0, 1),
                     ),
                   ],
                 ),
-              ),
-            ),
-            Expanded(
-              child: Chat(
-                showUserAvatars: true,
-                showUserNames: true,
-                inputOptions: InputOptions(
-                  sendButtonVisibilityMode: SendButtonVisibilityMode.always,
-                ),
-                messages: _messages,
-                onSendPressed: (_) {},
-                // Not needed because we use a custom input
-                user: _user,
-                theme: const DefaultChatTheme(
-                  primaryColor: Colorutils.userdetailcolor,
-                  sentMessageBodyTextStyle: TextStyle(color: Colors.white),
-                  receivedMessageBodyTextStyle: TextStyle(color: Colors.black),
-                ),
-                customBottomWidget: _buildCustomInputField(),
-                emptyState: Center(
-                  child: Text(
-                    "Healing begins with utharam....",
-                    style: TextStyle(color: Colors.grey, fontSize: 15),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 45),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(width: 12.w),
+                          SizedBox(width: 12.w),
+                          GestureDetector(
+                            onTap: () async {
+                              await SharedPrefrence2().clearSessionId2();                          },
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.transparent,
+                              backgroundImage: AssetImage(
+                                'assets/images/Utaram3d_Logo.png',
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'MetroMind AI',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18.h,
+                                    color: Colors.black.withOpacity(0.9),
+                                  ),
+                                ),
+                                Text(
+                                  'online',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.h,
+                                    color: Colorutils.userdetailcolor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          GestureDetector(
+                            onTap: () {
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => PageIndexNavigationPatient(
+                              //       tokenPatient: Get.find<UserAuthController>()
+                              //           .loginData
+                              //           .value
+                              //           ?.data
+                              //           ?.accessToken ??
+                              //           "",
+                              //       role: widget.role,
+                              //       name: widget.name,
+                              //       date: widget.date,
+                              //       patientId: widget.patientId, userid: widget.userid,
+                              //     ),
+                              //   ),
+                              // );
+                              FocusScope.of(context).unfocus();
+
+                              _sendMessage(
+                                types.PartialText(
+                                    text: "Generate utharamAI report"),
+                                switchPress: true,
+                              );
+                            },
+                            child: Card(
+                              color: Colors.white,
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    40), // circular for round shape
+                              ),
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                child: Lottie.asset(
+                                  "assets/images/genAI (1).json",
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 18.w),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                avatarBuilder: _customAvatarBuilder,
               ),
-            ),
-          ],
+              Expanded(
+                child: Chat(
+                  showUserAvatars: true,
+                  showUserNames: true,
+                  inputOptions: InputOptions(
+                    sendButtonVisibilityMode: SendButtonVisibilityMode.always,
+                  ),
+                  messages: _messages,
+                  onSendPressed: (_) {},
+                  // Not needed because we use a custom input
+                  user: _user,
+                  theme: const DefaultChatTheme(
+                    primaryColor: Colorutils.userdetailcolor,
+                    sentMessageBodyTextStyle: TextStyle(color: Colors.white),
+                    receivedMessageBodyTextStyle: TextStyle(color: Colors.black),
+                  ),
+                  customBottomWidget: _buildCustomInputField(),
+                  emptyState: Center(
+                    child: Text(
+                      "Healing begins with utharam....",
+                      style: TextStyle(color: Colors.grey, fontSize: 15),
+                    ),
+                  ),
+                  avatarBuilder: _customAvatarBuilder,
+                ),
+              ),
+            ],
+          ),
+          // floatingActionButton:  GestureDetector(
+          //   onDoubleTap: () {
+          //     // Navigator.push(context, MaterialPageRoute(builder: (context) { return
+          //     //   ChatScreen(patientToken:widget.tokenPatient,);
+          //     //
+          //     // },));
+          //   },
+          //   child: GestureDetector(
+          //     onTap: (){
+          //       _sendMessage(
+          //         types.PartialText(text: ""),
+          //         switchPress: true,
+          //       );
+          //     },
+          //     child: Padding(
+          //       padding: const EdgeInsets.only(bottom: 200),
+          //       child: Card(
+          //         color: Colors.white,
+          //
+          //         elevation: 4,
+          //         shape: RoundedRectangleBorder(
+          //
+          //           borderRadius: BorderRadius.circular(40), // circular for round shape
+          //         ),
+          //         child: Container(
+          //           width: 65,
+          //           height: 65,
+          //           decoration: BoxDecoration(
+          //             borderRadius: BorderRadius.circular(40),
+          //           ),
+          //           child: Lottie.asset(
+          //             "assets/images/Splash ScreenLQ.json",
+          //             fit: BoxFit.fitHeight,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // floatingActionButton: Padding(
+          //   padding: const EdgeInsets.only(bottom: 80),
+          //   child: FloatingActionButton.extended(
+          //     onPressed: () {
+          //       _sendMessage(
+          //         types.PartialText(text: ""),
+          //         switchPress: true,
+          //       );
+          //     },
+          //     label: Text('Generate Report'),
+          //     backgroundColor: Colors.blue,
+          //   ),
+          // ),
         ),
-        // floatingActionButton:  GestureDetector(
-        //   onDoubleTap: () {
-        //     // Navigator.push(context, MaterialPageRoute(builder: (context) { return
-        //     //   ChatScreen(patientToken:widget.tokenPatient,);
-        //     //
-        //     // },));
-        //   },
-        //   child: GestureDetector(
-        //     onTap: (){
-        //       _sendMessage(
-        //         types.PartialText(text: ""),
-        //         switchPress: true,
-        //       );
-        //     },
-        //     child: Padding(
-        //       padding: const EdgeInsets.only(bottom: 200),
-        //       child: Card(
-        //         color: Colors.white,
-        //
-        //         elevation: 4,
-        //         shape: RoundedRectangleBorder(
-        //
-        //           borderRadius: BorderRadius.circular(40), // circular for round shape
-        //         ),
-        //         child: Container(
-        //           width: 65,
-        //           height: 65,
-        //           decoration: BoxDecoration(
-        //             borderRadius: BorderRadius.circular(40),
-        //           ),
-        //           child: Lottie.asset(
-        //             "assets/images/Splash ScreenLQ.json",
-        //             fit: BoxFit.fitHeight,
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // floatingActionButton: Padding(
-        //   padding: const EdgeInsets.only(bottom: 80),
-        //   child: FloatingActionButton.extended(
-        //     onPressed: () {
-        //       _sendMessage(
-        //         types.PartialText(text: ""),
-        //         switchPress: true,
-        //       );
-        //     },
-        //     label: Text('Generate Report'),
-        //     backgroundColor: Colors.blue,
-        //   ),
-        // ),
       ),
     );
   }
 
   Widget _buildCustomInputField() {
     return Padding(
-      padding: const EdgeInsets.only(left: 8,right: 8,bottom: 12),
+      padding: const EdgeInsets.only(left: 8,right: 8,bottom: 15),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
         decoration: BoxDecoration(

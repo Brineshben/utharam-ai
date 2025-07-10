@@ -449,6 +449,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../Controller/Login_Controller.dart';
+import '../../../Model/ChatModel.dart';
 import '../../../Service/SharedPreference.dart';
 import '../../../utils/Constants.dart';
 import '../../../utils/color_util.dart';
@@ -493,9 +494,55 @@ class _ChatScreenState extends State<ChatScreen> {
 
   String? sessionId;
 
+  Future<void> _loadChatHistory() async {
+    final url = "https://metromind-web-backend-euh0gkdwg9deaudd.uaenorth-01.azurewebsites.net/accounts/diagnosis/chat-history/${widget.userid}/";
+
+    try {
+      print("📤 Sending Request:");
+      print("URL: $_apiUrl");
+      print("Headers: Authorization Bearer ${widget.tokenPatient}");
+      // print("Body: ${jsonEncode(requestBody)}");
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${widget.tokenPatient}',
+        },
+
+      );
+      print("✅ Response Status Code: ${response.statusCode}");
+      print("✅ Response Body: ${utf8.decode(response.bodyBytes)}");
+      if (response.statusCode == 200) {
+        final data = ChatHistoryModel.fromJson(jsonDecode(response.body));
+
+        if (data.message != null) {
+          final historyMessages = data.message!.map((msg) {
+
+            return types.TextMessage(
+              id: const Uuid().v4(),
+              author: msg.role == "user" ? _user : _otherUser,
+              text: msg.content?.toString().replaceAll(RegExp(r'[^\x00-\x7F]'), '') ?? "",
+
+              createdAt: DateTime.now().millisecondsSinceEpoch,
+            );
+          }).toList();
+
+          setState(() {
+            _messages.insertAll(0, historyMessages.reversed); // oldest first
+          });
+        }
+      } else {
+        print("Failed to load chat history: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error loading chat history: $e");
+    }
+  }
   @override
   void initState() {
     super.initState();
+    _loadChatHistory();
+
     WidgetsBinding.instance.addPostFrameCallback(
           (_) => ShowCaseWidget.of(context).startShowCase([
         _fabKey,
@@ -551,9 +598,11 @@ class _ChatScreenState extends State<ChatScreen> {
           'Authorization': 'Bearer ${widget.tokenPatient}',
         },
         body: jsonEncode(requestBody),
+
       );
 
       if (response.statusCode == 200) {
+
         final responseData = jsonDecode(utf8.decode(response.bodyBytes));
         sessionId = responseData['session_id'];
 

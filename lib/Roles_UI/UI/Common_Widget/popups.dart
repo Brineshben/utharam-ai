@@ -525,6 +525,86 @@ class ProductAppPopUps {
     );
   }
 
+  static chatStopDialog({required BuildContext context}) {
+    return Get.dialog(
+      AlertDialog(
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        ),
+        title: Column(
+          children: [
+            SizedBox(height: 10.w),
+            Text(
+              "Quit AI Chat",
+              style: TextStyle(
+                  fontSize: 19.sp,
+                color: Colors.black
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          "Are you sure you want to quit the Ai chat Session?",
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 16.sp),
+        ),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(left: 18, right: 18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: 100.w,
+                  child: FittedBox(
+                    child: FilledButton(
+                      onPressed: () async {
+                        Navigator.pop(context);
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(Colors.red),
+                      ),
+                      child: Row(
+                        children: [
+                          Center(
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16.sp),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 100.w,
+                  child: FilledButton(
+                    onPressed: () {
+                      Get.back(); // closes the dialog
+                      Get.back(); // navigates back from the chat page
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                      WidgetStateProperty.all(Colorutils.userdetailcolor),
+                    ),
+                    child: Text(
+                      "Ok",
+                      style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   static submitEnquiry({
     String? title,
     required String message,

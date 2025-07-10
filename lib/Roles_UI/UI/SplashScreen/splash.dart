@@ -1,3 +1,5 @@
+
+
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -47,110 +49,123 @@ class _SplashState extends State<Splash> {
       await Get.find<UserAuthController>().getUserLoginSaved(loginApi);
       final resp = await ApiServices.refreshToken(
         token:
-            Get.find<UserAuthController>().loginData.value?.data?.refreshToken ??
-                "",
+        Get.find<UserAuthController>().loginData.value?.data?.refreshToken ??
+            "",
+
       );
-      String role =
-          Get.find<UserAuthController>().loginData.value?.data?.role ?? "";
-      String name =
-          Get.find<UserAuthController>().loginData.value?.data?.name ?? "";
-      String token = resp['access'];
+      print("objeewfrewfrw3frrct${resp['access']}");
+      if (resp.containsKey('access')) {
+        String role =
+            Get.find<UserAuthController>().loginData.value?.data?.role ?? "";
+        String name =
+            Get.find<UserAuthController>().loginData.value?.data?.name ?? "";
+        String token = resp['access'];
 
-      int doctorId =
-          Get.find<UserAuthController>().loginData.value?.data?.userId ?? 0;
-      bool firsttime =
-          Get.find<UserAuthController>().loginData.value?.data?.firstTime ??
-              false;
+        int doctorId =
+            Get.find<UserAuthController>().loginData.value?.data?.userId ?? 0;
+        bool firsttime =
+            Get.find<UserAuthController>().loginData.value?.data?.firstTime ??
+                false;
 
-      String formattedDate = Get.find<UserAuthController>()
-                  .loginData
-                  .value
-                  ?.data
-                  ?.registeredDate !=
-              null
-          ? DateFormat('dd_MM_yyyy').format(DateTime.parse(
-              Get.find<UserAuthController>()
-                  .loginData
-                  .value!
-                  .data!
-                  .registeredDate!))
-          : '';
-      String patientId =
-          Get.find<UserAuthController>().loginData.value?.data?.patientId ?? "";
-      int userid =
-          Get.find<UserAuthController>().loginData.value?.data?.userId ?? 0;
-      print("object$role");
-      if (role == "user") {
-        if (firsttime == false) {
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (context) => ChatScreen(
-                  tokenPatient: Get.find<UserAuthController>()
+        String formattedDate = Get.find<UserAuthController>()
+            .loginData
+            .value
+            ?.data
+            ?.registeredDate !=
+            null
+            ? DateFormat('dd_MM_yyyy').format(DateTime.parse(
+            Get.find<UserAuthController>()
+                .loginData
+                .value!
+                .data!
+                .registeredDate!))
+            : '';
+        String patientId =
+            Get.find<UserAuthController>().loginData.value?.data?.patientId ?? "";
+        int userid =
+            Get.find<UserAuthController>().loginData.value?.data?.userId ?? 0;
+        print("object$role");
+        if (role == "user") {
+          if (firsttime == false) {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(
+                    tokenPatient: Get.find<UserAuthController>()
+                        .loginData
+                        .value
+                        ?.data
+                        ?.accessToken ??
+                        "",
+                    role: role,
+                    name: name,
+                    date: formattedDate,
+                    patientId: patientId,
+                    userid: userid,
+                  ),
+                ),
+                    (route) => false);
+          } else {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => PageIndexNavigationPatient(
+                      tokenPatient: Get.find<UserAuthController>()
                           .loginData
                           .value
                           ?.data
                           ?.accessToken ??
-                      "",
-                  role: role,
-                  name: name,
-                  date: formattedDate,
-                  patientId: patientId,
-                  userid: userid,
-                ),
-              ),
-              (route) => false);
-        } else {
+                          "",
+                      role: role,
+                      name: name,
+                      date: formattedDate,
+                      patientId: patientId,
+                      userid: userid,
+                    )),
+                    (route) => false);
+          }
+        } else if (role == "admin") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                  builder: (context) => PageIndexNavigationPatient(
-                        tokenPatient: Get.find<UserAuthController>()
-                                .loginData
-                                .value
-                                ?.data
-                                ?.accessToken ??
-                            "",
-                        role: role,
-                        name: name,
-                        date: formattedDate,
-                        patientId: patientId,
-                        userid: userid,
-                      )),
-              (route) => false);
+                builder: (context) => PageIndexNavigationChief(
+                  role: role,
+                  name: name,
+                  token: token,
+                  doctorId: doctorId,
+                ),
+              ),
+                  (route) => false);
+        } else if (role == "junior_psychologist") {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => PageIndexNavigationJunior(
+                  role: role,
+                  name: name,
+                  token: token,
+                  doctorId: doctorId,
+                ),
+              ),
+                  (route) => false);
+        } else if (role == "senior_psychologist" || role == "psychiatrist") {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => PageIndexNavigationTherapist(
+                  role: role,
+                  name: name,
+                  token: token,
+                  doctorId: doctorId,
+                ),
+              ),
+                  (route) => false);
         }
-      } else if (role == "admin") {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => PageIndexNavigationChief(
-                role: role,
-                name: name,
-                token: token,
-                doctorId: doctorId,
-              ),
-            ),
-            (route) => false);
-      } else if (role == "junior_psychologist") {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => PageIndexNavigationJunior(
-                role: role,
-                name: name,
-                token: token,
-                doctorId: doctorId,
-              ),
-            ),
-            (route) => false);
-      } else if (role == "senior_psychologist" || role == "psychiatrist") {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => PageIndexNavigationTherapist(
-                role: role,
-                name: name,
-                token: token,
-                doctorId: doctorId,
-              ),
-            ),
-            (route) => false);
+      } else {
+
+        Get.snackbar('Error ', 'Session Expired',
+          snackPosition: SnackPosition.BOTTOM,
+          margin: const EdgeInsets.only(
+              bottom: 10,
+              left: 8,
+              right: 8),);
       }
+
     }
   }
 
@@ -216,35 +231,35 @@ class _SplashState extends State<Splash> {
                               },
                               child: Center(
                                   child: Padding(
-                                padding:
+                                    padding:
                                     const EdgeInsets.symmetric(horizontal: 30)
                                         .w,
-                                child: GestureDetector(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.blueGrey,
-                                      borderRadius: BorderRadius.circular(20.r),
-                                    ),
-                                    // width: 250.w,
-                                    height: 50.h,
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
+                                    child: GestureDetector(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.blueGrey,
+                                          borderRadius: BorderRadius.circular(20.r),
+                                        ),
+                                        // width: 250.w,
+                                        height: 50.h,
+                                        child: Center(
+                                          child: Row(
+                                            mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'GET STARTED',
-                                            style: GoogleFonts.roboto(
-                                              color: Colors.white,
-                                              fontSize: 20.h,
-                                            ),
+                                            children: [
+                                              Text(
+                                                'GET STARTED',
+                                                style: GoogleFonts.roboto(
+                                                  color: Colors.white,
+                                                  fontSize: 20.h,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              )),
+                                  )),
                             ),
                             SizedBox(
                               height: 20.h,
@@ -371,14 +386,14 @@ final List<CarouselItem> items = [
         children: [
           // Logo at the top
           Image.asset(
-            "assets/images/treatment.png", // Replace with your image
+            "assets/images/magnifier.png", // Replace with your image
             height: 80, // Adjust size as needed
           ),
           SizedBox(height: 16), // Spacing
 
           // Title Text
           Text(
-            "Metromind",
+            "AI-Powered",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w400,
@@ -386,7 +401,7 @@ final List<CarouselItem> items = [
             ),
           ),
           Text(
-            "Therapy",
+            "Insights",
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
@@ -397,7 +412,8 @@ final List<CarouselItem> items = [
 
           // Description
           Text(
-            "Metro Mind Therapy utilizes a scientific approach to improve mood, thoughts, and behaviors through a combination of pharmacological treatments, psychological interventions, and electromagnetic therapies.",
+            // "Gain deeper understanding of patient progress and treatment effectiveness",
+            "PubMed studies show NLP AI can detect early mental-health warning signs with ~89% accuracy and up to 7 days ahead of human clinicians.",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14,
@@ -421,14 +437,14 @@ final List<CarouselItem> items = [
         children: [
           // Logo at the top
           Image.asset(
-            "assets/images/emergency.png", // Replace with your image
+            "assets/images/3d-bell.png", // Replace with your image
             height: 80, // Adjust size as needed
           ),
           SizedBox(height: 16), // Spacing
 
           // Title Text
           Text(
-            "Psychedelic",
+            "24×7",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w400,
@@ -436,7 +452,7 @@ final List<CarouselItem> items = [
             ),
           ),
           Text(
-            "Therapy",
+            "AI-Human Support ",
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
@@ -447,7 +463,7 @@ final List<CarouselItem> items = [
 
           // Description
           Text(
-            "By integrating cutting-edge research with patient-centered care, this therapy aims to provide transformative mental health outcomes.",
+            "AI tracks emotional changes in real time. Trained therapists are on standby. You get continuous care - anytime, anywhere",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14,
@@ -471,14 +487,14 @@ final List<CarouselItem> items = [
         children: [
           // Logo at the top
           Image.asset(
-            "assets/images/staff.png", // Replace with your image
+            "assets/images/analysis.png", // Replace with your image
             height: 80, // Adjust size as needed
           ),
           SizedBox(height: 16), // Spacing
 
           // Title Text
           Text(
-            "rTMS",
+            "Advanced",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w400,
@@ -486,7 +502,7 @@ final List<CarouselItem> items = [
             ),
           ),
           Text(
-            "Therapy",
+            "Analytics",
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
@@ -497,7 +513,8 @@ final List<CarouselItem> items = [
 
           // Description
           Text(
-            "Repetitive Transcranial Magnetic Stimulation (rTMS) is a non-invasive, evidence-based therapy used to treat mental health conditions like depression, anxiety, and OCD.",
+            // "Utilize predictive an-dytic to failor in tereimentions and optimize care plans",
+            "Every session makes the next one better. That's the power of adaptive AI ",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14,
@@ -521,14 +538,14 @@ final List<CarouselItem> items = [
         children: [
           // Logo at the top
           Image.asset(
-            "assets/images/doctors.png", // Replace with your image
+            "assets/images/protection.png", // Replace with your image
             height: 80, // Adjust size as needed
           ),
           SizedBox(height: 16), // Spacing
 
           // Title Text
           Text(
-            "IV Therapy",
+            "Secure &",
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w400,
@@ -536,7 +553,7 @@ final List<CarouselItem> items = [
             ),
           ),
           Text(
-            "Clinic",
+            "Complaint",
             style: TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
@@ -547,7 +564,8 @@ final List<CarouselItem> items = [
 
           // Description
           Text(
-            "IV Drip Therapy or Intravenous Therapy, is the ultimate in delivering essential nutrients directly into the bloodstream via a cannula. Bypassing the gut barrier, IV administartion allows for maximum bio availability of the nutrients meaning your body may absorb what it needs quickly.",
+            // "Adhere to strict data security measures and ministry regulations",
+            "Your data is encrypted, stored on indian servers, and follows HIPAA and IT act standards. You stay in control- always",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14,

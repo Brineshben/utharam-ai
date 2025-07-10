@@ -162,7 +162,7 @@ class _EditAssesmentState extends State<EditAssesment> {
       ),
 
       bottomNavigationBar: Container(
-        height: 70.h,
+        height: 85.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(15),
