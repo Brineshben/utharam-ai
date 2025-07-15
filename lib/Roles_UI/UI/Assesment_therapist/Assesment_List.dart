@@ -65,7 +65,7 @@ class _AssesmentListPageState extends State<AssesmentListPage> {
                       height: 50,
                       width: 50.h,
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Colors.white.withOpacity(0.2),
                         border: Border.all(
                           color: Colors.blue,
                           width: 0.1,

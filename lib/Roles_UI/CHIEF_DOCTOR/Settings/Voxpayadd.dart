@@ -81,6 +81,7 @@ class _VoksBayAddState extends State<VoksBayAdd> {
 
               buildTextField2("Staff Number", "assets/images/user.svg", false, staff,
                   true, _formKey, false),
+
             ],
           ),
         ),
