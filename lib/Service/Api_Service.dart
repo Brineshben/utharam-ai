@@ -299,6 +299,25 @@ class ApiServices {
       throw Exception("Service Error consultDoctorList");
     }
   }
+  ///Chat enable List
+  static Future<Map<String, dynamic>> ChatEnable({
+    required String token,
+  }) async {
+    String url = "${ApiConstants.baseURL}${ApiConstants.chatenable}";
+    print("Chat enable List--$url");
+
+    try {
+      var request = http.Request('GET', Uri.parse(url));
+      request.headers.addAll({'Authorization': "Bearer $token"});
+      http.StreamedResponse response = await request.send();
+      print('Chat enable List-2---->${response}');
+
+      var respString = await response.stream.bytesToString();
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error consultDoctorList");
+    }
+  }
 
   ///patientDetails List
   static Future<Map<String, dynamic>> PatientDetails({

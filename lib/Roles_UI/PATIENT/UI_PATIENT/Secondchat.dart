@@ -786,7 +786,68 @@ class _ChatScreen2State extends State<ChatScreen2> {
                               ],
                             ),
                           ),
+                          SizedBox(width: 2.w),
+                          GestureDetector(child: Icon(Icons.info_outline,color: Colors.grey,),onTap: (){
+
+                            Get.dialog(
+                              AlertDialog(
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                title:  Text(
+                                  "Instructions",
+                                  style: TextStyle(
+                                    fontSize: 20.h,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blueGrey,
+                                  ),
+                                ),
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children:  [
+                                      Text(
+                                        "1.Start by sharing your feelings and thoughts with this psychologist chatbot.",
+                                        style: TextStyle(fontSize: 15.h, color: Colors.black),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "2.The chatbot needs sufficient data from your conversation to generate a meaningful report",
+                                        style: TextStyle(fontSize:15.h, color: Colors.black),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "3.Generate Report button will become active only after enough interaction",
+                                        style: TextStyle(fontSize: 15.h, color: Colors.black),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "4.Once the report is generated, you'll be redirected to your dashboard",
+                                        style: TextStyle(fontSize: 15.h, color: Colors.black),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                                actionsAlignment: MainAxisAlignment.center,
+                                actions: [
+                                  FilledButton(
+                                    onPressed: () {
+                                      Get.back(); // close dialog
+                                    },
+                                    child: const Text(
+                                      "Got it!",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+
+                          },),
                           SizedBox(width: 12.w),
+
                           GestureDetector(
                             onTap: () {
                               // Navigator.pushReplacement(

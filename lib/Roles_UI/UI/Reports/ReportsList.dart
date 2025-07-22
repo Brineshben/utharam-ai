@@ -165,7 +165,7 @@ class _ReportsListState extends State<ReportsList> {
                             ),
                           ),
                           subtitle: Text(
-                            report?.patient?.mobileNumber ?? "No Role",
+                            report?.patient?.patientId ?? "No Role",
                             style: TextStyle(
                               fontSize: 14.h,
                               color: Colors.blueGrey,

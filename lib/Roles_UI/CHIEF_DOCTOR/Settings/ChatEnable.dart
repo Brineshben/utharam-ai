@@ -8,29 +8,36 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:patient/utils/color_util.dart';
 
+import '../../../Controller/ChatEnableController.dart';
 import '../../../Controller/Doctor_List_Controller.dart';
+import '../../../Controller/EnquiredListController.dart';
 import '../../../Controller/PatientAssesmentListController.dart';
+import '../../../Controller/Patient_queue_Controller.dart';
 import '../../../Controller/SheduleController.dart';
+import '../../../Service/Api_Service.dart';
 import '../../CHIEF_DOCTOR/bottom_Navigation_Chief.dart';
-import 'Add_Assesment.dart';
-import 'Assesment_List.dart';
+import '../../UI/Assesment_therapist/Assesment_List.dart';
+import '../../UI/Common_Widget/popups.dart';
 
-class AssesmentPage extends StatefulWidget {
+
+class Chatenable extends StatefulWidget {
   final String token;
 
-  const AssesmentPage({super.key, required this.token});
+  const Chatenable({super.key, required this.token});
 
   @override
-  State<AssesmentPage> createState() => _AssesmentPageState();
+  State<Chatenable> createState() => _ChatenableState();
 }
 
-class _AssesmentPageState extends State<AssesmentPage> {
+class _ChatenableState extends State<Chatenable> {
   @override
   void initState() {
+    Get.find<Chatenablecontroller>().chatEnableDataz(widget.token);
+
     super.initState();
-    Get.find<PatientAssesmentListController>().scheduleDataz(widget.token);
   }
 
   @override
@@ -55,7 +62,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
             Padding(
               padding: const EdgeInsets.only(top: 50, left: 20),
               child: Text(
-                "PATIENT ASSESSMENT LIST",
+                "ENABLE CHAT",
                 style: GoogleFonts.shanti(
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.w900,
@@ -80,7 +87,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
                     FilteringTextInputFormatter.deny(RegExp(r'\s')), // 👈 Disallows all whitespace
                   ],
                   onChanged: (value) {
-                    Get.find<PatientAssesmentListController>().sehduleList(value);
+                    Get.find<Chatenablecontroller>().chatList(value);
                   },
                   validator: (val) => val!.isEmpty ? 'Enter the Topic' : null,
                   cursorColor: Colors.grey,
@@ -121,8 +128,8 @@ class _AssesmentPageState extends State<AssesmentPage> {
                 ),
               ),
             ),            Expanded(
-              child: GetX<PatientAssesmentListController>(
-                builder: (PatientAssesmentListController controller) {
+              child: GetX<Chatenablecontroller>(
+                builder: (Chatenablecontroller controller) {
 
                   if (controller.isLoading.value) {
                     return Center(
@@ -131,7 +138,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
                       ),
                     );
                   }
-                  if (controller.scheduleList.isEmpty) {
+                  if (controller.chatEnableList.isEmpty) {
                     return Center(
                       child: const Text(
                         "No Patient details found",
@@ -145,9 +152,11 @@ class _AssesmentPageState extends State<AssesmentPage> {
                       padding: EdgeInsets.symmetric(horizontal: 5.w),
                       shrinkWrap: true,
                       // physics: NeverScrollableScrollPhysics(),
-                      itemCount: controller.scheduleList.length,
+                      itemCount: controller.chatEnableList.length,
                       itemBuilder: (context, index) {
-                        final patient = controller.scheduleList[index];
+                        final patient = controller.chatEnableList[index];
+                        final isAvailable = patient?.chatEnabled ?? false;
+
                         return Column(
                           children: [
                             ListTile(
@@ -164,7 +173,7 @@ class _AssesmentPageState extends State<AssesmentPage> {
                                 ),
                               ),
                               title: Text(
-                                patient?.patientName?.toUpperCase() ?? "No Name",
+                                patient?.name?.toUpperCase() ?? "No Name",
                                 style: TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 14.h,
@@ -179,13 +188,53 @@ class _AssesmentPageState extends State<AssesmentPage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              trailing: GestureDetector(child: _buildTag("VIEW", Colors.red),onTap: (){
+                              trailing: Switch(
+                                value: isAvailable,
+                                onChanged: (value) async {
+                                  if (value== true) {
+                                    context.loaderOverlay.show();
+                                    final response = await ApiServices.enableChat(patientId:  patient?.id ??0);
+                                    context.loaderOverlay.hide();
+                                    print('Enable Chat Response: $response');
+
+                                    if (response['status'] == true) {
+                                      Get.find<Chatenablecontroller>().chatEnableDataz(widget.token);
+
+                                      // Get.find<EnquiredListController>().enquiryListData(widget.token);
+                                      // Get.find<PatientQueueController>().patientData(widget.token);
+
+                                      ProductAppPopUps.submit(
+                                        title: "Success",
+                                        message: "Chat Functionality Enabled",
+                                        actionName: "Close",
+                                        iconData: Icons.done,
+                                        iconColor: Colors.green,
+                                      );
+                                    }
+                                  } else {
+                                    context.loaderOverlay.show();
+                                    final response = await ApiServices.disableChat(patientId:  patient?.id ??0);
+                                    context.loaderOverlay.hide();
+                                    print('Enable Chat Response: $response');
+
+                                    if (response['status'] == true) {
+                                      Get.find<Chatenablecontroller>().chatEnableDataz(widget.token);
 
 
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return  AssesmentListPage(token: widget.token, name:patient?.patientName ??"", patientId: patient?.patientId ??"", id: patient?.patient ??0, sevirity:  patient?.aiSummary?.patientReport?.patientSummary ??"",);
-                                },));
-                              },),
+                                      ProductAppPopUps.submit(
+                                        title: "Success",
+                                        message: "Chat Functionality Disabled",
+                                        actionName: "Close",
+                                        iconData: Icons.done,
+                                        iconColor: Colors.green,
+                                      );
+                                    }      }
+                                },
+                                activeColor: Colorutils.userdetailcolor.withOpacity(0.1),
+                                activeTrackColor: Colorutils.userdetailcolor,
+                                inactiveThumbColor: Colorutils.userdetailcolor.withOpacity(0.1),
+                                inactiveTrackColor: Colors.grey.shade400,
+                              ),
 
                             ),
                             Divider(

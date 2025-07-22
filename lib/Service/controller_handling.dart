@@ -5,6 +5,7 @@ import '../Controller/AddTalktoHumanController.dart';
 import '../Controller/AssignedDoctorPatients_Controller.dart';
 import '../Controller/Assignement_Controller/PatientAssesMentLIst_Controller.dart';
 import '../Controller/Call_HumanController.dart';
+import '../Controller/ChatEnableController.dart';
 import '../Controller/ComplaintListController.dart';
 import '../Controller/Consult_Doctor_Controller.dart';
 import '../Controller/DoctorParticularPatientMedicineController.dart';
@@ -69,6 +70,7 @@ class HandleControllers {
     Get.put(DoctorAllListController());
     Get.put(ComplaintListController());
     Get.put(PatientAssesmentListController());
+    Get.put(Chatenablecontroller());
   }
 
   static deleteAllGetControllers() async {
@@ -105,5 +107,6 @@ class HandleControllers {
     await Get.delete<DoctorAllListController>();
     await Get.delete<ComplaintListController>();
     await Get.delete<PatientAssesmentListController>();
+    await Get.delete<Chatenablecontroller>();
   }
 }

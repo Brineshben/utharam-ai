@@ -440,6 +440,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:patient/utils/Api_Constants.dart';
@@ -450,6 +451,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../Controller/Login_Controller.dart';
 import '../../../Model/ChatModel.dart';
+import '../../../Model/Login_Model.dart';
 import '../../../Service/SharedPreference.dart';
 import '../../../utils/Constants.dart';
 import '../../../utils/color_util.dart';
@@ -625,7 +627,7 @@ class _ChatScreenState extends State<ChatScreen> {
         });
 
         if (responseData['switch_press'] == true) {
-          await  SharedPrefs().removeLoginData();
+          await updateFirstTimeToFalse();
           await SharedPrefrence().clearSessionId();
           Navigator.pushReplacement(
             context,
@@ -698,7 +700,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         SizedBox(width: 12.w),
                         GestureDetector(
                           onTap: () async {
-                            await SharedPrefs().removeLoginData();
+                            await  SharedPrefs().removeLoginData();
                             await SharedPrefrence().clearSessionId(); // Optional: clear session on logout
                           },
                           child: CircleAvatar(
@@ -733,6 +735,67 @@ class _ChatScreenState extends State<ChatScreen> {
                             ],
                           ),
                         ),
+                        SizedBox(width: 2.w),
+                        GestureDetector(child: Icon(Icons.info_outline,color: Colors.grey,),onTap: (){
+
+                          Get.dialog(
+                            AlertDialog(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              title:  Text(
+                                "Instructions",
+                                style: TextStyle(
+                                  fontSize: 20.h,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blueGrey,
+                                ),
+                              ),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children:  [
+                                    Text(
+                                      "1.Start by sharing your feelings and thoughts with this psychologist chatbot.",
+                                      style: TextStyle(fontSize: 15.h, color: Colors.black),
+                                    ),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      "2.The chatbot needs sufficient data from your conversation to generate a meaningful report",
+                                      style: TextStyle(fontSize:15.h, color: Colors.black),
+                                    ),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      "3.Generate Report button will become active only after enough interaction",
+                                      style: TextStyle(fontSize: 15.h, color: Colors.black),
+                                    ),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      "4.Once the report is generated, you'll be redirected to your dashboard",
+                                      style: TextStyle(fontSize: 15.h, color: Colors.black),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                              actionsAlignment: MainAxisAlignment.center,
+                              actions: [
+                                FilledButton(
+                                  onPressed: () {
+                                    Get.back(); // close dialog
+                                  },
+                                  child: const Text(
+                                    "Got it!",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+
+                        },),
+                        SizedBox(width: 12.w),
                         GestureDetector(
                           onTap: () {
                             FocusScope.of(context).unfocus();
@@ -884,5 +947,16 @@ Widget _customAvatarBuilder(types.User user) {
         style: TextStyle(color: Colors.white),
       ),
     );
+  }
+}
+Future<void> updateFirstTimeToFalse() async {
+  print("updateFirstTimeToFalse");
+  final sharedPrefs = GetIt.instance<SharedPrefs>();
+  LoginModel? currentData = await sharedPrefs.getLoginData();
+
+  if (currentData != null && currentData.data != null) {
+    currentData.data!.firstTime = true; // Change to whatever value you want
+    await sharedPrefs.setLoginData(currentData);
+    print("After Update → firstTime: ${LoginModel}");// Save updated model back
   }
 }

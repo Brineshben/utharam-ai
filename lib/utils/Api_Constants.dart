@@ -34,6 +34,7 @@ class ApiConstants {
   static String addObservation = "/doctor_observations/observation/create/";
   static String addTalktohumanlist= "/doctor_observations/observation/create/";
   static String sheduleModel = "/doctor_observations/doctor-observations/";
+  static String chatenable = "/accounts/patient_list/view/";
   static String juniorDashboard = "/counts/admin/dashboard/count/";
   static String seniorDashboard = "/counts/senior/dashboard/count/";
   static String quotes = "/accounts/quotes";

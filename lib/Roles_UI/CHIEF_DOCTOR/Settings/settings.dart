@@ -9,6 +9,7 @@ import '../../JUNIOR_DOCTOR/appoinment/PatientListr.dart';
 import '../../PATIENT/UI_PATIENT/RegisterComplaints/AddComplaints.dart';
 import '../../UI/AppintmentsPage/My_Appointments.dart';
 import '../../UI/DoctorListSenior/doctorListSenior.dart';
+import 'ChatEnable.dart';
 import 'RejectedPatientList.dart';
 import 'addTalktoHuman.dart';
 import 'doctorstatus.dart';
@@ -157,6 +158,20 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 },
                 child: NameCard(
                   name: "ADD TALK TO HUMAN",
+                ),
+              ), SizedBox(height: 5),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return Chatenable(
+                        token: widget.token,
+                      );
+                    },
+                  ));
+                },
+                child: NameCard(
+                  name: "CHAT ENABLE",
                 ),
               ),
               SizedBox(height: 5),

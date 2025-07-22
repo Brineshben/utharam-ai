@@ -154,6 +154,20 @@ class _ProfilePatientsSettingsPageState extends State<ProfilePatientsSettingsPag
                 child: NameCard(
                   name: "COMPLAINTS",
                 ),
+              ),
+ SizedBox(height: 5),
+              if(   widget.role==    "psychiatrist")
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return AddComplaint(token: widget.token, role: widget.role,);
+                    },
+                  ));
+                },
+                child: NameCard(
+                  name: "SUGGEST MEDICINE",
+                ),
               )
 
               // ElevatedButton(
