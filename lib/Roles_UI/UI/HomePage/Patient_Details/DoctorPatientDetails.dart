@@ -279,11 +279,11 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                             return Padding(
                               padding:
                               EdgeInsets.only(top: 1.h, left: 10.w, right: 8.w),
-                              child: MedicineCard(
+                              child: MedicineCard2(
                                 brandName: medicine.first?.medicines?[index].medicine ?? "--",
                                 frequency: medicine.first?.medicines?[index].frequency ?? "--",
                                 dosage:medicine.first?.medicines?[index].dosage ?? "--",
-                                date: formatDate2(medicine.first?.date ?? "--"),
+                                date: formatDate2(medicine.first?.date ?? "--"), token:widget.token, id: medicine.first?.medicines?[index].id ?? 0, patientId: widget.id,
                               ),
                             );
 

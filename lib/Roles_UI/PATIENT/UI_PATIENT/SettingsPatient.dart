@@ -9,6 +9,7 @@ import '../../JUNIOR_DOCTOR/appoinment/PatientListr.dart';
 import '../../PATIENT/UI_PATIENT/RegisterComplaints/AddComplaints.dart';
 import '../../UI/AppintmentsPage/My_Appointments.dart';
 import '../../UI/DoctorListSenior/doctorListSenior.dart';
+import '../../UI/SuggestMedicine/PatientListMedicineSuggest.dart';
 
 
 class ProfilePatientsSettingsPage extends StatefulWidget {
@@ -161,7 +162,7 @@ class _ProfilePatientsSettingsPageState extends State<ProfilePatientsSettingsPag
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return AddComplaint(token: widget.token, role: widget.role,);
+                      return Patientlistmedicinesuggest(token: widget.token,);
                     },
                   ));
                 },

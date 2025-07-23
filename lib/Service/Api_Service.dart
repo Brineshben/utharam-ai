@@ -1303,6 +1303,29 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
+  ///DELETE MEDICINE
+  static Future<Map<String, dynamic>> deleteMedicine(
+      {required String token,required int id}) async {
+    String url =
+        "${ApiConstants.baseURL}${ApiConstants.deleteMedicine}$id/";
+    print("assignmentedit: $url");
+
+
+    try {
+
+      var request = http.Request('PATCH', Uri.parse(url));
+      request.headers.addAll(
+        {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+
+      var respString = await response.stream.bytesToString();
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
 
   /// Enquired LIST
   static Future<Map<String, dynamic>> enquiredList({

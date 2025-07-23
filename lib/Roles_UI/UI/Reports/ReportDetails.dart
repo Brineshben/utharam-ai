@@ -95,7 +95,7 @@ class _ReportsDetailsState extends State<ReportsDetails> {
                     Padding(
                       padding: const EdgeInsets.only(top: 50, left: 15),
                       child: Text(
-                        "PATIENT REPORT LIST",
+                        "PATIENT REPORT DETAILS",
                         style: GoogleFonts.shanti(
                           color: Colors.blueGrey,
                           fontWeight: FontWeight.w900,

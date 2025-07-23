@@ -1,5 +1,123 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+
+import '../../../Controller/DoctorParticularPatientMedicineController.dart';
+import '../../../Service/Api_Service.dart';
+import '../../../utils/color_util.dart';
+import '../Common_Widget/popups.dart';
+
+class MedicineCard2 extends StatelessWidget {
+  final String brandName;
+  final String token;
+  final int  id;
+  final int  patientId;
+  final String frequency;
+  final String dosage;
+  final String date;
+
+  const MedicineCard2({
+    Key? key,
+    required this.brandName,
+    required this.frequency,
+    required this.dosage, required this.date, required this.token, required this.id, required this.patientId,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.white,
+      elevation: 4,
+
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10,right: 10,top: 8,bottom: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              brandName ,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(Icons.timeline_sharp, size: 15, color: Colors.red),
+                const SizedBox(width: 8),
+                Text(
+                  'Frequency: $frequency',
+                  style: TextStyle(fontSize: 12),
+                ),
+                Spacer(),
+                GestureDetector(child: Icon(Icons.delete, size: 20, color: Colors.red),onTap: () async {
+                  Map<String,dynamic> resp = await ApiServices.deleteMedicine(token: token, id: id);
+                  context.loaderOverlay.hide();
+                  print("----------redvffegvsp---------?$resp");
+                  if (resp['message'] == "Medicine deactivated successfully") {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => OtpScreen(
+                    //       phoneNumber: fullPhoneNumber,
+                    //     ),
+                    //   ),
+                    // );
+                    // ProductAppPopUps.submit2Back(
+                    //   title: "Success",
+                    //   message: resp['message'] ?? 'Something went wrong.',
+                    //   actionName: "Close",
+                    //   iconData: Icons.done,
+                    //   iconColor: Colorutils.userdetailcolor,
+                    // );
+                    await  Get.find<DoctorParticularPatientMedicineController>().DoctorParticularPatientMedicineDataz(token,patientId);
+
+                  } else {
+                    ProductAppPopUps.submit(
+                      title: "Failed",
+                      message: resp['message'] ?? 'Something went wrong.',
+                      actionName: "Close",
+                      iconData: Icons.error_outline,
+                      iconColor: Colors.red,
+                    );
+                  }            },),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Icon(Icons.medical_services, size: 15, color: Colors.green),
+                const SizedBox(width: 8),
+                Text(
+                  'Dosage: $dosage',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+
+            Row(
+              children: [
+                Icon(Icons.access_time_rounded, size: 15, color: Colors.blue),
+                const SizedBox(width: 8),
+                Text(
+                  'Date: $date',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class MedicineCard extends StatelessWidget {
   final String brandName;
