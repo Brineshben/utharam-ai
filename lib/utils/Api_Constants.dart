@@ -39,7 +39,8 @@ class ApiConstants {
   static String seniorDashboard = "/counts/senior/dashboard/count/";
   static String quotes = "/accounts/quotes";
   static String medicineList = "/medicine/medicine/list/";
-  static String brand = "/medicine/brand/list/";
+  // static String brand = "/medicine/brand/list/";
+  static String brand = "/medicine/assign/medicine/brand/list/";
   static String frequency = "/medicine/frequency/list/";
   static String sendOtp = "/accounts/send_otp/";
   static String checkOtp = "/accounts/check_otp/";

@@ -70,6 +70,13 @@ class _MedicinelistjuniorState extends State<Medicinelistjunior> {
               Expanded(
                 child: GetX<ParticularMedicinelistController>(
                   builder: (ParticularMedicinelistController controller) {
+                    if (controller.isLoading.value) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: Colorutils.userdetailcolor,
+                        ),
+                      );
+                    }
                     if (controller.particularMedicineList.isEmpty) {
                       return Padding(
                           padding:
@@ -83,25 +90,27 @@ class _MedicinelistjuniorState extends State<Medicinelistjunior> {
                             ),
                           ));
                     } else {
-                      return  ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.particularMedicineList.length,
-                        itemBuilder: (context, index) {
-                          final medicine = controller.particularMedicineList[index];
+                      return  SingleChildScrollView(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: controller.particularMedicineList.length,
+                          itemBuilder: (context, index) {
+                            final medicine = controller.particularMedicineList[index];
 
-                          return Padding(
-                            padding:
-                            EdgeInsets.only(top: 1.h, left: 10.w, right: 8.w),
-                            child: MedicineCard(
-                              brandName: medicine?.medicine ?? "----",
-                              frequency: medicine?.strength ?? "",
-                              dosage: medicine?.dosage ?? "",
-                              date: formatDate2(medicine?.dateTime ?? ""),
-                            ),
-                          );
+                            return Padding(
+                              padding:
+                              EdgeInsets.only(top: 1.h, left: 10.w, right: 8.w),
+                              child: MedicineCard(
+                                brandName: medicine?.medicine ?? "----",
+                                frequency: medicine?.frequency ?? "",
+                                dosage: medicine?.dosage ?? "",
+                                date: formatDate2(medicine?.dateTime ?? ""),
+                              ),
+                            );
 
-                        },
+                          },
+                        ),
                       );
 
 

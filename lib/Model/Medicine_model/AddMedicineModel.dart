@@ -87,7 +87,7 @@ class Medicines {
 }
 
 class MedicinesList {
-  BrandData? brand;
+  Data? brand;
   MedicineData? medicine;
   FrequencyData? frequency;
   String? strength;

@@ -1,17 +1,19 @@
 class BrandModel {
   String? status;
   String? message;
-  List<BrandData>? data;
+  int? count;
+  List<Data>? data;
 
-  BrandModel({this.status, this.message, this.data});
+  BrandModel({this.status, this.message, this.count, this.data});
 
   BrandModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
+    count = json['count'];
     if (json['data'] != null) {
-      data = <BrandData>[];
+      data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new BrandData.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
@@ -20,6 +22,7 @@ class BrandModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     data['message'] = this.message;
+    data['count'] = this.count;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -27,21 +30,43 @@ class BrandModel {
   }
 }
 
-class BrandData {
+class Data {
   int? id;
-  String? name;
+  int? brand;
+  String? brandName;
+  int? medicine;
+  String? medicineName;
+  bool? status;
+  String? assignedAt;
 
-  BrandData({this.id, this.name});
+  Data(
+      {this.id,
+        this.brand,
+        this.brandName,
+        this.medicine,
+        this.medicineName,
+        this.status,
+        this.assignedAt});
 
-  BrandData.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
+    brand = json['brand'];
+    brandName = json['brand_name'];
+    medicine = json['medicine'];
+    medicineName = json['medicine_name'];
+    status = json['status'];
+    assignedAt = json['assigned_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['name'] = this.name;
+    data['brand'] = this.brand;
+    data['brand_name'] = this.brandName;
+    data['medicine'] = this.medicine;
+    data['medicine_name'] = this.medicineName;
+    data['status'] = this.status;
+    data['assigned_at'] = this.assignedAt;
     return data;
   }
 }

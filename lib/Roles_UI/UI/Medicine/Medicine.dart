@@ -15,6 +15,7 @@ import '../../../Controller/Medicine_Controller/Brand_Controller.dart';
 import '../../../Controller/Medicine_Controller/FrequencyController.dart';
 import '../../../Controller/Medicine_Controller/Medicine_Controller.dart';
 import '../../../Controller/Medicine_Controller/Particular_medicineList_Controller.dart';
+import '../../JUNIOR_DOCTOR/Junior_doctorView/Add_Doctor.dart';
 import '../Common_Widget/connectivity.dart';
 import '../Register_Page/Register.dart';
 import 'Medicine_Widgets.dart';
@@ -138,41 +139,36 @@ class _MedicineState extends State<Medicine> {
                                   ),
                                 ),
                                 GetX<MedicineController>(
-                                  builder:
-                                      (MedicineController medicineController) {
+                                  builder: (medicineController) {
+
                                     return buildDropdownSearchField(
-                                      hintText: "Select Medicine",
-                                      items: medicineController.medicineList
-                                          .map((e) =>
-                                              e?.name ??
-                                              '') // Assuming your model has 'medicineName'
-                                          .where((name) => name
-                                              .isNotEmpty) // To filter empty names
-                                          .toList(),
-                                      // controller: phoneNumber,
-                                      validation: true,
-                                      index: index,
-                                      type: 'medicine',
+                                        hintText: "Select Medicine",
+                                        items: medicineController.medicineList
+                                            .map((e) => e?.name ?? '')
+                                            .where((name) => name.isNotEmpty)
+                                            .toList(),
+                                        validation: true,
+                                        index: index,
+                                      type: 'medicine', token: widget.patientToken
                                     );
                                   },
                                 ),
-                                GetX<BrandController>(
-                                  builder: (BrandController brandController) {
-                                    return buildDropdownSearchField(
-                                        hintText: "Select Brand",
-                                        items: brandController.brandList
-                                            .map((e) =>
-                                                e?.name ??
-                                                '') // Assuming your model has 'medicineName'
-                                            .where((name) => name
-                                                .isNotEmpty) // To filter empty names
-                                            .toList(),
-                                        // controller: phoneNumber,
-                                        validation: true,
-                                        index: index,
-                                        type: 'brand');
-                                  },
-                                ),
+                            Obx(() {
+                              final brandController = Get.find<BrandController>();
+
+
+                              return buildDropdownSearchField(
+                                hintText: "Select Brand",
+                                items: brandController.brandList
+                                    .map((e) => e?.brandName ?? '')
+                                    .where((name) => name.isNotEmpty)
+                                    .toList(),
+                                validation: true,
+                                index: index,
+                                type: 'brand',
+                                token: widget.patientToken,
+                              );
+                            }),
                                 GetX<FrequencyController>(
                                   builder: (FrequencyController
                                       frequencyController) {
@@ -188,7 +184,7 @@ class _MedicineState extends State<Medicine> {
                                         // controller: phoneNumber,
                                         validation: true,
                                         index: index,
-                                        type: 'frequency');
+                                        type: 'frequency', token: widget.patientToken);
                                   },
                                 ),
                                 Row(
@@ -298,26 +294,75 @@ class _MedicineState extends State<Medicine> {
                                 // ),
                                 Row(
                                   children: [
+                                    // Expanded(
+                                    //   child: Padding(
+                                    //     padding: const EdgeInsets.all(4),
+                                    //     child: SizedBox(
+                                    //       width: double.infinity,
+                                    //       child: TextFormField(
+                                    //         controller: controller.medicineControllers[index]['UOM'],
+                                    //         validator: false
+                                    //             ? (val) => val!.trim().isEmpty ? 'Please enter Strength' : null
+                                    //             : null,
+                                    //         obscureText: false,
+                                    //         onChanged: (value) {
+                                    //           controller
+                                    //               .addMedicineData
+                                    //               .value[index]
+                                    //               .uom = value;
+                                    //           controller.addMedicineData.refresh();
+                                    //         },
+                                    //         decoration: InputDecoration(
+                                    //           hintText: "UOM",
+                                    //           labelText: "UOM",
+                                    //           labelStyle: TextStyle(
+                                    //             fontSize: 15.h,
+                                    //             fontWeight: FontWeight.bold,
+                                    //             color: Colors.blueGrey,
+                                    //           ),
+                                    //           focusedBorder: OutlineInputBorder(
+                                    //             borderRadius: BorderRadius.circular(10),
+                                    //             borderSide: BorderSide(color: Colorutils.userdetailcolor, width: 1),
+                                    //           ),
+                                    //           enabledBorder: OutlineInputBorder(
+                                    //             borderRadius: BorderRadius.circular(10),
+                                    //             borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+                                    //           ),
+                                    //           border: OutlineInputBorder(
+                                    //             borderRadius: BorderRadius.circular(10),
+                                    //             borderSide: BorderSide(color: Colorutils.userdetailcolor),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: SizedBox(
                                           width: double.infinity,
-                                          child: TextFormField(
-                                            controller: controller.medicineControllers[index]['UOM'],
-                                            validator: false
-                                                ? (val) => val!.trim().isEmpty ? 'Please enter Strength' : null
+                                          child: DropdownButtonFormField<String>(
+                                            value: controller.medicineControllers[index]['UOM']?.text.isNotEmpty == true
+                                                ? controller.medicineControllers[index]['UOM']?.text
                                                 : null,
-                                            obscureText: false,
+                                            items: ['ML', 'Nos'].map((String unit) {
+                                              return DropdownMenuItem<String>(
+                                                value: unit,
+                                                child: Text(unit),
+                                              );
+                                            }).toList(),
                                             onChanged: (value) {
-                                              controller
-                                                  .addMedicineData
-                                                  .value[index]
-                                                  .uom = value;
-                                              controller.addMedicineData.refresh();
+                                              if (value != null) {
+                                                controller.medicineControllers[index]['UOM']?.text = value;
+                                                controller.addMedicineData[index].uom = value;
+                                                controller.addMedicineData.refresh();
+                                              }
                                             },
+                                            validator: (value) =>
+                                            value == null || value.trim().isEmpty ? 'Please select UOM' : null,
                                             decoration: InputDecoration(
-                                              hintText: "UOM",
+                                              hintText: "Select UOM",
                                               labelText: "UOM",
                                               labelStyle: TextStyle(
                                                 fontSize: 15.h,
@@ -340,7 +385,9 @@ class _MedicineState extends State<Medicine> {
                                           ),
                                         ),
                                       ),
-                                    ), Expanded(
+                                    ),
+
+                                    Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: SizedBox(

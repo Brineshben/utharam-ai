@@ -197,6 +197,7 @@ import '../../../utils/color_util.dart';
 // }
 Widget buildDropdownSearchField({
   required String hintText,
+  required String token,
   required List<String> items,
   required bool validation,
   required int index,
@@ -213,7 +214,7 @@ Widget buildDropdownSearchField({
       case 'medicine':
         return data.medicine?.name;
       case 'brand':
-        return data.brand?.name;
+        return data.brand?.brandName;
       case 'frequency':
         return data.frequency?.name;
       default:
@@ -229,21 +230,48 @@ Widget buildDropdownSearchField({
       child: DropdownSearch<String>(
         items: items,
         selectedItem: getSelectedItem(),
-        onChanged: (value) {
+        onChanged: (value) async {
           if (value == null) return;
 
           switch (type) {
+            // case 'medicine':
+            //   final selected = Get.find<MedicineController>()
+            //       .medicineList
+            //       .firstWhere((e) => e?.name == value, orElse: () => null);
+            //
+            //   controller.addMedicineData[index].medicine = selected;
+            //
+            //
+            //   if (selected?.id != null)  {
+            //     final brandController = Get.find<BrandController>();
+            //     await brandController.brandDataz(token, selected!.id!);
+            //   }
+            //   break;
             case 'medicine':
               final selected = Get.find<MedicineController>()
                   .medicineList
                   .firstWhere((e) => e?.name == value, orElse: () => null);
+
               controller.addMedicineData[index].medicine = selected;
+
+              // ❗️Clear brand field before fetching new brand data
+              controller.addMedicineData[index].brand = null;
+              await Future.delayed(const Duration(milliseconds: 50));
+
+              controller.addMedicineData.refresh();
+
+              // ✅ Fetch brand list
+              if (selected?.id != null) {
+                final brandController = Get.find<BrandController>();
+                await brandController.brandDataz(token, selected!.id!);
+              }
+
               break;
 
             case 'brand':
               final selected = Get.find<BrandController>()
                   .brandList
-                  .firstWhere((e) => e?.name == value, orElse: () => null);
+                  .firstWhere((e) => e?.brandName == value, orElse: () => null);
               controller.addMedicineData[index].brand = selected;
               break;
 

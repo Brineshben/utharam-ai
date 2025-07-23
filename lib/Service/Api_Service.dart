@@ -822,8 +822,9 @@ class ApiServices {
   ///Add Slot brand
   static Future<Map<String, dynamic>> addBrand({
     required String token,
+    required int id,
   }) async {
-    String url = "${ApiConstants.baseURL}${ApiConstants.brand}";
+    String url = "${ApiConstants.baseURL}${ApiConstants.brand}?medicine=$id";
     print("Medicine URL: $url");
 
     try {
@@ -836,8 +837,10 @@ class ApiServices {
       http.StreamedResponse response = await request.send();
 
       var respString = await response.stream.bytesToString();
+      print("Medicine URL2: $respString");
 
       return json.decode(respString);
+
     } catch (e) {
       throw Exception("Service Error Login Api");
     }

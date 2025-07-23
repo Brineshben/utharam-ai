@@ -11,6 +11,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 
 import '../../../../Controller/AssignedDoctorPatients_Controller.dart';
 import '../../../../Controller/DoctorParticularPatientMedicineController.dart';
+import '../../../../Controller/Medicine_Controller/AddMedicineController.dart';
 import '../../../../Controller/Medicine_Controller/Brand_Controller.dart';
 import '../../../../Controller/Medicine_Controller/FrequencyController.dart';
 import '../../../../Controller/Medicine_Controller/Medicine_Controller.dart';
@@ -248,6 +249,13 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                   ),
                   GetX<DoctorParticularPatientMedicineController>(
                     builder: (DoctorParticularPatientMedicineController controller) {
+                      if (controller.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: Colorutils.userdetailcolor,
+                          ),
+                        );
+                      }
                       if (controller.DoctorParticularPatientMedicineList.isEmpty) {
                         return Padding(
                             padding:
@@ -359,8 +367,9 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                     child: GestureDetector(
                       onTap: () async {
                         Get.find<MedicineController>().medicineDataz(widget.token);
-                        Get.find<BrandController>().brandDataz(widget.token);
-                        Get.find<FrequencyController>().frequencyDataz(widget.token);
+                         Get.find<FrequencyController>().frequencyDataz(widget.token);
+                        Get.find<AddMedicineController>().addMedicineData.value.clear();
+                        Get.find<AddMedicineController>().medicineControllers.clear();
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
                             return Medicine(patientToken: widget.token, patientId: widget.id,);

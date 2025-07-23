@@ -116,7 +116,6 @@ class _DashchiefState extends State<Dashchief> {
                   SizedBox(height: 25.w,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                     children: [
@@ -129,7 +128,7 @@ class _DashchiefState extends State<Dashchief> {
                         ),
                       ),
                       SizedBox(height: 10.w,),
-                      if (item?.key == "Recent Registrations" && item?.value != 0)
+                      if (item?.key == "Registered patients" && item?.value != 0)
                         Center(
                           child: GestureDetector(
                             onTap: () {
