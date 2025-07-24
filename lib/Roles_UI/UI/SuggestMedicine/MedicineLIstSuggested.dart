@@ -22,7 +22,8 @@ class Medicinelistsuggested extends StatefulWidget {
   final String token;
   final int id;
 
-  const Medicinelistsuggested({super.key, required this.token, required this.id});
+  const Medicinelistsuggested(
+      {super.key, required this.token, required this.id});
 
   @override
   State<Medicinelistsuggested> createState() => _MedicinelistsuggestedState();
@@ -30,10 +31,13 @@ class Medicinelistsuggested extends StatefulWidget {
 
 class _MedicinelistsuggestedState extends State<Medicinelistsuggested> {
   TextEditingController controllers = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    Get.find<DoctorParticularPatientMedicineController>().DoctorParticularPatientMedicineDataz(widget.token,widget.id);  }
+    Get.find<DoctorParticularPatientMedicineController>()
+        .DoctorParticularPatientMedicineDataz(widget.token, widget.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +79,8 @@ class _MedicinelistsuggestedState extends State<Medicinelistsuggested> {
             ),
             Expanded(
               child: GetX<DoctorParticularPatientMedicineController>(
-                builder: (DoctorParticularPatientMedicineController controller) {
+                builder:
+                    (DoctorParticularPatientMedicineController controller) {
                   if (controller.isLoading.value) {
                     return Center(
                       child: CircularProgressIndicator(
@@ -85,36 +90,60 @@ class _MedicinelistsuggestedState extends State<Medicinelistsuggested> {
                   }
                   if (controller.DoctorParticularPatientMedicineList.isEmpty) {
                     return Padding(
-                        padding:
-                        const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 20),
                         child: Center(
                           child: const Text(
                             "No Medicine Assigned Yet",
                             style: TextStyle(
-                                color: Colors.red,
-                                fontStyle: FontStyle.italic),
+                                color: Colors.red, fontStyle: FontStyle.italic),
                           ),
                         ));
                   } else {
-                    return  SingleChildScrollView(
+                    return SingleChildScrollView(
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.DoctorParticularPatientMedicineList[0]?.medicines?.length,
+                        itemCount: controller
+                            .DoctorParticularPatientMedicineList[0]
+                            ?.medicines
+                            ?.length,
                         itemBuilder: (context, index) {
-                          final medicine = controller.DoctorParticularPatientMedicineList;
-                      
+                          final medicine =
+                              controller.DoctorParticularPatientMedicineList;
+
                           return Padding(
-                            padding:
-                            EdgeInsets.only(top: 1.h, left: 10.w, right: 8.w,),
+                            padding: EdgeInsets.only(
+                              top: 1.h,
+                              left: 10.w,
+                              right: 8.w,
+                            ),
                             child: MedicineCard3(
-                              brandName: medicine.first?.medicines?[index].medicine ?? "--",
-                              frequency: medicine.first?.medicines?[index].frequency ?? "--",
-                              dosage:medicine.first?.medicines?[index].dosage ?? "--",
-                              date: formatDate2(medicine.first?.date ?? "--"), token:widget.token, id: medicine.first?.medicines?[index].id ?? 0, patientId: widget.id,
+                              brandName:
+                                  medicine.first?.medicines?[index].brand ??
+                                      "--",
+                              frequency:
+                                  medicine.first?.medicines?[index].frequency ??
+                                      "--",
+                              dosage:
+                                  medicine.first?.medicines?[index].dosage ??
+                                      "--",
+                              date: formatDate2(medicine.first?.date ?? "--"),
+                              token: widget.token,
+                              id: medicine.first?.medicines?[index].id ?? 0,
+                              patientId: widget.id,
+                              medicineName:  medicine.first?.medicines?[index].medicine ??
+                                  "--",
+                              period:medicine.first?.medicines?[index].period ?? 0,
+                              Quantity:medicine.first?.medicines?[index].quantity ?? 0,
+                              Uom: medicine.first?.medicines?[index].uom ??
+                                  "--",
+                              Route: medicine.first?.medicines?[index].route ??
+                                  "--",
+                              remarks:  medicine.first?.medicines?[index].remarks ??
+                                  "--", strength: medicine.first?.medicines?[index].strength ??
+                                "--",
                             ),
                           );
-                      
                         },
                       ),
                     );
@@ -131,23 +160,28 @@ class _MedicinelistsuggestedState extends State<Medicinelistsuggested> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         onPressed: () {
-
-            Get.find<MedicineController>().medicineDataz(widget.token);
-            Get.find<FrequencyController>().frequencyDataz(widget.token);
-            Get.find<AddMedicineController>().addMedicineData.value.clear();
-            Get.find<AddMedicineController>().medicineControllers.clear();
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return Medicine(patientToken: widget.token, patientId: widget.id,);
-              },
-            ));
-
-              },
-        child: Icon(Icons.add,color: Colorutils.userdetailcolor,),
+          Get.find<MedicineController>().medicineDataz(widget.token);
+          Get.find<FrequencyController>().frequencyDataz(widget.token);
+          Get.find<AddMedicineController>().addMedicineData.value.clear();
+          Get.find<AddMedicineController>().medicineControllers.clear();
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return Medicine(
+                patientToken: widget.token,
+                patientId: widget.id,
+              );
+            },
+          ));
+        },
+        child: Icon(
+          Icons.add,
+          color: Colorutils.userdetailcolor,
+        ),
       ),
     );
   }
 }
+
 Widget _buildTag(String text, Color bgColor) {
   return Container(
     decoration: BoxDecoration(
