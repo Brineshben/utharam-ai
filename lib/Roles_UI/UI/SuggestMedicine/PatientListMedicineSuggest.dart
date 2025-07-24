@@ -176,7 +176,15 @@ class _ReportsListState extends State<Patientlistmedicinesuggest> {
                             mainAxisSize: MainAxisSize.min,
 
                             children: [
-                              GestureDetector(child: _buildTag("Suggest", Colors.blue),onTap: (){
+                              // GestureDetector(child: _buildTag("Edit", Colors.red),onTap: (){
+                              //
+                              //
+                              //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              //     return  Medicinelistsuggested(token: widget.token, id: report?.patient?.id ??0,);
+                              //   },));
+                              // },),
+                              // SizedBox(width: 10,),
+                              GestureDetector(child: _buildTag("Add", Colors.blue),onTap: (){
 
 
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -202,10 +210,10 @@ class _ReportsListState extends State<Patientlistmedicinesuggest> {
 Widget _buildTag(String text, Color bgColor) {
   return Container(
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(4),
       color: bgColor,
     ),
-    padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 5.w),
+    padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
     child: Text(
       text,
       style: GoogleFonts.nunito(

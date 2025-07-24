@@ -107,7 +107,7 @@ class _MedicinelistsuggestedState extends State<Medicinelistsuggested> {
                           return Padding(
                             padding:
                             EdgeInsets.only(top: 1.h, left: 10.w, right: 8.w,),
-                            child: MedicineCard2(
+                            child: MedicineCard3(
                               brandName: medicine.first?.medicines?[index].medicine ?? "--",
                               frequency: medicine.first?.medicines?[index].frequency ?? "--",
                               dosage:medicine.first?.medicines?[index].dosage ?? "--",

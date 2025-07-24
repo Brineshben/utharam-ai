@@ -44,7 +44,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.teal.shade50,
+              Colors.blue.shade50,
               Colors.white,
               Colors.white,
             ],

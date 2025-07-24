@@ -42,7 +42,7 @@ class _ProfilePatientsSettingsPageState extends State<ProfilePatientsSettingsPag
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.teal.shade50,
+              Colors.blue.shade50,
               Colors.white,
               Colors.white,
             ],
