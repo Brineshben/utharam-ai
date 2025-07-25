@@ -51,6 +51,7 @@ class ApiConstants {
   static String deActivateDoctor = "/accounts/deactivate-user/";
   static String createAssignment = "/thoughts/thoughts/create/";
   static String editAssignment = "/thoughts/thoughts/update/";
+  static String editMedicine = "/medicine_assign/patient-medicine/update/";
   static String patientAssignmentList = "/thoughts/patient-thoughts/list/";
   static String diagnosisAdd = "/accounts/approve_ai_diagnosis_summary/";
   static String complaintList = "/complaint/view_complaints/";

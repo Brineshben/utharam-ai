@@ -96,8 +96,7 @@ class ApiServices {
     http.StreamedResponse response = await request.send();
     var respString = await response.stream.bytesToString();
     print(
-        'Api body-----Add Doctorresponse----------------->${json.decode(
-            respString)}');
+        'Api body-----Add Doctorresponse----------------->${json.decode(respString)}');
     return json.decode(respString);
   }
 
@@ -224,7 +223,6 @@ class ApiServices {
     }
   }
 
-
   ///Patient LIST
   static Future<Map<String, dynamic>> patientList() async {
     String url = "${ApiConstants.baseURL}${ApiConstants.patientList}";
@@ -242,7 +240,6 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
-
 
   ///Slot LIST
   static Future<Map<String, dynamic>> SlotList({
@@ -351,8 +348,7 @@ class ApiServices {
     required int patientId,
   }) async {
     String url =
-        "${ApiConstants.baseURL}${ApiConstants
-        .assignedDoctorAppointnmentList1}$patientId/";
+        "${ApiConstants.baseURL}${ApiConstants.assignedDoctorAppointnmentList1}$patientId/";
     print("Assigned doctorPatientsList---$url");
 
     try {
@@ -430,7 +426,6 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
-
 
   ///addSecondAssesment
   static Future<Map<String, dynamic>> addvoxbay({
@@ -630,8 +625,7 @@ class ApiServices {
     required String destination,
     required String extension,
   }) async {
-    String url =
-        "${ApiConstants.baseURL}${ApiConstants.voxBay}";
+    String url = "${ApiConstants.baseURL}${ApiConstants.voxBay}";
     print('URL-voxBayTalk--->${url}');
     Map apiBody = {
       "destination": destination,
@@ -782,8 +776,7 @@ class ApiServices {
     required String date,
   }) async {
     String url =
-        "${ApiConstants.baseURL}${ApiConstants
-        .addPatient}?doctor_name=$doctorName&date=$date";
+        "${ApiConstants.baseURL}${ApiConstants.addPatient}?doctor_name=$doctorName&date=$date";
     print("Request URL: $url");
 
     try {
@@ -900,8 +893,8 @@ class ApiServices {
   }
 
   ///Add check OTP
-  static Future<Map<String, dynamic>> checkOTP(String phoneNumber,
-      String oTP) async {
+  static Future<Map<String, dynamic>> checkOTP(
+      String phoneNumber, String oTP) async {
     String url = "${ApiConstants.baseURL}${ApiConstants.checkOtp}";
     print("sendOtp: $url");
     Map apiBody = {
@@ -978,13 +971,10 @@ class ApiServices {
   }
 
   /// Doctor Medicine List
-  static Future<Map<String, dynamic>> ParticularDoctorMedicineList({
-    required String token,
-    required int userId
-  }) async {
+  static Future<Map<String, dynamic>> ParticularDoctorMedicineList(
+      {required String token, required int userId}) async {
     String url =
-        "${ApiConstants.baseURL}${ApiConstants
-        .particularDoctorMedicineList}$userId/";
+        "${ApiConstants.baseURL}${ApiConstants.particularDoctorMedicineList}$userId/";
     print("Doctor Medicine List---$url");
 
     try {
@@ -1003,10 +993,8 @@ class ApiServices {
   }
 
   /// deactivate doctor
-  static Future<Map<String, dynamic>> deActivateDoctor({
-    required String token,
-    required int userId
-  }) async {
+  static Future<Map<String, dynamic>> deActivateDoctor(
+      {required String token, required int userId}) async {
     String url =
         "${ApiConstants.baseURL}${ApiConstants.deActivateDoctor}$userId/";
     print("deactivate doctor---$url");
@@ -1131,9 +1119,10 @@ class ApiServices {
   }
 
   ///Add assignmentCreate
-  static Future<Map<String, dynamic>> assignmentCreate({required int patientId,
-    required String question,
-    required String token}) async {
+  static Future<Map<String, dynamic>> assignmentCreate(
+      {required int patientId,
+      required String question,
+      required String token}) async {
     String url = "${ApiConstants.baseURL}${ApiConstants.createAssignment}";
     print("assignmentCreate: $url");
     Map apiBody = {
@@ -1191,8 +1180,8 @@ class ApiServices {
 
   ///check OTP
   static Future<Map<String, dynamic>> checkOTp({
-    required int id, required String otp,
-
+    required int id,
+    required String otp,
   }) async {
     String url = "${ApiConstants.baseURL}${ApiConstants.checkOtpForgot}$id/";
     print("assignmentCreate: $url");
@@ -1224,7 +1213,6 @@ class ApiServices {
     required int id,
     required String newPassword,
     required String confirm,
-
   }) async {
     String url = "${ApiConstants.baseURL}${ApiConstants.resetPassword}$id/";
     print("assignmentCreate: $url");
@@ -1257,10 +1245,9 @@ class ApiServices {
     required int patientId,
     required int assignmentId,
     required int doctorId,
-
   }) async {
-    String url = "${ApiConstants.baseURL}${ApiConstants
-        .reAssign}$patientId/$assignmentId/";
+    String url =
+        "${ApiConstants.baseURL}${ApiConstants.reAssign}$patientId/$assignmentId/";
     print("reAssign: $url");
 
     Map apiBody = {
@@ -1285,9 +1272,10 @@ class ApiServices {
   }
 
   ///Add assignmentCreate
-  static Future<Map<String, dynamic>> Editassignment({required int thoughtsID,
-    required String response,
-    required String token}) async {
+  static Future<Map<String, dynamic>> Editassignment(
+      {required int thoughtsID,
+      required String response,
+      required String token}) async {
     String url =
         "${ApiConstants.baseURL}${ApiConstants.editAssignment}$thoughtsID/";
     print("assignmentedit: $url");
@@ -1313,51 +1301,61 @@ class ApiServices {
       throw Exception("Service Error Login Api");
     }
   }
-  //
-  // ///submit edit medicine
-  // static Future<Map<String, dynamic>> submitMedicine({required int medicine,
-  //   required String response,
-  //   required String token}) async {
-  //   String url =
-  //       "${ApiConstants.baseURL}${ApiConstants.editAssignment}$thoughtsID/";
-  //   print("assignmentedit: $url");
-  //   Map apiBody = {"medicine": 1,
-  //
-  //     "strength": "500mg",
-  //     "dosage": "1 tablet",
-  //     "uom": "ML",
-  //     "route": "Oral",
-  //     "remarks": "Take after food",
-  //     "period": 7,
-  //     "quantity": 14
-  //   }
-  //
-  //   try {
-  //     print("assignmentedit: $apiBody");
-  //
-  //     var request = http.Request('PATCH', Uri.parse(url));
-  //     request.body = (json.encode(apiBody));
-  //
-  //     request.headers.addAll(
-  //       {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
-  //     );
-  //     http.StreamedResponse response = await request.send();
-  //
-  //     var respString = await response.stream.bytesToString();
-  //
-  //     return json.decode(respString);
-  //   } catch (e) {
-  //     throw Exception("Service Error Login Api");
-  //   }
-  // }
+
+  ///submit edit medicine
+  static Future<Map<String, dynamic>> submitMedicine(
+      {required int medineId,
+      required int medicine,
+      required int frequency,
+      required int brand,
+      required int period,
+      required int quantity,
+      required String strength,
+      required String dosage,
+      required String Uom,
+      required String route,
+      required String remarks,
+      required String token}) async {
+    String url =
+        "${ApiConstants.baseURL}${ApiConstants.editMedicine}$medineId/";
+    print("submitMedicine: $url");
+    Map apiBody = {
+      "medicine": medicine,
+      "frequency": frequency,
+      "brand": brand,
+      "strength": strength,
+      "dosage": dosage,
+      "uom": Uom,
+      "route": route,
+      "remarks": token,
+      "period": period,
+      "quantity": quantity,
+    };
+
+    try {
+      print("submitMedicine: $apiBody");
+
+      var request = http.Request('PATCH', Uri.parse(url));
+      request.body = (json.encode(apiBody));
+
+      request.headers.addAll(
+        {'Authorization': "Bearer $token", 'Content-Type': 'application/json'},
+      );
+      http.StreamedResponse response = await request.send();
+
+      var respString = await response.stream.bytesToString();
+
+      return json.decode(respString);
+    } catch (e) {
+      throw Exception("Service Error Login Api");
+    }
+  }
 
   ///DELETE MEDICINE
   static Future<Map<String, dynamic>> deleteMedicine(
       {required String token, required int id}) async {
-    String url =
-        "${ApiConstants.baseURL}${ApiConstants.deleteMedicine}$id/";
+    String url = "${ApiConstants.baseURL}${ApiConstants.deleteMedicine}$id/";
     print("assignmentedit: $url");
-
 
     try {
       var request = http.Request('PATCH', Uri.parse(url));
@@ -1449,8 +1447,7 @@ class ApiServices {
   static Future<Map<String, dynamic>> refreshToken({
     required String token,
   }) async {
-    String url =
-        "${ApiConstants.baseURL}${ApiConstants.refreshToken}";
+    String url = "${ApiConstants.baseURL}${ApiConstants.refreshToken}";
     print("refresh token--$url");
     Map apiBody = {
       "refresh": token,

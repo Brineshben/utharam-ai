@@ -248,10 +248,21 @@ class MedicineCard3 extends StatelessWidget {
                             route:Route ,
                             remarks: remarks,
                             period: period,
-                            quality: Quantity, token: token,
+                            quality: Quantity, token: token, id: id, patientId: patientId,
                           ),
                         ));
                   },
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Icon(Icons.branding_watermark, size: 15, color: Colors.orange),
+                const SizedBox(width: 8),
+                Text(
+                  'Brand: $brandName',
+                  style: TextStyle(fontSize: 12),
                 ),
               ],
             ),
