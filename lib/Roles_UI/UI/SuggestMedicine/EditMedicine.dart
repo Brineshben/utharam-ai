@@ -271,7 +271,7 @@ class _EditmedicineState extends State<Editmedicine> {
                           Expanded(
                             child: DropdownButtonFormField<String>(
                               value: selectedUOM,
-                              items: ['ML', 'Nos'].map((String unit) {
+                              items: ['ML', "No's"].map((String unit) {
                                 return DropdownMenuItem<String>(
                                   value: unit,
                                   child: Text(unit),

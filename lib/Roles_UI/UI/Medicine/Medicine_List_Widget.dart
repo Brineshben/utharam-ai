@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -13,6 +14,7 @@ import '../SuggestMedicine/EditMedicine.dart';
 
 class MedicineCard2 extends StatelessWidget {
   final String brandName;
+  final String brand;
   final String token;
   final int id;
   final int patientId;
@@ -28,7 +30,7 @@ class MedicineCard2 extends StatelessWidget {
     required this.date,
     required this.token,
     required this.id,
-    required this.patientId,
+    required this.patientId, required this.brand,
   }) : super(key: key);
 
   @override
@@ -52,6 +54,16 @@ class MedicineCard2 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(Icons.branding_watermark, size: 15, color: Colors.orange),
+                const SizedBox(width: 8),
+                Text(
+                  'Brand: $brand',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
             Row(
               children: [
                 Icon(Icons.timeline_sharp, size: 15, color: Colors.red),
@@ -189,7 +201,7 @@ class MedicineCard3 extends StatelessWidget {
                 ),
                 Spacer(),
                 GestureDetector(
-                  child: Icon(Icons.delete, size: 20, color: Colors.red),
+                  child: Icon(Icons.delete, size: 25.h, color: Colors.red),
                   onTap: () async {
                     Map<String, dynamic> resp =
                         await ApiServices.deleteMedicine(token: token, id: id);
@@ -231,7 +243,7 @@ class MedicineCard3 extends StatelessWidget {
                   width: 5,
                 ),
                 GestureDetector(
-                  child: Icon(Icons.edit, size: 20, color: Colors.red),
+                  child: Icon(Icons.edit, size: 25.h, color: Colors.blue),
                   onTap: () async {
                     Get.find<MedicineController>().medicineDataz(token);
                     Get.find<FrequencyController>().frequencyDataz(token);
@@ -297,6 +309,7 @@ class MedicineCard3 extends StatelessWidget {
 
 class MedicineCard extends StatelessWidget {
   final String brandName;
+  final String brand;
   final String frequency;
   final String dosage;
   final String date;
@@ -306,7 +319,7 @@ class MedicineCard extends StatelessWidget {
     required this.brandName,
     required this.frequency,
     required this.dosage,
-    required this.date,
+    required this.date, required this.brand,
   }) : super(key: key);
 
   @override
@@ -330,6 +343,16 @@ class MedicineCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(Icons.branding_watermark, size: 15, color: Colors.orange),
+                const SizedBox(width: 8),
+                Text(
+                  'Brand: $brand',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
             Row(
               children: [
                 Icon(Icons.timeline_sharp, size: 15, color: Colors.red),

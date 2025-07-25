@@ -27,7 +27,7 @@ class AddMedicineController extends GetxController {
         patient: patientId,
         medicines: addMedicineData.map((medicine) => Medicines(
           medicine: medicine.medicine?.id,
-          brand: medicine.brand?.id,
+          brand: medicine.brand?.brand,
           frequency: medicine.frequency?.id,
           dosage: medicine.dosage,
           period: medicine.period,
@@ -35,8 +35,8 @@ class AddMedicineController extends GetxController {
           remarks: medicine.remarks,
           route: medicine.route,
           strength: medicine.strength,
-          // uom: medicine.uom,
-          uom:"ML",
+          uom: medicine.uom,
+          // uom:"ML",
           isActive: true,
         )).toList(),
       );
@@ -44,7 +44,7 @@ class AddMedicineController extends GetxController {
 
       Map<String, dynamic> resp = await ApiServices.addMedicineList(token: token, addData: addMedicineModel);
       print("wfdedwefwef2fr$resp");
-      if (resp['message'] != 'Medicines retrieve error.') {
+      if (resp['status'] == 'ok') {
         ProductAppPopUps.submit22Back(
           title: "SUCCESS",
           message: "Medicine added successfully.",

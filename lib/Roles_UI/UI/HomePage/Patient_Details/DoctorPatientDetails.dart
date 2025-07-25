@@ -59,7 +59,10 @@ class DoctorsPatientDetails extends StatefulWidget {
       required this.token,
       required this.id,
       required this.role,
-      required this.doctorID, required this.url, required this.diagnosisID, required this.assignedId})
+      required this.doctorID,
+      required this.url,
+      required this.diagnosisID,
+      required this.assignedId})
       : super(key: key);
 
   @override
@@ -69,9 +72,11 @@ class DoctorsPatientDetails extends StatefulWidget {
 class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
   @override
   void initState() {
-    Get.find<DoctorParticularPatientMedicineController>().DoctorParticularPatientMedicineDataz(widget.token,widget.id);
+    Get.find<DoctorParticularPatientMedicineController>()
+        .DoctorParticularPatientMedicineDataz(widget.token, widget.id);
     super.initState();
   }
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _observationController = TextEditingController();
 
@@ -172,7 +177,11 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                     ),
                   ),
                   AiReport(
-                      summary: widget.diagnosissummary, details: "details", repoturl: widget.url, name:widget.name,),
+                    summary: widget.diagnosissummary,
+                    details: "details",
+                    repoturl: widget.url,
+                    name: widget.name,
+                  ),
                   Padding(
                     padding:
                         EdgeInsets.only(top: 10.h, left: 20.w, right: 10.w),
@@ -248,7 +257,8 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                     ),
                   ),
                   GetX<DoctorParticularPatientMedicineController>(
-                    builder: (DoctorParticularPatientMedicineController controller) {
+                    builder:
+                        (DoctorParticularPatientMedicineController controller) {
                       if (controller.isLoading.value) {
                         return Center(
                           child: CircularProgressIndicator(
@@ -256,10 +266,10 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                           ),
                         );
                       }
-                      if (controller.DoctorParticularPatientMedicineList.isEmpty) {
+                      if (controller
+                          .DoctorParticularPatientMedicineList.isEmpty) {
                         return Padding(
-                            padding:
-                            const EdgeInsets.only(top: 20),
+                            padding: const EdgeInsets.only(top: 20),
                             child: Center(
                               child: const Text(
                                 "No Medicine Assigned Yet",
@@ -269,24 +279,48 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                               ),
                             ));
                       } else {
-                        return  ListView.builder(
+                        return ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: controller.DoctorParticularPatientMedicineList[0]?.medicines?.length,
+                          itemCount: controller
+                              .DoctorParticularPatientMedicineList[0]
+                              ?.medicines
+                              ?.length,
                           itemBuilder: (context, index) {
-                            final medicine = controller.DoctorParticularPatientMedicineList;
+                            final medicine =
+                                controller.DoctorParticularPatientMedicineList;
 
                             return Padding(
-                              padding:
-                              EdgeInsets.only(top: 1.h, left: 10.w, right: 8.w),
-                              child: MedicineCard2(
-                                brandName: medicine.first?.medicines?[index].medicine ?? "--",
-                                frequency: medicine.first?.medicines?[index].frequency ?? "--",
-                                dosage:medicine.first?.medicines?[index].dosage ?? "--",
-                                date: formatDate2(medicine.first?.date ?? "--"), token:widget.token, id: medicine.first?.medicines?[index].id ?? 0, patientId: widget.id,
+                              padding: EdgeInsets.only(
+                                  top: 1.h, left: 10.w, right: 8.w),
+                              child: MedicineCard3(
+                                brandName: medicine
+                                        .first?.medicines?[index].brand ??
+                                    "--",
+                                frequency: medicine
+                                        .first?.medicines?[index].frequency ??
+                                    "--",
+                                dosage:
+                                    medicine.first?.medicines?[index].dosage ??
+                                        "--",
+                                date: formatDate2(medicine.first?.date ?? "--"),
+                                token: widget.token,
+                                id: medicine.first?.medicines?[index].id ?? 0,
+                                patientId: widget.id,
+                                 medicineName:  medicine
+                                     .first?.medicines?[index].medicine ??
+                                     "--", period:  medicine.first?.medicines?[index].period ?? 0,
+                                Quantity: medicine.first?.medicines?[index].quantity ?? 0,
+                                Uom: medicine.first?.medicines?[index].uom ??
+                                    "--",
+                                Route: medicine.first?.medicines?[index].route ??
+                                    "--",
+                                remarks: medicine.first?.medicines?[index].remarks ??
+                                    "--",
+                                strength: medicine.first?.medicines?[index].strength ??
+                                    "--",
                               ),
                             );
-
                           },
                         );
                       }
@@ -328,7 +362,6 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                   //     },
                   //   );
                   // })
-
                 ],
               ),
             ),
@@ -361,46 +394,56 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if(widget.role == "psychiatrist")
-                GestureDetector(
-                  child: Center(
-                    child: GestureDetector(
-                      onTap: () async {
-                        Get.find<MedicineController>().medicineDataz(widget.token);
-                         Get.find<FrequencyController>().frequencyDataz(widget.token);
-                        Get.find<AddMedicineController>().addMedicineData.value.clear();
-                        Get.find<AddMedicineController>().medicineControllers.clear();
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return Medicine(patientToken: widget.token, patientId: widget.id,);
-                          },
-                        ));
-                      },
-                      child: Container(
-                        width: 180.w,
-                        height: 45.h,
+                if (widget.role == "psychiatrist")
+                  GestureDetector(
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () async {
+                          Get.find<MedicineController>()
+                              .medicineDataz(widget.token);
+                          Get.find<FrequencyController>()
+                              .frequencyDataz(widget.token);
+                          Get.find<AddMedicineController>()
+                              .addMedicineData
+                              .value
+                              .clear();
+                          Get.find<AddMedicineController>()
+                              .medicineControllers
+                              .clear();
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return Medicine(
+                                patientToken: widget.token,
+                                patientId: widget.id,
+                              );
+                            },
+                          ));
+                        },
+                        child: Container(
+                          width: 180.w,
+                          height: 45.h,
 
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.r),
-                          color: Colorutils.userdetailcolor,
-                        ),
-                        // width: 250.w,
-                        child: Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'ADD MEDICINE',
-                                style: GoogleFonts.inter(
-                                    fontSize: 16.h, color: Colors.white),
-                              ),
-                            ],
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.r),
+                            color: Colorutils.userdetailcolor,
+                          ),
+                          // width: 250.w,
+                          child: Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'ADD MEDICINE',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 16.h, color: Colors.white),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
                 SizedBox(
                   width: 10,
                 ),
@@ -421,12 +464,17 @@ class _DoctorsPatientDetailsState extends State<DoctorsPatientDetails> {
                                       token: widget.token,
                                       observation: _observationController.text,
                                       patientId: widget.id,
-                                      doctorId: widget.doctorID, diagnosis: widget.diagnosisID, assignedId: widget.assignedId);
+                                      doctorId: widget.doctorID,
+                                      diagnosis: widget.diagnosisID,
+                                      assignedId: widget.assignedId);
 
                               if (resp['status'] == "ok") {
-                                await Get.find<SeniorDashboardController>().SeniorDashboardData(widget.token);
-                                await Get.find<AssignedDoctorToPatientController>()
-                                    .assignedDoctorPatientData(widget.token, widget.doctorID);
+                                await Get.find<SeniorDashboardController>()
+                                    .SeniorDashboardData(widget.token);
+                                await Get.find<
+                                        AssignedDoctorToPatientController>()
+                                    .assignedDoctorPatientData(
+                                        widget.token, widget.doctorID);
                                 context.loaderOverlay.hide();
                                 ProductAppPopUps.submit22Back(
                                   title: "Success",
@@ -495,7 +543,6 @@ class PatientCard extends StatelessWidget {
   final String phone;
   final String sevirity;
 
-
   const PatientCard({
     Key? key,
     required this.email,
@@ -504,7 +551,6 @@ class PatientCard extends StatelessWidget {
     required this.name,
     required this.phone,
     required this.sevirity,
-
   }) : super(key: key);
 
   @override
@@ -541,7 +587,7 @@ class PatientCard extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color:getSeverityColor(sevirity),
+                      color: getSeverityColor(sevirity),
                     ),
                     padding:
                         EdgeInsets.symmetric(vertical: 3.h, horizontal: 8.w),
@@ -553,8 +599,7 @@ class PatientCard extends StatelessWidget {
                         style: GoogleFonts.nunito(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
-                          fontSize: 12
-                              .h,
+                          fontSize: 12.h,
                         ),
                       ),
                     ),
@@ -596,7 +641,9 @@ class AiReport extends StatelessWidget {
   const AiReport({
     Key? key,
     required this.summary,
-    required this.details, required this.repoturl, required this.name,
+    required this.details,
+    required this.repoturl,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -640,13 +687,14 @@ class AiReport extends StatelessWidget {
               height: 10,
             ),
             _buildTitle('      ', summary),
-            if(repoturl.isNotEmpty && repoturl!= "")
+            if (repoturl.isNotEmpty && repoturl != "")
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
                     onPressed: () {
-                      downloadPdfToDownloads(repoturl,name)  ;               },
+                      downloadPdfToDownloads(repoturl, name);
+                    },
                     icon: Icon(Icons.download),
                   ),
                   SizedBox(
@@ -658,7 +706,7 @@ class AiReport extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => FullScreenPdfViewer(
-                            pdfUrl:repoturl,
+                            pdfUrl: repoturl,
                           ),
                         ),
                       );
@@ -669,7 +717,7 @@ class AiReport extends StatelessWidget {
                         color: Colorutils.userdetailcolor,
                       ),
                       padding:
-                      EdgeInsets.symmetric(vertical: 3.h, horizontal: 8.w),
+                          EdgeInsets.symmetric(vertical: 3.h, horizontal: 8.w),
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 10, right: 10, top: 3, bottom: 3),

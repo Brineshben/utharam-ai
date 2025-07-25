@@ -346,7 +346,7 @@ class _MedicineState extends State<Medicine> {
                                             value: controller.medicineControllers[index]['UOM']?.text.isNotEmpty == true
                                                 ? controller.medicineControllers[index]['UOM']?.text
                                                 : null,
-                                            items: ['ML', 'Nos'].map((String unit) {
+                                            items: ['ML', "No's"].map((String unit) {
                                               return DropdownMenuItem<String>(
                                                 value: unit,
                                                 child: Text(unit),

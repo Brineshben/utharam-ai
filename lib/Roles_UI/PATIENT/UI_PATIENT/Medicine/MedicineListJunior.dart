@@ -105,7 +105,7 @@ class _MedicinelistjuniorState extends State<Medicinelistjunior> {
                                 brandName: medicine?.medicine ?? "----",
                                 frequency: medicine?.frequency ?? "",
                                 dosage: medicine?.dosage ?? "",
-                                date: formatDate2(medicine?.dateTime ?? ""),
+                                date: formatDate2(medicine?.dateTime ?? ""), brand: medicine?.medicine ?? "----",
                               ),
                             );
 
